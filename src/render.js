@@ -2,7 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { adaptersFor } from "./adapters.js";
-import { applyConditionals, managedNote, parseMdc } from "./convert.js";
+import { parseMdc } from "./convert.js";
 import { packageManagerCommands } from "./detect.js";
 import { FRAMEWORK_NAMES, FRAMEWORK_RULES, selectRules } from "./rules.js";
 
