@@ -1,0 +1,106 @@
+{
+  "versions": [
+    "1.0.0",
+    "1.1.0",
+    "1.1.1",
+    "1.2.0",
+    "1.2.1",
+    "1.2.2",
+    "1.3.0",
+    "1.3.1",
+    "1.3.2"
+  ],
+  "files": {
+    ".cursor/rules/api.mdc": [
+      "00841a8cdad284efaf8f3b01b838df12466a2d98d76b35579bb1d5e30ceebb70",
+      "25b4afe527a3e17c39da65ff68319fc267bbff49cde13b9d756a2e32d7573f8e",
+      "460e5a95f2c54dd43bf65e4aa9f3d08b0db0dae58f8a1dfb8753efcf23401ec1",
+      "b3772571bc9df188c36aa10de955eaf841f5707343b2a46e60ec1cf32befe448",
+      "e9eb41626f2231d9a648f1a63877ef7b6ac6d6bbea312c445f2e2c20723462b7",
+      "eade780c3bf5ecaf371c96ce064302db6121b1a43bdb413b16168071e33213d5"
+    ],
+    ".cursor/rules/core-principles.mdc": [
+      "0b04fee199b16768937bf028c812f9dbf0bd8bb41f1f284a4b101372c8b4b204",
+      "4ff0a721c366e35b5ebd08034d744172935eaca2e65cfdb5fea92b216550a9be",
+      "d5a0a832cc8881ea08f93d5d81889653f16d232dcdbf7e8316fa2464593a16f1",
+      "dcfbf105daaf718d668cd51bc7a92e4b7c83ac80333670520dabed4d1fb415b6"
+    ],
+    ".cursor/rules/forms.mdc": [
+      "8aca65cffe109bc7de8184ad9d669b7c990467eacfca7bf9d7a6b385e495ed2a",
+      "c36a37691239b1af654988761f4cefe8db17ad1a9ab41e2da9fcf00b22c3e682"
+    ],
+    ".cursor/rules/i18n.mdc": [
+      "03dfd0015e81c6756a133115ae1fbd9cde7dc3a2e9b1b426fce91c810fa4fade"
+    ],
+    ".cursor/rules/nextjs.mdc": [
+      "80abb9326dd3ce03b425a423cec63e5b057557872391991db1c689535b74dfef",
+      "969c194e830a025cd50eb4bf6ba39f44c0f7485194f51a253a921d7dfdb69b6a"
+    ],
+    ".cursor/rules/performance.mdc": [
+      "64522fec880543e060f2449be5641b96355431d68bb96de1d496b6c4a3bf33e0",
+      "84413b306d063ca7eb2555d3ea623c7bfc25ccbf99875a778aa074c94a088f0f",
+      "de9f8b1ebf064a2e3469c7294d686e36e16399d6834596c7139f55077cdb1ec0",
+      "eba853b400f6cc0063525906aab5087cc19a4a70dc8bef3cef3ea6f68948bc15"
+    ],
+    ".cursor/rules/react-best-practices.mdc": [
+      "dddece490867c98567d66dd722fb1269d1b758a7fc599da77ab89fcde9ed4d33",
+      "ea29de16d44e03f56e94a40ac39e636b11daa9849067220f1c1a539fc79d9645"
+    ],
+    ".cursor/rules/state-management.mdc": [
+      "08ef0e37b2cf748ca9ff660cfdd012e38f19cf1e3a20cbef27d71a5fff67058f",
+      "f857e7d2403b611b720204933b69882a72762f3e8760d0b7064baf1b421b3f25"
+    ],
+    ".cursor/rules/tanstack-query.mdc": [
+      "2b402df87f548c520e8e95adae1c2b8a70c10fb661e00705cfb525df6b507715",
+      "54dc0ccf1d36c57022aa69dbf5e6179e13393e7500b859f65849f801aee12700",
+      "d461599c86c6eb87a89ad9b0223b13b2f2ac621300ee89f86c0b3583a979b44a",
+      "eed7357d3cda861127d0cbe69de08241ce571c6256b9ea8ef2e710035d30c7ab"
+    ],
+    ".cursor/rules/tanstack-start.mdc": [
+      "022602a6ac3a5ddf1a5278520d83f09894e727debaa8d0543121a7622f8ade9d",
+      "54bdedbcb46ab39e256d00959b38c828b04a0216db00ec36fbd480eabcf29552"
+    ],
+    ".cursor/rules/testing.mdc": [
+      "20da99d453a355e74f271767f98e7feb79ba6d598da52565debd731dba35361b",
+      "70d2942972d099f132b3e11e689bfe20ab945b7aa76a5d4dbbfa4d90620bccdc",
+      "c8f75829252750b59368faa415a795c90812a153d141b42e091ade24bb26ae21"
+    ],
+    ".cursor/rules/typescript.mdc": [
+      "486a090559b934101ec3b69f20a8dffb316765bece1af81e69768b2fd8455af9",
+      "7112d29ffd1c4bb6315828e9317dab45ed6c27c53fa557a599549bd2a8cff3c7",
+      "bcddb5b5a0aa88aae427eba04ee6d820db9dcb17389b26d6e6daa6f836c5e61e"
+    ],
+    ".cursor/rules/ui-components.mdc": [
+      "0ac2e0ce9cfdecbab0df1892e2c51a1e9aabf1b534282a28f3c186325cf47140",
+      "8f7abfad2b26d051bcaa4bf394253be2e9422262c43595eadbb5caa0a4612a97",
+      "ab767c1f808cba9321740b8ff42ecf204dcd4087d992b57a68211daed9726f47",
+      "c893e9183e8a2626503de389243615fe858a655807a766518c49a64f349a9f67",
+      "d43380a3178de91686aadae20a1abd1a3f1cddf8e605a1fe377d9e8f68a61776"
+    ],
+    "CLAUDE.md": [
+      "918b1c90559355ef78f33fdf3562f2b021ef8bdfd8a5c8415e5decd44934de55",
+      "d97c0f5819c85a7986e6df24001b55e7d48d1abdf27543024f824fb71522b21b"
+    ],
+    "docs/architecture-guide.md": [
+      "5b84cc8317300b691debb29987577f0971f66fcf1c0dd4b305ed9cfb54151dde",
+      "6d173d6c42a19c39e70904406ce38b113c856741d227ef9fc672d2d54c72a034",
+      "d17cc368bce469326a4584e62e120e66e11c17773dee070f5dc36da290020a9c"
+    ],
+    "docs/MEMORIES.md": [
+      "20413fe05176623e5c55f0377926e2aa980350e1096579820ecfdde2bd7e7a30",
+      "dad5b630902a70de6caba17ed08941558373ecd12b4ef7d8662cd0e3b89cee68"
+    ]
+  },
+  "agentsMd": [
+    "444790474b4d239f40ce71b5d3a3f4e34435465f9cdd90a7a7d57e94ef0e424d",
+    "44711b115735139068d79ae8d68ca462c70d25846d29a755e3add78a71a4d68d",
+    "922815336c692f2b54ef299c46de4c91016c7860d83a8ffdbd7bb0bdf9128fe2",
+    "cc45e7c3448aef313a7fee7d70ce10269047e3363efec4540f65b36c9535dfc5",
+    "dc7ab380e0dc3e5d6a7ad76796f40db4335f9c42e01ad872c5b61ceae644d2da",
+    "e444f07089f9edd13fd0a54883438b028ff8b907c0c72d129dc614d3cc7a971e",
+    "fe6216244337343dea29e04208b689f598619fcdd3f558ba46e02b965a027bba"
+  ],
+  "nextjsBlock": [
+    "a0fe2dafb48ad395ab1e51074df0daa5b094cbe4965fd54312ba7dafcd4ea65f"
+  ]
+}

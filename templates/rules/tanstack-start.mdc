@@ -15,7 +15,9 @@ alwaysApply: false
 - **Hydration:** Rely on loader prefetching for data hydration. Do not use Next.js-specific patterns like manual dehydration.
 - **Server Functions:** Wrap all backend-only logic in standalone `serverFn`. Functions MUST act as a bridge to the API layer; keep database orchestration and business logic inside src/features/api or helpers.
 - **Search Params:** Validate all search params with `validateSearch` using a Zod schema. Never trust raw search values.
+<!-- i18n:start -->
 - **i18n Implementation:** Use `paraglide-js` for translations. Follow the patterns defined in `i18n.mdc`.
+<!-- i18n:end -->
 - **Error Handling:** Provide `errorComponent` for failure states. Handle expected errors in the loader.
 - **Loading UI:** Provide `pendingComponent` for async states when needed.
 - **Not Found:** Provide `notFoundComponent` for missing resources.

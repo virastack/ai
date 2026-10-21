@@ -1,3 +1,7 @@
+---
+description: "USE WHEN: Deciding where code lives, creating folders, and respecting feature boundaries."
+alwaysApply: true
+---
 # Architecture Constitution
 
 ## Technical Stack (SSOT)
