@@ -1,0 +1,47 @@
+---
+description: "USE WHEN: Writing tests with Vitest, Testing Library and MSW."
+globs: "src/**/*.test.{ts,tsx},src/test/**/*.{ts,tsx},vitest.config.ts"
+alwaysApply: false
+---
+
+# Testing
+
+## Setup
+
+- Vitest + jsdom (`vitest.config.ts`, `src/test/setup.ts`). Run `{{TEST_COMMAND}}`.
+- `renderWithProviders` (`@/test/render`) adds the app providers. MSW server: `@/test/server`; unhandled requests fail.
+
+## Rules
+
+- Test behavior the user sees (Arrange, Act, Assert), not implementation details.
+- Prioritize feature logic (helpers, api, hooks, stores) and critical flows. Skip trivial markup.
+- Query by role and label (`getByRole`, `findByRole`, `getByLabelText`). Use `getByTestId` only as a last resort.
+- Interact through `userEvent.setup()` and wait for async UI with `findBy*`.
+- Mock HTTP with MSW handlers (`server.use(...)`) per test. Do not mock `fetch` or the api module.
+- Cover loading, empty, error and success for critical data flows.
+- Tests sit next to their code (`get-users.api.test.ts`). Snapshots only for small, stable data.
+- No browser E2E tools unless the project has them or you are asked.
+
+<example>
+```tsx
+import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { http, HttpResponse } from "msw";
+import { expect, it } from "vitest";
+
+import { LoginForm } from "@/features/auth";
+import { renderWithProviders } from "@/test/render";
+import { server } from "@/test/server";
+
+it("shows an error when the login fails", async () => {
+  server.use(http.post("*/api/login", () => HttpResponse.json(null, { status: 401 })));
+  const user = userEvent.setup();
+  renderWithProviders(<LoginForm />);
+
+  await user.type(screen.getByLabelText(/email/i), "ada@example.com");
+  await user.click(screen.getByRole("button", { name: /log in/i }));
+
+  expect(await screen.findByRole("alert")).toHaveTextContent(/invalid credentials/i);
+});
+```
+</example>

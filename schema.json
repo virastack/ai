@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unpkg.com/@virastack/ai@2/schema.json",
+  "title": "ViraStack AI manifest",
+  "description": "Written by @virastack/ai to .virastack/ai.json. Commit it; do not edit it by hand.",
+  "type": "object",
+  "required": ["version", "cliVersion", "framework", "agents", "files"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": 1, "description": "Manifest format version." },
+    "cliVersion": { "type": "string", "description": "@virastack/ai version that wrote this file." },
+    "framework": { "enum": ["nextjs", "tanstack"] },
+    "agents": {
+      "type": "array",
+      "description": "Selected agents. [\"none\"] installs AGENTS.md and plain Markdown rules only.",
+      "items": { "enum": ["claude", "cursor", "none"] },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "claudeImport": {
+      "enum": ["created", "inserted"],
+      "description": "How the @AGENTS.md line got into CLAUDE.md, so remove can undo exactly that."
+    },
+    "files": {
+      "type": "object",
+      "description": "Managed files (POSIX path relative to the project root) and the sha256 of their content with LF line endings.",
+      "additionalProperties": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+    }
+  },
+  "additionalProperties": false
+}

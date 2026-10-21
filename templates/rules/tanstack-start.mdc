@@ -1,0 +1,65 @@
+---
+description: "USE WHEN: Working on TanStack Start routes, loaders, server functions, middleware and head/SEO."
+globs: "src/routes/**/*.{ts,tsx},src/router.tsx,src/start.ts"
+alwaysApply: false
+---
+
+# TanStack Start
+
+## Routes
+
+- `createFileRoute` with a path that matches the file. Never edit the generated `src/routeTree.gen.ts`.
+- Parent routes render `<Outlet />`.
+- Validate search params with `validateSearch` and a Zod schema.
+- Auth guards and redirects go in `beforeLoad`.
+- `pendingComponent`, `errorComponent` and `notFoundComponent` where a route can wait, fail or miss. Metadata in `head()`.
+- Navigate with typed `Link` and `useNavigate`, never string-built URLs.
+
+## Data
+
+- Load route data with `context.queryClient.ensureQueryData(options)` in `loader`, read it with `useSuspenseQuery(options)`. `@tanstack/react-router-ssr-query` handles hydration; no `HydrationBoundary`.
+
+## Server functions
+
+- `createServerFn` from `@tanstack/react-start`, exported from the feature's `api/` folder, never defined in components or routes.
+- Validate input with `.validator(zodSchema)`.
+- Check auth in `createMiddleware` or at the top of the handler. Return `{ data, error }`, never raw errors.
+- Secrets stay in server code; `VITE_` env vars are public.
+<!-- i18n:start -->
+
+## i18n
+
+- Paraglide JS (`@inlang/paraglide-js`): locale routes under `src/routes/$lang`. See the `i18n` rule.
+<!-- i18n:end -->
+
+## Bans
+
+- Route data fetched in a component (`useEffect`, or `useQuery` without a loader prefetch).
+- Next.js APIs: `"use server"`, `next/*` imports, `page.tsx` files.
+
+<example>
+```tsx
+// src/routes/users/$userId.tsx
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+
+import { UserProfile, userQueryOptions } from "@/features/users";
+
+export const Route = createFileRoute("/users/$userId")({
+  loader: ({ context, params }) => context.queryClient.ensureQueryData(userQueryOptions(params.userId)),
+  component: UserPage,
+});
+
+function UserPage() {
+  const { userId } = Route.useParams();
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId));
+  return <UserProfile user={user} />;
+}
+```
+</example>
+
+<incorrect-example>
+```tsx
+const { data } = useQuery({ queryKey: ["dashboard"], queryFn: fetchDashboard }); // no loader prefetch
+```
+</incorrect-example>

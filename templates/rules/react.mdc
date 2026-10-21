@@ -1,0 +1,55 @@
+---
+description: "USE WHEN: Writing React 19 components and hooks: state, effects, composition, React Compiler."
+globs: "src/**/*.tsx,src/hooks/**/*.ts,src/features/**/hooks/**/*.ts"
+alwaysApply: false
+---
+
+# React 19
+
+## Rules
+
+- One component per file, under about 200 lines.
+- Compose with `children` and slots instead of drilling props past two levels.
+- Derive values during render. Never mirror props or other state into state.
+- Business logic goes into hooks; components render.
+- List keys are stable ids, never the index.
+- `useEffect` only syncs with external systems (subscriptions, DOM APIs). Handle user actions in event handlers.
+- Use updater functions when the next state depends on the previous one.
+<!-- nextjs:start -->
+- React Compiler is enabled: no hand-written `useMemo`, `useCallback` or `memo`.
+<!-- nextjs:end -->
+<!-- tanstack:start -->
+- `useMemo`, `useCallback` and `memo` only for a measured problem or a required stable reference.
+<!-- tanstack:end -->
+
+## React 19 APIs
+
+- `ref` is a regular prop. Do not use `forwardRef` in new code.
+- `use()` reads a promise or context.
+- Actions: `useActionState`, `useFormStatus` and `useOptimistic` (TanStack Query mutations: see `server-state`).
+
+## Bans
+
+- Class components.
+- Fetching data with `useEffect` in a Client Component. Use query hooks or server loading (async Server Components may `await`).
+- Silencing `react-hooks/exhaustive-deps`.
+
+<example>
+```tsx
+import type { Task } from "@/features/tasks/types";
+
+type TaskListProps = { tasks: Task[]; showDone: boolean };
+
+export function TaskList({ tasks, showDone }: TaskListProps) {
+  const visible = showDone ? tasks : tasks.filter((task) => !task.done);
+
+  return (
+    <ul>
+      {visible.map((task) => (
+        <li key={task.id}>{task.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+</example>

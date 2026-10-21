@@ -1,7 +1,7 @@
 {
   "name": "@virastack/ai",
-  "version": "1.3.2",
-  "description": "AI-native architecture kit for modern React. High-discipline protocols for autonomous agents.",
+  "version": "2.0.0-beta.1",
+  "description": "AI-native architecture kit for modern React. One command installs the same rules for Claude Code, Cursor and every AGENTS.md agent.",
   "author": {
     "name": "Ömer Gülçiçek (ViraStack)",
     "email": "iletisim@omergulcicek.com",
@@ -17,16 +17,21 @@
     "url": "https://github.com/virastack/ai/issues"
   },
   "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "files": [
     "bin",
+    "src",
     "templates",
+    "schema.json",
     "CHANGELOG.md"
   ],
   "publishConfig": {
     "access": "public"
   },
   "bin": {
-    "ai": "./bin/ai.js"
+    "virastack-ai": "./bin/virastack-ai.js"
   },
   "keywords": [
     "virastack",
@@ -43,12 +48,18 @@
     "architecture",
     "standards",
     "dx",
-    "cli"
+    "cli",
+    "claude-code",
+    "agents-md",
+    "claude-rules"
   ],
-  "devDependencies": {
-    "vitest": "^1.6.0"
-  },
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "hashes:v1": "node scripts/build-v1-hashes.js",
+    "fixture:start": "node scripts/build-start-fixture.js"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.7"
   }
 }

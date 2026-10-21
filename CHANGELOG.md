@@ -1,5 +1,32 @@
 # Changelog
 
+## [v2.0.0] - Unreleased
+
+### Breaking
+- **New file layout:** Rules install to `.claude/rules/virastack/` (Claude Code) and `.cursor/rules/virastack/` (Cursor), or `.agents/rules/virastack/` with `--agent none`. v1's `.cursor/rules/*.mdc`, `docs/MEMORIES.md` and `docs/architecture-guide.md` are no longer written.
+- **Renamed rules:** `core-principles` → `core`, `react-best-practices` → `react`, `ui-components` → `ui`, `tanstack-query` → `server-state`, `state-management` → `client-state`. `docs/architecture-guide.md` became the always-loaded `architecture` rule.
+- **`AGENTS.md` is no longer replaced.** ViraStack writes only its `virastack-ai` block; your content and the Next.js block stay untouched.
+- **`ApiError`** follows ViraStack Start's `src/lib/api.ts` (`message`, `status`, `data`).
+
+### Added
+- **`--agent claude,cursor|none`**, `remove`, `--dry-run`, `--yes` and `--framework`.
+- **Manifest** `.virastack/ai.json` with file hashes: re-running `init` updates untouched rules, asks before overwriting edited ones, and removes rules a new version drops.
+- **Automatic v1 migration:** unedited v1 files are removed, edited ones are kept and listed.
+- **Package manager aware:** commands in the rules use the detected package manager.
+- **Conditional content:** the `i18n` rule installs only with `next-intl` or Paraglide; framework-specific lines appear only for the detected framework.
+
+### Changed
+- **All 14 rules rewritten** for Next.js 16, React 19.2, TanStack Start, TanStack Query 5, Zustand 5, Zod 4 and Tailwind CSS 4. Rule text is about 30% smaller than v1, with one example per rule that follows its own rules.
+- **Next.js 16:** async `params`, `proxy.ts`, `"use cache"` with `cacheComponents`, `preload` instead of `priority`, `ssr: false` only in Client Components.
+- **TanStack Start:** `@tanstack/react-start` imports, `ensureQueryData` + `useSuspenseQuery` with the SSR Query integration, no `tsr watch`.
+- **TanStack Query:** one `queryOptions` factory per query, thin hooks, optimistic updates only when needed (v5 `variables` first).
+- **Zustand:** `useShallow`, per-request stores for SSR, `useIsClient` or `skipHydration` instead of the non-existent `useHydrated`.
+- **Testing** assumes Vitest, Testing Library and MSW, as shipped by ViraStack Start.
+- **Performance** keeps only LCP, INP and CLS budgets; accessibility moved to `ui`.
+
+### Removed
+- Chat-era rules (`INTENTIONAL_TODO`, the blanket comment ban), the `@/data` alias and `*.data.ts` naming, TTI and API p95 budgets.
+
 ## [v1.3.2] - 2026-08-06
 
 ### Added

@@ -1,0 +1,53 @@
+---
+description: "USE WHEN: Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility."
+globs: "src/components/**/*.tsx,src/features/**/components/**/*.tsx"
+alwaysApply: false
+---
+
+# UI
+
+## Components
+
+- `components/ui`: primitives without data or store access. `components/shared`: reused app components. `features/<feature>/components`: domain UI.
+- Add primitives with `{{EXEC_COMMAND}} shadcn@latest add <component>`; do not hand-write them.
+- Find the primitive library first: `style` in `components.json` (`base-…` or `radix-…`), else `package.json` (`@base-ui/react` or `@radix-ui/*`). Never mix them.
+- Merge classes with `cn()` (`@/lib/utils`), never template strings.
+- Data-driven UI has loading (a skeleton of the final size), empty and error states.
+- Animate with `motion/react` and respect reduced motion.
+
+## Tailwind CSS 4
+
+- Theme tokens and the default scale only (`bg-background`, `p-4`). No hex, rgb or arbitrary values like `p-[13px]`.
+- v4 class names: `bg-linear-to-r` instead of `bg-gradient-to-r`, `size-4` instead of `w-4 h-4`.
+- Mobile first from 320px; check every breakpoint up to `xl`.
+
+## Accessibility
+
+- Semantic HTML: `button` for actions, links for navigation, one `h1` per page, no skipped heading levels.
+- Every control has a name: visible text, a `<label>`, or `aria-label` if nothing is visible.
+- Everything works by keyboard and focus is visible.
+- Dialogs and menus use the primitive's focus handling, never a custom focus trap.
+- Text contrast meets WCAG AA (4.5:1). Never show state with color alone.
+- Meaningful `alt` text; `alt=""` for decorative images.
+
+## Bans
+
+- `onClick` on `div` or `span`.
+- The generic "AI look": indigo or purple defaults, gradients everywhere, `rounded-2xl` on everything, identical card grids. Lorem ipsum.
+
+<example>
+```tsx
+import { cn } from "@/lib/utils";
+
+type StatCardProps = { label: string; value: string; className?: string };
+
+export function StatCard({ label, value, className }: StatCardProps) {
+  return (
+    <section className={cn("rounded-lg border bg-card p-4 md:p-6", className)}>
+      <h3 className="text-sm text-muted-foreground">{label}</h3>
+      <p className="mt-2 text-2xl font-semibold">{value}</p>
+    </section>
+  );
+}
+```
+</example>

@@ -1,0 +1,557 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`init: file tree > nextjs with --agent claude > nextjs-claude-agents 1`] = `
+"<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Persona
+
+Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
+
+## Commands
+
+- **Dev:** \`npm install && npm run dev\`
+- **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
+- **Build:** \`npm run build\`
+
+## Operational Guardrails
+
+- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
+- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
+- **Naming:** Code, types and identifiers in English.
+- **Self-Documentation:** JSDoc for complex logic.
+- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+
+## Rules
+
+- **Claude Code:** \`.claude/rules/virastack/\` (loaded automatically)
+- **Other agents:** read the "Always" rules at the start of every task and the matching rule before editing, from \`.claude/rules/virastack/\`.
+
+| Rule | Use when |
+| :--- | :------- |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+<!-- END:virastack-ai -->
+"
+`;
+
+exports[`init: file tree > nextjs with --agent claude > nextjs-claude-tree 1`] = `
+[
+  ".claude/rules/virastack/api.md",
+  ".claude/rules/virastack/architecture.md",
+  ".claude/rules/virastack/client-state.md",
+  ".claude/rules/virastack/core.md",
+  ".claude/rules/virastack/forms.md",
+  ".claude/rules/virastack/nextjs.md",
+  ".claude/rules/virastack/performance.md",
+  ".claude/rules/virastack/react.md",
+  ".claude/rules/virastack/server-state.md",
+  ".claude/rules/virastack/testing.md",
+  ".claude/rules/virastack/typescript.md",
+  ".claude/rules/virastack/ui.md",
+  ".virastack/ai.json",
+  "AGENTS.md",
+  "CLAUDE.md",
+  "package.json",
+]
+`;
+
+exports[`init: file tree > nextjs with --agent claude,cursor > nextjs-both-agents 1`] = `
+"<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Persona
+
+Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
+
+## Commands
+
+- **Dev:** \`npm install && npm run dev\`
+- **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
+- **Build:** \`npm run build\`
+
+## Operational Guardrails
+
+- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
+- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
+- **Naming:** Code, types and identifiers in English.
+- **Self-Documentation:** JSDoc for complex logic.
+- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+
+## Rules
+
+- **Claude Code:** \`.claude/rules/virastack/\` (loaded automatically)
+- **Cursor:** \`.cursor/rules/virastack/\` (loaded automatically)
+- **Other agents:** read the "Always" rules at the start of every task and the matching rule before editing, from \`.claude/rules/virastack/\`.
+
+| Rule | Use when |
+| :--- | :------- |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+<!-- END:virastack-ai -->
+"
+`;
+
+exports[`init: file tree > nextjs with --agent claude,cursor > nextjs-both-tree 1`] = `
+[
+  ".claude/rules/virastack/api.md",
+  ".claude/rules/virastack/architecture.md",
+  ".claude/rules/virastack/client-state.md",
+  ".claude/rules/virastack/core.md",
+  ".claude/rules/virastack/forms.md",
+  ".claude/rules/virastack/nextjs.md",
+  ".claude/rules/virastack/performance.md",
+  ".claude/rules/virastack/react.md",
+  ".claude/rules/virastack/server-state.md",
+  ".claude/rules/virastack/testing.md",
+  ".claude/rules/virastack/typescript.md",
+  ".claude/rules/virastack/ui.md",
+  ".cursor/rules/virastack/api.mdc",
+  ".cursor/rules/virastack/architecture.mdc",
+  ".cursor/rules/virastack/client-state.mdc",
+  ".cursor/rules/virastack/core.mdc",
+  ".cursor/rules/virastack/forms.mdc",
+  ".cursor/rules/virastack/nextjs.mdc",
+  ".cursor/rules/virastack/performance.mdc",
+  ".cursor/rules/virastack/react.mdc",
+  ".cursor/rules/virastack/server-state.mdc",
+  ".cursor/rules/virastack/testing.mdc",
+  ".cursor/rules/virastack/typescript.mdc",
+  ".cursor/rules/virastack/ui.mdc",
+  ".virastack/ai.json",
+  "AGENTS.md",
+  "CLAUDE.md",
+  "package.json",
+]
+`;
+
+exports[`init: file tree > nextjs with --agent cursor > nextjs-cursor-agents 1`] = `
+"<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Persona
+
+Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
+
+## Commands
+
+- **Dev:** \`npm install && npm run dev\`
+- **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
+- **Build:** \`npm run build\`
+
+## Operational Guardrails
+
+- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
+- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
+- **Naming:** Code, types and identifiers in English.
+- **Self-Documentation:** JSDoc for complex logic.
+- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+
+## Rules
+
+- **Cursor:** \`.cursor/rules/virastack/\` (loaded automatically)
+- **Other agents:** read the "Always" rules at the start of every task and the matching rule before editing, from \`.cursor/rules/virastack/\`.
+
+| Rule | Use when |
+| :--- | :------- |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+<!-- END:virastack-ai -->
+"
+`;
+
+exports[`init: file tree > nextjs with --agent cursor > nextjs-cursor-tree 1`] = `
+[
+  ".cursor/rules/virastack/api.mdc",
+  ".cursor/rules/virastack/architecture.mdc",
+  ".cursor/rules/virastack/client-state.mdc",
+  ".cursor/rules/virastack/core.mdc",
+  ".cursor/rules/virastack/forms.mdc",
+  ".cursor/rules/virastack/nextjs.mdc",
+  ".cursor/rules/virastack/performance.mdc",
+  ".cursor/rules/virastack/react.mdc",
+  ".cursor/rules/virastack/server-state.mdc",
+  ".cursor/rules/virastack/testing.mdc",
+  ".cursor/rules/virastack/typescript.mdc",
+  ".cursor/rules/virastack/ui.mdc",
+  ".virastack/ai.json",
+  "AGENTS.md",
+  "package.json",
+]
+`;
+
+exports[`init: file tree > nextjs with --agent none > nextjs-none-agents 1`] = `
+"<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Persona
+
+Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
+
+## Commands
+
+- **Dev:** \`npm install && npm run dev\`
+- **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
+- **Build:** \`npm run build\`
+
+## Operational Guardrails
+
+- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
+- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
+- **Naming:** Code, types and identifiers in English.
+- **Self-Documentation:** JSDoc for complex logic.
+- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+
+## Rules
+
+- **All agents:** read the "Always" rules at the start of every task and the matching rule before editing, from \`.agents/rules/virastack/\`.
+
+| Rule | Use when |
+| :--- | :------- |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+<!-- END:virastack-ai -->
+"
+`;
+
+exports[`init: file tree > nextjs with --agent none > nextjs-none-tree 1`] = `
+[
+  ".agents/rules/virastack/api.md",
+  ".agents/rules/virastack/architecture.md",
+  ".agents/rules/virastack/client-state.md",
+  ".agents/rules/virastack/core.md",
+  ".agents/rules/virastack/forms.md",
+  ".agents/rules/virastack/nextjs.md",
+  ".agents/rules/virastack/performance.md",
+  ".agents/rules/virastack/react.md",
+  ".agents/rules/virastack/server-state.md",
+  ".agents/rules/virastack/testing.md",
+  ".agents/rules/virastack/typescript.md",
+  ".agents/rules/virastack/ui.md",
+  ".virastack/ai.json",
+  "AGENTS.md",
+  "package.json",
+]
+`;
+
+exports[`init: file tree > tanstack with --agent claude > tanstack-claude-agents 1`] = `
+"<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Persona
+
+Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
+
+## Commands
+
+- **Dev:** \`npm install && npm run dev\`
+- **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
+- **Build:** \`npm run build\`
+
+## Operational Guardrails
+
+- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
+- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
+- **Naming:** Code, types and identifiers in English.
+- **Self-Documentation:** JSDoc for complex logic.
+- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+
+## Rules
+
+- **Claude Code:** \`.claude/rules/virastack/\` (loaded automatically)
+- **Other agents:** read the "Always" rules at the start of every task and the matching rule before editing, from \`.claude/rules/virastack/\`.
+
+| Rule | Use when |
+| :--- | :------- |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+<!-- END:virastack-ai -->
+"
+`;
+
+exports[`init: file tree > tanstack with --agent claude > tanstack-claude-tree 1`] = `
+[
+  ".claude/rules/virastack/api.md",
+  ".claude/rules/virastack/architecture.md",
+  ".claude/rules/virastack/client-state.md",
+  ".claude/rules/virastack/core.md",
+  ".claude/rules/virastack/forms.md",
+  ".claude/rules/virastack/performance.md",
+  ".claude/rules/virastack/react.md",
+  ".claude/rules/virastack/server-state.md",
+  ".claude/rules/virastack/tanstack-start.md",
+  ".claude/rules/virastack/testing.md",
+  ".claude/rules/virastack/typescript.md",
+  ".claude/rules/virastack/ui.md",
+  ".virastack/ai.json",
+  "AGENTS.md",
+  "CLAUDE.md",
+  "package.json",
+]
+`;
+
+exports[`init: file tree > tanstack with --agent claude,cursor > tanstack-both-agents 1`] = `
+"<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Persona
+
+Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
+
+## Commands
+
+- **Dev:** \`npm install && npm run dev\`
+- **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
+- **Build:** \`npm run build\`
+
+## Operational Guardrails
+
+- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
+- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
+- **Naming:** Code, types and identifiers in English.
+- **Self-Documentation:** JSDoc for complex logic.
+- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+
+## Rules
+
+- **Claude Code:** \`.claude/rules/virastack/\` (loaded automatically)
+- **Cursor:** \`.cursor/rules/virastack/\` (loaded automatically)
+- **Other agents:** read the "Always" rules at the start of every task and the matching rule before editing, from \`.claude/rules/virastack/\`.
+
+| Rule | Use when |
+| :--- | :------- |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+<!-- END:virastack-ai -->
+"
+`;
+
+exports[`init: file tree > tanstack with --agent claude,cursor > tanstack-both-tree 1`] = `
+[
+  ".claude/rules/virastack/api.md",
+  ".claude/rules/virastack/architecture.md",
+  ".claude/rules/virastack/client-state.md",
+  ".claude/rules/virastack/core.md",
+  ".claude/rules/virastack/forms.md",
+  ".claude/rules/virastack/performance.md",
+  ".claude/rules/virastack/react.md",
+  ".claude/rules/virastack/server-state.md",
+  ".claude/rules/virastack/tanstack-start.md",
+  ".claude/rules/virastack/testing.md",
+  ".claude/rules/virastack/typescript.md",
+  ".claude/rules/virastack/ui.md",
+  ".cursor/rules/virastack/api.mdc",
+  ".cursor/rules/virastack/architecture.mdc",
+  ".cursor/rules/virastack/client-state.mdc",
+  ".cursor/rules/virastack/core.mdc",
+  ".cursor/rules/virastack/forms.mdc",
+  ".cursor/rules/virastack/performance.mdc",
+  ".cursor/rules/virastack/react.mdc",
+  ".cursor/rules/virastack/server-state.mdc",
+  ".cursor/rules/virastack/tanstack-start.mdc",
+  ".cursor/rules/virastack/testing.mdc",
+  ".cursor/rules/virastack/typescript.mdc",
+  ".cursor/rules/virastack/ui.mdc",
+  ".virastack/ai.json",
+  "AGENTS.md",
+  "CLAUDE.md",
+  "package.json",
+]
+`;
+
+exports[`init: file tree > tanstack with --agent cursor > tanstack-cursor-agents 1`] = `
+"<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Persona
+
+Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
+
+## Commands
+
+- **Dev:** \`npm install && npm run dev\`
+- **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
+- **Build:** \`npm run build\`
+
+## Operational Guardrails
+
+- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
+- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
+- **Naming:** Code, types and identifiers in English.
+- **Self-Documentation:** JSDoc for complex logic.
+- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+
+## Rules
+
+- **Cursor:** \`.cursor/rules/virastack/\` (loaded automatically)
+- **Other agents:** read the "Always" rules at the start of every task and the matching rule before editing, from \`.cursor/rules/virastack/\`.
+
+| Rule | Use when |
+| :--- | :------- |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+<!-- END:virastack-ai -->
+"
+`;
+
+exports[`init: file tree > tanstack with --agent cursor > tanstack-cursor-tree 1`] = `
+[
+  ".cursor/rules/virastack/api.mdc",
+  ".cursor/rules/virastack/architecture.mdc",
+  ".cursor/rules/virastack/client-state.mdc",
+  ".cursor/rules/virastack/core.mdc",
+  ".cursor/rules/virastack/forms.mdc",
+  ".cursor/rules/virastack/performance.mdc",
+  ".cursor/rules/virastack/react.mdc",
+  ".cursor/rules/virastack/server-state.mdc",
+  ".cursor/rules/virastack/tanstack-start.mdc",
+  ".cursor/rules/virastack/testing.mdc",
+  ".cursor/rules/virastack/typescript.mdc",
+  ".cursor/rules/virastack/ui.mdc",
+  ".virastack/ai.json",
+  "AGENTS.md",
+  "package.json",
+]
+`;
+
+exports[`init: file tree > tanstack with --agent none > tanstack-none-agents 1`] = `
+"<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Persona
+
+Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
+
+## Commands
+
+- **Dev:** \`npm install && npm run dev\`
+- **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
+- **Build:** \`npm run build\`
+
+## Operational Guardrails
+
+- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
+- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
+- **Naming:** Code, types and identifiers in English.
+- **Self-Documentation:** JSDoc for complex logic.
+- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+
+## Rules
+
+- **All agents:** read the "Always" rules at the start of every task and the matching rule before editing, from \`.agents/rules/virastack/\`.
+
+| Rule | Use when |
+| :--- | :------- |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+<!-- END:virastack-ai -->
+"
+`;
+
+exports[`init: file tree > tanstack with --agent none > tanstack-none-tree 1`] = `
+[
+  ".agents/rules/virastack/api.md",
+  ".agents/rules/virastack/architecture.md",
+  ".agents/rules/virastack/client-state.md",
+  ".agents/rules/virastack/core.md",
+  ".agents/rules/virastack/forms.md",
+  ".agents/rules/virastack/performance.md",
+  ".agents/rules/virastack/react.md",
+  ".agents/rules/virastack/server-state.md",
+  ".agents/rules/virastack/tanstack-start.md",
+  ".agents/rules/virastack/testing.md",
+  ".agents/rules/virastack/typescript.md",
+  ".agents/rules/virastack/ui.md",
+  ".virastack/ai.json",
+  "AGENTS.md",
+  "package.json",
+]
+`;

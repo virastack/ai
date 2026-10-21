@@ -24,19 +24,11 @@
 
 ## Why ViraStack AI?
 
-- **Smart Framework Isolation:** Automatically detects your framework (Next.js or TanStack Start) via `package.json` to inject only the relevant rules and prevent cross-framework hallucinations.
-- **Strict Feature Boundaries:** Enforces feature-sliced design, blocking cross-feature imports and mandating Zod-first validation at the API edge.
-- **Multi-Agent Ready:** Ships with unified `AGENTS.md` and `CLAUDE.md` entry points, ensuring Cursor, Claude Code, and Windsurf all follow the exact same architecture.
-- **Mandatory Patterns:** Imposes non-negotiable coding standards like TanStack Query `queryOptions` factories, Safe Return Patterns, and strict error normalization (`ApiError`).
-
-## Injected Rule Coverage
-
-The initialization command safely injects `.mdc` files into your `.cursor/rules` directory, covering:
-
-- **Architecture:** Core Principles, Feature Boundaries, React Best Practices
-- **Data & State:** TanStack Query, Zustand, API & Error Normalization
-- **UI & Performance:** UI Components, Tailwind, Forms, Core Web Vitals
-- **Quality:** TypeScript Strictness, Testing
+- **Claude Code and Cursor, one command:** Writes the same rules in each tool's native format. Claude Code gets `.claude/rules`, Cursor gets `.cursor/rules`, every other agent reads `AGENTS.md`.
+- **Written for the 2026 stack:** Next.js 16, React 19.2, TanStack Start, TanStack Query 5, Zustand 5, Zod 4 and Tailwind CSS 4. About 30% shorter than v1, with every example following its own rules.
+- **Never overwrites your files:** Rules live in their own `virastack/` folders. `AGENTS.md` and `CLAUDE.md` only get a small managed block or import line; everything else in them stays byte for byte.
+- **Smart Framework Isolation:** Detects Next.js or TanStack Start from `package.json` and installs only that framework's rules. The `i18n` rule is installed only when `next-intl` or Paraglide is in the project.
+- **Safe updates:** `.virastack/ai.json` records what was installed. Re-running `init` updates untouched rules, asks before touching rules you changed, and cleans up rules a new version no longer ships.
 
 ## Quick Start
 
@@ -44,17 +36,86 @@ The initialization command safely injects `.mdc` files into your `.cursor/rules`
 npx @virastack/ai init
 ```
 
-The CLI reads your `package.json`, detects your stack, and writes `AGENTS.md`, `CLAUDE.md`, `docs/`, and `.cursor/rules/*.mdc` into your project root.
-
 **Starting a new project?** [ViraStack Start](https://virastack.com/start/) scaffolds Next.js or TanStack Start with these rules pre-installed.
+
+## Supported tools
+
+| Tool | Native rules | From the `AGENTS.md` map |
+| :--- | :----------: | :----------------------: |
+| Claude Code | ✅ `.claude/rules/virastack/` | ✅ |
+| Cursor | ✅ `.cursor/rules/virastack/` | ✅ |
+| Codex | | ✅ |
+| GitHub Copilot | | ✅ |
+| Gemini CLI | | ✅ (one setting, below) |
+| Aider | | ✅ (one setting, below) |
+| Other tools that read `AGENTS.md` (Windsurf, Zed, …) | | ✅ |
+
+"From the map" means the agent reads the managed `AGENTS.md` block, which lists every rule with its file path and when to read it.
+
+- **Gemini CLI:** add `{ "context": { "fileName": ["AGENTS.md", "GEMINI.md"] } }` to `.gemini/settings.json`.
+- **Aider:** add `read: AGENTS.md` to `.aider.conf.yml`.
+
+## What gets installed
+
+| Path | When | Purpose |
+| :--- | :--- | :------ |
+| `.claude/rules/virastack/*.md` | `--agent claude` | Claude Code rules, loaded by file path |
+| `CLAUDE.md` | `--agent claude` | Gets an `@AGENTS.md` import line if missing |
+| `.cursor/rules/virastack/*.mdc` | `--agent cursor` | Cursor rules, loaded by file path |
+| `.agents/rules/virastack/*.md` | `--agent none` | Plain Markdown rules for any agent |
+| `AGENTS.md` | always | Managed `virastack-ai` block: persona, commands, rule map |
+| `.virastack/ai.json` | always | Manifest of installed files. Commit it. |
+
+Without `--agent`, both Claude Code and Cursor are installed. The choice is saved in `.virastack/ai.json` and reused on the next `init`.
+
+## Rules
+
+Two rules are always loaded. The others load when the agent works on matching files.
+
+| Rule | Loaded for |
+| :--- | :--------- |
+| `core` | Always: workflow, naming, exports, errors |
+| `architecture` | Always: folder tree, feature boundaries, imports |
+| `react` | `src/**/*.tsx`, hooks |
+| `typescript` | `src/**/*.{ts,tsx}` |
+| `ui` | `src/components/**`, feature components |
+| `forms` | `*Form*.tsx`, `schemas/` |
+| `api` | `src/lib/api.ts`, feature `api/` |
+| `server-state` | feature `api/` and `hooks/`, `src/providers/`, `src/lib/query-client.ts` |
+| `client-state` | `stores/` |
+| `i18n` | `messages/`, `src/i18n/`, components (only with `next-intl` or Paraglide) |
+| `performance` | routes and components |
+| `testing` | `*.test.{ts,tsx}`, `src/test/` |
+| `nextjs` | `src/app/**`, `src/proxy.ts`, `next.config.ts` (Next.js only) |
+| `tanstack-start` | `src/routes/**`, `src/router.tsx`, `src/start.ts` (TanStack Start only) |
+
+Commands in the rules (`lint`, `typecheck`, `test`, `shadcn add`) use the package manager detected from your lockfile.
+
+## Commands
+
+| Command | Description |
+| :------ | :---------- |
+| `init` | Install the rules, or update an existing install. |
+| `remove` | Remove every managed file, the `AGENTS.md` block and the `CLAUDE.md` import. Files you changed are kept unless you confirm or pass `--force`. |
 
 ## Options
 
-| Flag            | Description                                            |
-| :-------------- | :----------------------------------------------------- |
-| `--force`, `-f` | Overwrite existing rule files without prompting.       |
-| `--framework`   | Explicitly set the framework (`nextjs` or `tanstack`). |
-| `--tr`          | Run the CLI with Turkish prompts and success messages. |
+| Flag | Description |
+| :--- | :---------- |
+| `--agent <list>` | `claude`, `cursor` (comma separated) or `none`. Default: `claude,cursor`. |
+| `--framework <name>` | `nextjs` or `tanstack`. Overrides detection. |
+| `--force`, `-f` | Also overwrite (or, with `remove`, delete) managed files you changed. Content outside the `AGENTS.md` block is never touched. |
+| `--dry-run` | Print the plan without writing anything. |
+| `--yes`, `-y` | Answer every question with its default (never overwrite). |
+| `--tr` | Turkish output. |
+| `--help`, `-h` | Show help. |
+| `--version`, `-v` | Show the version. |
+
+In CI or any non-interactive shell, changed files are skipped with a warning instead of a question.
+
+## Upgrading from v1
+
+Run `npx @virastack/ai@latest init` in the project. Rule files and `docs/` written by v1.x are removed if you never edited them. Edited ones are kept and listed so you can delete them yourself.
 
 ## Explore the ViraStack Ecosystem
 

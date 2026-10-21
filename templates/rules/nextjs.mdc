@@ -1,0 +1,76 @@
+---
+description: "USE WHEN: Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts."
+globs: "src/app/**/*.{ts,tsx},src/proxy.ts,next.config.ts"
+alwaysApply: false
+---
+
+# Next.js 16
+
+Check unfamiliar APIs in `node_modules/next/dist/docs/` (the Next.js block in `AGENTS.md` points there too).
+
+## Rendering
+
+- `src/app` files are Server Components. `"use client"` only on leaf components that need state, effects, events or browser APIs, never on `page.tsx` or `layout.tsx`.
+- `params`, `searchParams`, `cookies()` and `headers()` are async: `const { id } = await params`.
+- Stream with `loading.tsx` and `<Suspense>`; add `error.tsx` and `not-found.tsx` where a segment can fail or miss.
+- Metadata via `metadata` or `generateMetadata`, never manual `<head>` tags.
+- `next/dynamic` with `{ ssr: false }` works only inside Client Components.
+
+## Data and caching
+
+- Prefetch with `queryClient.prefetchQuery(options)` on the server and hand off with `HydrationBoundary`; clients read it with the feature's query hook.
+- `"use cache"` (`cacheLife`, `cacheTag`) only with `cacheComponents: true` in `next.config.ts`. Read cookies and headers outside cached scopes.
+- Pass only serializable, non-sensitive data to Client Components. Import `server-only` in server-only modules.
+
+## Server Actions
+
+- One file per action in `features/<feature>/actions/`, `"use server"` at the top. Never inline.
+- Validate with the feature's Zod schema, check auth, then call the api layer (no direct database access). Return `{ data, error }`, never raw errors.
+
+## proxy.ts
+
+- `src/proxy.ts` replaces `middleware.ts`. Only redirects, rewrites, headers and locale; no data fetching.
+
+## Assets
+
+- `next/image`, `next/font` and `next/script`. LCP image: `loading="eager"` or `fetchPriority="high"` (`preload` replaces the deprecated `priority`).
+<!-- i18n:start -->
+
+## i18n
+
+- `next-intl`: routes live under `src/app/[locale]`, config in `src/i18n/`. See the `i18n` rule.
+<!-- i18n:end -->
+
+<example>
+```tsx
+// src/app/users/[id]/page.tsx
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+
+import { makeQueryClient } from "@/lib/query-client";
+
+import { UserProfile, userQueryOptions } from "@/features/users";
+
+type PageProps = { params: Promise<{ id: string }> };
+
+export default async function UserPage({ params }: PageProps) {
+  const { id } = await params;
+  const queryClient = makeQueryClient();
+  await queryClient.prefetchQuery(userQueryOptions(id));
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <UserProfile id={id} />
+    </HydrationBoundary>
+  );
+}
+```
+</example>
+
+<incorrect-example>
+```tsx
+"use client";
+export default function Page() {
+  useEffect(() => { fetch("/api/user").then(setUser); }, []);
+}
+```
+</incorrect-example>
