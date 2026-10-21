@@ -26,7 +26,3 @@ Senior Frontend Architect specialized in {{FRAMEWORK_NAME}}. Decisions: SOLID, S
 | Rule | Use when |
 | :--- | :------- |
 {{RULE_TABLE}}
-
-## Skills
-
-{{SKILL_LIST}} in `.agents/skills/` (and `.claude/skills/` for Claude Code).

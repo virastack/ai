@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { adaptersFor } from "./adapters.js";
 import { applyConditionals, managedNote, parseMdc } from "./convert.js";
 import { packageManagerCommands } from "./detect.js";
-import { FRAMEWORK_NAMES, FRAMEWORK_RULES, selectRules, SKILLS } from "./rules.js";
+import { FRAMEWORK_NAMES, FRAMEWORK_RULES, selectRules } from "./rules.js";
 
 const TEMPLATES = path.join(path.dirname(path.dirname(fileURLToPath(import.meta.url))), "templates");
 
@@ -12,7 +12,7 @@ async function readTemplate(relative) {
   return fs.readFile(path.join(TEMPLATES, relative), "utf8");
 }
 
-/** Values for the `{{NAME}}` placeholders in rules, skills and the AGENTS.md block. */
+/** Values for the `{{NAME}}` placeholders in rules and the AGENTS.md block. */
 function templateValues(ctx) {
   const commands = packageManagerCommands(ctx.packageManager);
   return {
@@ -52,24 +52,6 @@ export async function renderRules(ctx) {
   return { files, rules };
 }
 
-/**
- * Renders the skills: always into `.agents/skills/`, and a copy into
- * `.claude/skills/` when Claude Code is selected (copies, not symlinks, so
- * Windows works the same).
- */
-export async function renderSkills(ctx) {
-  const values = templateValues(ctx);
-  const dirs = [".agents/skills", ...(ctx.agents.includes("claude") ? [".claude/skills"] : [])];
-  const files = new Map();
-  for (const skill of SKILLS) {
-    const text = applyConditionals(fill(await readTemplate(`skills/${skill}/SKILL.md`), values), ctx);
-    const end = text.indexOf("\n---", 3) + "\n---\n".length;
-    const content = `${text.slice(0, end)}${managedNote(ctx.version)}\n\n${text.slice(end).replace(/^\s+/, "")}`;
-    for (const dir of dirs) files.set(`${dir}/${skill}/SKILL.md`, content);
-  }
-  return files;
-}
-
 const READ_HINT = `read the "Always" rules at the start of every task and the matching rule before editing, from`;
 
 function ruleLocations(agents) {
@@ -93,6 +75,5 @@ export async function renderAgentsBlock(ctx, rules) {
     ...templateValues(ctx),
     RULE_LOCATIONS: ruleLocations(ctx.agents),
     RULE_TABLE: rules.map(ruleRow).join("\n"),
-    SKILL_LIST: SKILLS.map((skill) => `\`${skill}\``).join(", "),
   });
 }

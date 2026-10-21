@@ -65,9 +65,7 @@ describe("init: file tree", () => {
     for (const [file, fileHash] of Object.entries(manifest.files)) {
       expect(hash(tree[file])).toBe(fileHash);
     }
-    expect(Object.keys(manifest.files)).toHaveLength(14);
-    expect(manifest.files).toHaveProperty([".claude/skills/virastack-create-feature/SKILL.md"]);
-    expect(manifest.files).toHaveProperty([".agents/skills/virastack-create-feature/SKILL.md"]);
+    expect(Object.keys(manifest.files)).toHaveLength(12);
   });
 
   it("never writes docs/ or the Next.js block", async () => {

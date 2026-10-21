@@ -24,7 +24,7 @@
 
 ## Why ViraStack AI?
 
-- **Claude Code and Cursor, one command:** Writes the same rules in each tool's native format. Claude Code gets `.claude/rules` and skills, Cursor gets `.cursor/rules`, every other agent reads `AGENTS.md`.
+- **Claude Code and Cursor, one command:** Writes the same rules in each tool's native format. Claude Code gets `.claude/rules`, Cursor gets `.cursor/rules`, every other agent reads `AGENTS.md`.
 - **Written for the 2026 stack:** Next.js 16, React 19.2, TanStack Start, TanStack Query 5, Zustand 5, Zod 4 and Tailwind CSS 4. About 30% shorter than v1, with every example following its own rules.
 - **Never overwrites your files:** Rules live in their own `virastack/` folders. `AGENTS.md` and `CLAUDE.md` only get a small managed block or import line; everything else in them stays byte for byte.
 - **Smart Framework Isolation:** Detects Next.js or TanStack Start from `package.json` and installs only that framework's rules. The `i18n` rule is installed only when `next-intl` or Paraglide is in the project.
@@ -42,7 +42,7 @@ npx @virastack/ai init
 
 | Tool | Native rules | From the `AGENTS.md` map |
 | :--- | :----------: | :----------------------: |
-| Claude Code | ✅ `.claude/rules/virastack/`, `.claude/skills/` | ✅ |
+| Claude Code | ✅ `.claude/rules/virastack/` | ✅ |
 | Cursor | ✅ `.cursor/rules/virastack/` | ✅ |
 | Codex | | ✅ |
 | GitHub Copilot | | ✅ |
@@ -60,11 +60,9 @@ npx @virastack/ai init
 | Path | When | Purpose |
 | :--- | :--- | :------ |
 | `.claude/rules/virastack/*.md` | `--agent claude` | Claude Code rules, loaded by file path |
-| `.claude/skills/virastack-*/` | `--agent claude` | Claude Code skills (a copy of `.agents/skills/`) |
 | `CLAUDE.md` | `--agent claude` | Gets an `@AGENTS.md` import line if missing |
 | `.cursor/rules/virastack/*.mdc` | `--agent cursor` | Cursor rules, loaded by file path |
 | `.agents/rules/virastack/*.md` | `--agent none` | Plain Markdown rules for any agent |
-| `.agents/skills/virastack-*/` | always | Skills: `virastack-create-feature` |
 | `AGENTS.md` | always | Managed `virastack-ai` block: persona, commands, rule map |
 | `.virastack/ai.json` | always | Manifest of installed files. Commit it. |
 
@@ -92,14 +90,6 @@ Two rules are always loaded. The others load when the agent works on matching fi
 | `tanstack-start` | `src/routes/**`, `src/router.tsx`, `src/start.ts` (TanStack Start only) |
 
 Commands in the rules (`lint`, `typecheck`, `test`, `shadcn add`) use the package manager detected from your lockfile.
-
-## Skills
-
-| Skill | What it does |
-| :---- | :----------- |
-| `virastack-create-feature` | Scaffolds `src/features/<name>/` following the `architecture` rule, then runs lint, typecheck and tests. |
-
-In Claude Code, run it as `/virastack-create-feature`.
 
 ## Commands
 

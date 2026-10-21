@@ -3,8 +3,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { CONDITIONS, parseMdc, splitGlobs } from "../src/convert.js";
-import { renderRules, renderSkills } from "../src/render.js";
-import { RULES, SKILLS } from "../src/rules.js";
+import { renderRules } from "../src/render.js";
+import { RULES } from "../src/rules.js";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const TEMPLATES = path.join(ROOT, "templates");
@@ -60,10 +60,6 @@ async function readRule(name) {
   return fs.readFile(path.join(TEMPLATES, "rules", `${name}.mdc`), "utf8");
 }
 
-async function readSkill(name) {
-  return fs.readFile(path.join(TEMPLATES, "skills", name, "SKILL.md"), "utf8");
-}
-
 describe("rule globs", () => {
   it.each(RULES.map((rule) => [rule.name, rule]))("%s globs match Start files", async (name, rule) => {
     const { data } = parseMdc(await readRule(name));
@@ -99,7 +95,6 @@ describe("template text", () => {
   async function allTemplates() {
     const texts = { "agents.md": await fs.readFile(path.join(TEMPLATES, "agents.md"), "utf8") };
     for (const rule of RULES) texts[`rules/${rule.name}`] = await readRule(rule.name);
-    for (const skill of SKILLS) texts[`skills/${skill}`] = await readSkill(skill);
     return texts;
   }
 
@@ -124,10 +119,9 @@ describe("template text", () => {
     }
   });
 
-  it("names every rule and skill in the catalog", async () => {
+  it("names every rule in the catalog", async () => {
     const rules = (await fs.readdir(path.join(TEMPLATES, "rules"))).map((file) => file.replace(/\.mdc$/, ""));
     expect(rules.sort()).toEqual(RULES.map((rule) => rule.name).sort());
-    expect((await fs.readdir(path.join(TEMPLATES, "skills"))).sort()).toEqual([...SKILLS].sort());
   });
 
   it.each(RULES.map((rule) => rule.name))("%s description starts with USE WHEN", async (name) => {
@@ -137,8 +131,7 @@ describe("template text", () => {
   it.each(FRAMEWORKS)("%s output fills every placeholder and strips every marker", async (framework) => {
     for (const i18n of [true, false]) {
       const { files } = await renderRules(ctxFor(framework, { i18n }));
-      const skills = await renderSkills(ctxFor(framework, { i18n }));
-      for (const [file, content] of [...files, ...skills]) {
+      for (const [file, content] of files) {
         expect(content, file).not.toMatch(/\{\{[A-Z_]+\}\}/);
         expect(content, file).not.toMatch(/<!-- [a-z0-9-]+:(start|end) -->/);
       }
@@ -164,29 +157,6 @@ describe("rule examples", () => {
       for (const [label, pattern, applies = () => true] of CHECKS) {
         if (applies(name)) expect(example, `${name}: ${label}`).not.toMatch(pattern);
       }
-    }
-  });
-});
-
-describe("skills", () => {
-  it.each(SKILLS)("%s has name and description frontmatter", async (skill) => {
-    const { data } = parseMdc(await readSkill(skill));
-    expect(data.name).toBe(skill);
-    expect(data.description).toMatch(/^USE WHEN: /);
-  });
-
-  it("are copied to .claude/skills only for Claude Code", async () => {
-    const both = await renderSkills(ctxFor("nextjs"));
-    expect([...both.keys()].filter((file) => file.startsWith(".claude/skills/"))).toHaveLength(SKILLS.length);
-    const cursor = await renderSkills(ctxFor("nextjs", { agents: ["cursor"] }));
-    expect([...cursor.keys()].every((file) => file.startsWith(".agents/skills/"))).toBe(true);
-    const none = await renderSkills(ctxFor("nextjs", { agents: [] }));
-    expect(none.size).toBe(SKILLS.length);
-  });
-
-  it("keeps the frontmatter first", async () => {
-    for (const content of (await renderSkills(ctxFor("tanstack"))).values()) {
-      expect(content.startsWith("---\nname: ")).toBe(true);
     }
   });
 });
