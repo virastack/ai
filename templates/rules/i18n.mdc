@@ -1,41 +1,37 @@
 ---
-description: "USE WHEN: Managing translation files (JSON), localization keys, or implementing multi-language logic."
-globs: "src/messages/**/*.json,src/i18n/**/*.{ts,tsx},src/features/**"
+description: "USE WHEN: Working with translations (next-intl or Paraglide JS): message files, keys, locales."
+globs: "messages/**/*.json,src/i18n/**/*.ts,project.inlang/settings.json,src/components/**/*.tsx,src/features/**/components/**/*.tsx"
 alwaysApply: false
 ---
 
-# Internationalization (i18n)
+# Internationalization
 
-## Constraints
+## Rules
 
-- **Library Selection:** Delegate specific hook/method usage to the framework constitution (`nextjs.mdc` or `tanstack-start.mdc`).
-- **Keys:** Use flat or max 3-level deep JSON structures. Use `camelCase` for keys.
-- **SSOT:** All translation keys MUST be defined in `src/messages/`.
-- **Type Safety:** Use the library's native type-generation features. Magic strings for keys are forbidden.
-- **Namespacing:** Use namespaces for features (e.g., `auth.login`, `profile.settings`) to maintain modularity.
+- Messages live in `messages/<locale>.json` at the root. Add each key to every locale in the same change.
+- Follow the key style already in `messages/en.json`. Group keys per feature, at most three levels deep.
+- No hardcoded user-facing strings, including `alt`, `aria-label` and metadata.
+- Keys are checked by the library's type support, so a missing key is a type error. Never build keys from variables.
+- Read the locale from the library, never from `window.location` or by parsing the URL.
 
-## Bans
+<!-- nextjs:start -->
+## next-intl
 
-- Hardcoded strings in UI components.
-- Dynamic key construction (e.g., `t("prefix." + variable)`).
-- Reading locale via `window.location` or manual URL parsing.
-- JSON hierarchy deeper than 3 levels.
-- Async translation loading that causes layout shifts.
+- `useTranslations` in Client Components and sync Server Components; `getTranslations` in async server code and `generateMetadata`.
+- Routing config, `Link`, `redirect` and `useRouter` come from `@/i18n/routing`, not from `next/navigation`.
+- Register the message type in next-intl's `AppConfig` so keys are type-checked.
+<!-- nextjs:end -->
+<!-- tanstack:start -->
+## Paraglide JS
 
-## Correct Implementation
-
-<example>
-// Common Pattern (Usage details delegated to framework MDC)
-const t = useTranslations("auth");
-return <button>{t("loginButton")}</button>;
-</example>
-
-## Incorrect Implementation
+- Each key is a function: `import * as m from "@/paraglide/messages.js"`, then `m.cart_title()`.
+- The locale comes from `@/paraglide/runtime.js` (`getLocale`, `setLocale`).
+- `src/paraglide/` is generated on install and build. Never edit it; change `messages/` or `project.inlang/settings.json`.
+<!-- tanstack:end -->
 
 <incorrect-example>
-// BAN: Hardcoded string
-return <button>Login</button>;
-
-// BAN: Dynamic key generation
-const label = t("welcome_" + type);
+```tsx
+<button>Log in</button>
+<p>{t(`status_${status}`)}</p>
+```
 </incorrect-example>

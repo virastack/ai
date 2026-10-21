@@ -1,49 +1,47 @@
 ---
-description: "USE WHEN: Writing unit, integration, or component tests. Mandatory for logic in features."
-globs: "**/*.{test,spec}.{ts,tsx}"
+description: "USE WHEN: Writing tests with Vitest, Testing Library and MSW."
+globs: "src/**/*.test.{ts,tsx},src/test/**/*.{ts,tsx},vitest.config.ts"
 alwaysApply: false
 ---
 
-# Testing Guide (Pragmatic)
+# Testing
 
-## Principles
-- **Value over Coverage:** Focus on testing complex business logic in `features/[feature]`. Skip simple UI components unless critical.
-- **Behavior Testing:** Focus on user outcomes (Arrange-Act-Assert).
-- **Accessible Queries:** Prefer `getByRole` / `findByRole` (and label text) over test IDs so tests enforce keyboard-reachable UI.
+## Setup
 
-## Tech Stack
-- Vitest & React Testing Library.
-- Do **not** add Playwright/browser E2E unless the project already has it or the user explicitly asks.
+- Vitest + jsdom (`vitest.config.ts`, `src/test/setup.ts`). Run `{{TEST_COMMAND}}`.
+- `renderWithProviders` (`@/test/render`) adds the app providers. MSW server: `@/test/server`; unhandled requests fail.
 
-## Preferences (Not Hard Rules)
-- **API:** Use `MSW` for stable features; simple mocks are okay for rapid prototyping.
-- **Location:** Keep `.test.ts` next to implementation.
-- **Snapshots:** Use only for small, static data structures to prevent maintenance hell.
-- **UI changes:** For critical flows, cover loading / empty / error / success paths in RTL. Breakpoint and visual polish checks belong to the `ui-components.mdc` Delivery Checklist, not unit tests.
+## Rules
 
-## Mandatory Patterns
-
-### 1. Async UI Testing (AAA Pattern)
-ALWAYS use `userEvent` for interactions and `findBy*` for async assertions. Mock APIs via MSW.
+- Test behavior the user sees (Arrange, Act, Assert), not implementation details.
+- Prioritize feature logic (helpers, api, hooks, stores) and critical flows. Skip trivial markup.
+- Query by role and label (`getByRole`, `findByRole`, `getByLabelText`). Use `getByTestId` only as a last resort.
+- Interact through `userEvent.setup()` and wait for async UI with `findBy*`.
+- Mock HTTP with MSW handlers (`server.use(...)`) per test. Do not mock `fetch` or the api module.
+- Cover loading, empty, error and success for critical data flows.
+- Tests sit next to their code (`get-users.api.test.ts`). Snapshots only for small, stable data.
+- No browser E2E tools unless the project has them or you are asked.
 
 <example>
-it('should display error on failed login', async () => {
-  // Arrange
-  server.use(http.post('/api/login', () => HttpResponse.json(null, { status: 401 })));
-  render(<LoginForm />);
+```tsx
+import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { http, HttpResponse } from "msw";
+import { expect, it } from "vitest";
 
-  // Act
-  await userEvent.click(screen.getByRole('button', { name: /login/i }));
+import { LoginForm } from "@/features/auth";
+import { renderWithProviders } from "@/test/render";
+import { server } from "@/test/server";
 
-  // Assert
-  expect(await screen.findByText(/invalid credentials/i)).toBeInTheDocument();
+it("shows an error when the login fails", async () => {
+  server.use(http.post("*/api/login", () => HttpResponse.json(null, { status: 401 })));
+  const user = userEvent.setup();
+  renderWithProviders(<LoginForm />);
+
+  await user.type(screen.getByLabelText(/email/i), "ada@example.com");
+  await user.click(screen.getByRole("button", { name: /log in/i }));
+
+  expect(await screen.findByRole("alert")).toHaveTextContent(/invalid credentials/i);
 });
-</example>
-
-## Correct Implementation
-<example>
-it('should calculate discount correctly', () => {
-  const result = calculateTotal({ price: 100, discount: 20 }); 
-  expect(result).toBe(80); 
-});
+```
 </example>

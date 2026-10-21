@@ -1,58 +1,56 @@
 ---
-description: "USE WHEN: Defining TypeScript types, Zod schemas, and generic constraints for type safety."
-globs: "**/*.{ts,tsx}"
+description: "USE WHEN: Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference."
+globs: "src/**/*.{ts,tsx}"
 alwaysApply: false
 ---
 
-# TypeScript
+# TypeScript and Zod
 
-## Constraints
+## Rules
 
-- **Zod-First:** Write Zod schemas for API/Domain contracts. Derive types via `z.infer`.
-- **Strict:** Operate in `strict: true` mode.
-- **Arrays:** Use `T[]`. Use `Array<T>` only for nested types.
-- **Enums:** Use `z.enum` or `as const` objects. Native `enum` is forbidden.
-- **Immutability:** Use `readonly` or `as const`.
-- **Return Types:** Explicitly define return types for exported functions.
-- **Generics:** Use constraints (`T extends object`).
-- **Branded Types:** Use branded types for IDs to prevent mix-ups (e.g., `type TaskId = string & { readonly __brand: 'TaskId' }`).
-- **Discriminated Unions:** Use discriminated unions for managing variant states.
-- **Prefer Addition:** Avoid breaking changes; extend interfaces with optional fields rather than modifying or deleting existing ones.
+- `strict` and `noUncheckedIndexedAccess` are on: handle `undefined` from index access, do not assert it away.
+- Zod first for outside data (API, forms, search params, env): write the schema, derive the type with `z.infer`.
+- Zod 4 APIs: `z.email()`, `z.url()`, `z.uuid()`, `z.iso.datetime()` instead of `z.string().email()` and similar. Custom messages are a string or `{ error }`.
+- `type` for shapes and unions. `interface` only for declaration merging, such as module augmentation.
+- `satisfies` checks a value against a type without widening it.
+- Model variants as discriminated unions.
+- `as const` objects or `z.enum` instead of `enum`.
+- Branded types are recommended for ids that are easy to mix up (`UserId`, `OrderId`).
 
 ## Bans
 
-- `any`.
-- `as Type` (except in tests).
-- `!` (Non-null assertion).
-- Using Interface and Type simultaneously.
-- `I` or `T` prefixes (`IUser`).
-- Type soup (`Pick<Omit<Partial<...>>>` nesting > 2). 
-  Exception: Deriving Form schemas from API schemas using Zod's `.pick()`, `.omit()`, or `.extend()` is encouraged to maintain SSOT.
-
-## Correct Implementation
+- `any`. Use `unknown` and narrow it.
+- `as` casts outside tests and low-level wrappers in `src/lib/`. Parse with Zod instead. `as const` is fine.
+- Non-null assertions (`!`).
+- `@ts-ignore`. Use `@ts-expect-error` with a reason when it is unavoidable.
+- More than two nested utility types. Derive from schemas with `.pick()`, `.omit()` and `.extend()`.
 
 <example>
 ```ts
-// Zod & Types
-const UserSchema = z.object({ id: z.string() });
-type User = z.infer<typeof UserSchema>;
+import { z } from "zod";
 
-// Branded Types
-type UserId = string & { readonly __brand: 'UserId' };
+export const userSchema = z.object({
+  id: z.string(),
+  email: z.email(),
+  role: z.enum(["admin", "member"]),
+});
 
-// Discriminated Unions
-type TaskState = 
-  | { status: 'pending' }
-  | { status: 'completed'; completedAt: Date }
-  | { status: 'failed'; errorReason: string };
+export type User = z.infer<typeof userSchema>;
+
+export type SaveState =
+  | { status: "idle" }
+  | { status: "saved"; savedAt: Date }
+  | { status: "failed"; reason: string };
+
+export const roleLabels = { admin: "Admin", member: "Member" } satisfies Record<User["role"], string>;
 ```
 </example>
 
-## Incorrect Implementation
-
 <incorrect-example>
 ```ts
-interface IUser { id: any; }
-const user = data as User;
+interface IUser {
+  id: any;
+}
+const user = data as IUser;
 ```
 </incorrect-example>

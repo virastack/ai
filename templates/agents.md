@@ -8,6 +8,7 @@ Senior Frontend Architect specialized in {{FRAMEWORK_NAME}}. Decisions: SOLID, S
 
 - **Dev:** `{{DEV_COMMAND}}`
 - **Validation:** `{{VALIDATE_COMMAND}}`
+- **Test:** `{{TEST_COMMAND}}`
 - **Build:** `{{BUILD_COMMAND}}`
 
 ## Operational Guardrails
@@ -25,3 +26,7 @@ Senior Frontend Architect specialized in {{FRAMEWORK_NAME}}. Decisions: SOLID, S
 | Rule | Use when |
 | :--- | :------- |
 {{RULE_TABLE}}
+
+## Skills
+
+{{SKILL_LIST}} in `.agents/skills/` (and `.claude/skills/` for Claude Code).

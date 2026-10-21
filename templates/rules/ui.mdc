@@ -1,87 +1,53 @@
 ---
-description: "USE WHEN: Building UI components, structuring layouts, and applying styles using Tailwind CSS."
-globs: "src/components/**/*.{ts,tsx},src/features/**/components/**/*.{ts,tsx}"
+description: "USE WHEN: Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility."
+globs: "src/components/**/*.tsx,src/features/**/components/**/*.tsx"
 alwaysApply: false
 ---
 
-# UI Components
+# UI
 
-## Constraints
-- **Hierarchy:** Organize by `ui` (stateless), `shared` (common), and `feature` (domain logic).
-- **Atomic:** Keep `src/components/ui` pure; forbid API/Store dependencies.
-- **Separation:** Separate data (container) from UI (presentation).
-- **Composition:** Prefer children-based composition over large prop objects.
-- **States:** Implement Skeleton (matching dimensions), EmptyState, and ErrorState for data-driven parts.
-- **UX:** Avoid empty screens; always provide meaningful states.
-- **Styling:** Use Tailwind CSS, `cn()`, and Design Tokens. No Hex/RGB or arbitrary values (use Tailwind scale strictly). When writing Tailwind CSS, always use v4 syntax and canonical classes (e.g., use `bg-linear-to-*` instead of `bg-gradient-to-*`, `size-*` instead of `w-* h-*`).
-- **Primitive Components:** Build primitive UI components (Button, Dialog, etc.) in `src/components/ui`.
-  - **CRITICAL CHECK:** Check `package.json` for UI primitives.
-  - If `@radix-ui/*` is installed, use Radix UI primitives.
-  - If `@base-ui/react` is installed, use Base UI primitives.
-  - If neither is installed, build accessible native HTML elements.
-- **A11y:** Enforce semantic HTML, `aria` attributes, and keyboard accessibility.
-- **Typography:** One `h1` per page. Do not skip heading levels. Do not use heading styles for non-heading content.
-- **Responsive:** Mobile-first from 320px. Use and verify at Tailwind defaults: sm 640, md 768, lg 1024, xl 1280.
-- **Focus:** Overlays/dialogs must move focus inside on open and restore it on close. Prefer Radix/Base UI primitives for focus trap; never invent a custom trap when a primitive is available.
-- **Exports:** Use Named exports only.
+## Components
+
+- `components/ui`: primitives without data or store access. `components/shared`: reused app components. `features/<feature>/components`: domain UI.
+- Add primitives with `{{EXEC_COMMAND}} shadcn@latest add <component>`; do not hand-write them.
+- Find the primitive library first: `style` in `components.json` (`base-…` or `radix-…`), else `package.json` (`@base-ui/react` or `@radix-ui/*`). Never mix them.
+- Merge classes with `cn()` (`@/lib/utils`), never template strings.
+- Data-driven UI has loading (a skeleton of the final size), empty and error states.
+- Animate with `motion/react` and respect reduced motion.
+
+## Tailwind CSS 4
+
+- Theme tokens and the default scale only (`bg-background`, `p-4`). No hex, rgb or arbitrary values like `p-[13px]`.
+- v4 class names: `bg-linear-to-r` instead of `bg-gradient-to-r`, `size-4` instead of `w-4 h-4`.
+- Mobile first from 320px; check every breakpoint up to `xl`.
+
+## Accessibility
+
+- Semantic HTML: `button` for actions, links for navigation, one `h1` per page, no skipped heading levels.
+- Every control has a name: visible text, a `<label>`, or `aria-label` if nothing is visible.
+- Everything works by keyboard and focus is visible.
+- Dialogs and menus use the primitive's focus handling, never a custom focus trap.
+- Text contrast meets WCAG AA (4.5:1). Never show state with color alone.
+- Meaningful `alt` text; `alt=""` for decorative images.
 
 ## Bans
-- **AI Aesthetic:** Default purple/indigo palettes, excessive gradients, overuse of `rounded-2xl`, generic card/grid layouts.
-- **Magic Numbers:** Arbitrary values (e.g., `p-[13px]`); use Tailwind’s spacing scale strictly.
-- **UX/A11y:** `div` soup, "Lorem Ipsum", or `onClick` on non-interactive elements without keyboard support.
-- **Logic:** Default exports or data fetching inside atomic components.
 
-## Delivery Checklist
-Before marking UI work done, confirm all of the following:
-- Interactive elements are reachable and operable via keyboard (Tab / Enter / Space / Escape where applicable).
-- Focus is visible; dialogs/sheets manage focus correctly.
-- Loading, empty, and error states exist for data-driven UI.
-- Spacing, color, and typography use design tokens / Tailwind scale (no raw hex or arbitrary values).
-- Layout holds at 320px and Tailwind defaults: sm 640, md 768, lg 1024, xl 1280.
-- No console errors or a11y anti-patterns introduced (`div` buttons, missing labels, color-only state).
-
-## Mandatory Patterns
-
-### 1. Tailwind Class Merging
-NEVER use dynamic string interpolation (`${class1} ${class2}`) for Tailwind classes. ALWAYS use the `cn()` utility function.
+- `onClick` on `div` or `span`.
+- The generic "AI look": indigo or purple defaults, gradients everywhere, `rounded-2xl` on everything, identical card grids. Lorem ipsum.
 
 <example>
+```tsx
 import { cn } from "@/lib/utils";
 
-export const Button = ({ className, variant }) => (
-  <button className={cn("base-classes", variant === "primary" && "bg-blue-500", className)}>
-    Click
-  </button>
-);
-</example>
+type StatCardProps = { label: string; value: string; className?: string };
 
-## Correct Implementation
-
-<example>
-```tsx
-export const Card = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <section className={cn("p-4 md:p-6", "bg-surface border rounded-md")}>
-    <h3 className="text-base font-semibold">{title}</h3>
-    <div className="mt-4">{children}</div>
-  </section>
-);
-```
-</example>
-
-## Incorrect Implementation
-
-<incorrect-example>
-```tsx
-export default function ActionButton({ label }: { label: string }) {
+export function StatCard({ label, value, className }: StatCardProps) {
   return (
-    <div 
-      style={{ backgroundColor: '#6366f1' }}
-      className="rounded-2xl p-[11px] shadow-2xl"
-      onClick={() => console.log('clicked')}
-    >
-      <span>{label}</span>
-    </div>
+    <section className={cn("rounded-lg border bg-card p-4 md:p-6", className)}>
+      <h3 className="text-sm text-muted-foreground">{label}</h3>
+      <p className="mt-2 text-2xl font-semibold">{value}</p>
+    </section>
   );
 }
 ```
-</incorrect-example>
+</example>

@@ -1,6 +1,6 @@
 {
   "name": "@virastack/ai",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-beta.1",
   "description": "AI-native architecture kit for modern React. One command installs the same rules for Claude Code, Cursor and every AGENTS.md agent.",
   "author": {
     "name": "Ömer Gülçiçek (ViraStack)",
@@ -56,7 +56,8 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "hashes:v1": "node scripts/build-v1-hashes.js"
+    "hashes:v1": "node scripts/build-v1-hashes.js",
+    "fixture:start": "node scripts/build-start-fixture.js"
   },
   "devDependencies": {
     "vitest": "^3.2.7"

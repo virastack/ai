@@ -24,7 +24,8 @@
 
 ## Why ViraStack AI?
 
-- **Claude Code and Cursor, one command:** Writes the same rules in each tool's native format. Claude Code gets `.claude/rules`, Cursor gets `.cursor/rules`, every other agent reads `AGENTS.md`.
+- **Claude Code and Cursor, one command:** Writes the same rules in each tool's native format. Claude Code gets `.claude/rules` and skills, Cursor gets `.cursor/rules`, every other agent reads `AGENTS.md`.
+- **Written for the 2026 stack:** Next.js 16, React 19.2, TanStack Start, TanStack Query 5, Zustand 5, Zod 4 and Tailwind CSS 4. About 30% shorter than v1, with every example following its own rules.
 - **Never overwrites your files:** Rules live in their own `virastack/` folders. `AGENTS.md` and `CLAUDE.md` only get a small managed block or import line; everything else in them stays byte for byte.
 - **Smart Framework Isolation:** Detects Next.js or TanStack Start from `package.json` and installs only that framework's rules. The `i18n` rule is installed only when `next-intl` or Paraglide is in the project.
 - **Safe updates:** `.virastack/ai.json` records what was installed. Re-running `init` updates untouched rules, asks before touching rules you changed, and cleans up rules a new version no longer ships.
@@ -37,18 +38,69 @@ npx @virastack/ai init
 
 **Starting a new project?** [ViraStack Start](https://virastack.com/start/) scaffolds Next.js or TanStack Start with these rules pre-installed.
 
+## Supported tools
+
+| Tool | Native rules | From the `AGENTS.md` map |
+| :--- | :----------: | :----------------------: |
+| Claude Code | ✅ `.claude/rules/virastack/`, `.claude/skills/` | ✅ |
+| Cursor | ✅ `.cursor/rules/virastack/` | ✅ |
+| Codex | | ✅ |
+| GitHub Copilot | | ✅ |
+| Gemini CLI | | ✅ (one setting, below) |
+| Aider | | ✅ (one setting, below) |
+| Other tools that read `AGENTS.md` (Windsurf, Zed, …) | | ✅ |
+
+"From the map" means the agent reads the managed `AGENTS.md` block, which lists every rule with its file path and when to read it.
+
+- **Gemini CLI:** add `{ "context": { "fileName": ["AGENTS.md", "GEMINI.md"] } }` to `.gemini/settings.json`.
+- **Aider:** add `read: AGENTS.md` to `.aider.conf.yml`.
+
 ## What gets installed
 
 | Path | When | Purpose |
 | :--- | :--- | :------ |
 | `.claude/rules/virastack/*.md` | `--agent claude` | Claude Code rules, loaded by file path |
+| `.claude/skills/virastack-*/` | `--agent claude` | Claude Code skills (a copy of `.agents/skills/`) |
 | `CLAUDE.md` | `--agent claude` | Gets an `@AGENTS.md` import line if missing |
 | `.cursor/rules/virastack/*.mdc` | `--agent cursor` | Cursor rules, loaded by file path |
 | `.agents/rules/virastack/*.md` | `--agent none` | Plain Markdown rules for any agent |
+| `.agents/skills/virastack-*/` | always | Skills: `virastack-create-feature`, `virastack-audit` |
 | `AGENTS.md` | always | Managed `virastack-ai` block: persona, commands, rule map |
 | `.virastack/ai.json` | always | Manifest of installed files. Commit it. |
 
 Without `--agent`, both Claude Code and Cursor are installed. The choice is saved in `.virastack/ai.json` and reused on the next `init`.
+
+## Rules
+
+Two rules are always loaded. The others load when the agent works on matching files.
+
+| Rule | Loaded for |
+| :--- | :--------- |
+| `core` | Always: workflow, naming, exports, errors |
+| `architecture` | Always: folder tree, feature boundaries, imports |
+| `react` | `src/**/*.tsx`, hooks |
+| `typescript` | `src/**/*.{ts,tsx}` |
+| `ui` | `src/components/**`, feature components |
+| `forms` | `*Form*.tsx`, `schemas/` |
+| `api` | `src/lib/api.ts`, feature `api/` |
+| `server-state` | feature `api/` and `hooks/`, `src/providers/`, `src/lib/query-client.ts` |
+| `client-state` | `stores/` |
+| `i18n` | `messages/`, `src/i18n/`, components (only with `next-intl` or Paraglide) |
+| `performance` | routes and components |
+| `testing` | `*.test.{ts,tsx}`, `src/test/` |
+| `nextjs` | `src/app/**`, `src/proxy.ts`, `next.config.ts` (Next.js only) |
+| `tanstack-start` | `src/routes/**`, `src/router.tsx`, `src/start.ts` (TanStack Start only) |
+
+Commands in the rules (`lint`, `typecheck`, `test`, `shadcn add`) use the package manager detected from your lockfile.
+
+## Skills
+
+| Skill | What it does |
+| :---- | :----------- |
+| `virastack-create-feature` | Scaffolds `src/features/<name>/` following the `architecture` rule, then runs lint, typecheck and tests. |
+| `virastack-audit` | Read-only audit against the rules (feature boundaries, `../` imports, `any`, default exports, HTTP in UI). Reports `file:line` findings. |
+
+In Claude Code, run them as `/virastack-create-feature` and `/virastack-audit`.
 
 ## Commands
 

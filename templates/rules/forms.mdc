@@ -1,59 +1,57 @@
 ---
-description: "USE WHEN: Constructing forms, validating inputs, and managing form state with Zod schemas."
-globs: "src/features/**/components/*Form*.tsx,src/features/**/schemas/*.ts"
+description: "USE WHEN: Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors."
+globs: "src/features/**/components/*Form*.tsx,src/features/**/schemas/**/*.ts,src/schemas/**/*.ts"
 alwaysApply: false
 ---
 
-# Form Management
+# Forms
 
-## Constraints
+## Rules
 
-- **Library:** Use `react-hook-form` + `@hookform/resolvers/zod`.
-- **Schema:** Store schemas in `features/[feature]/schemas/`.
-- **Defaults:** Define `defaultValues` fully using `z.infer` from the schema.
-- **Performance:** Use `useWatch` or `Controller` instead of `watch`.
-- **Submission:** Use `handleSubmit`. Prevent double clicks with `isSubmitting`.
-- **Errors:** Map server errors using `setError`.
+- React Hook Form with `zodResolver` from `@hookform/resolvers/zod`.
+- Schemas live in `schemas/` (`*.schema.ts`), never in the component file.
+- Every field has a value in `defaultValues`, typed from the schema.
+- Read live values with `useWatch` or `Controller`, not root `watch()`. Disable submit while `isSubmitting`.
+- Map server errors to fields or to `root` with `setError`.
+- The server validates the same schema again before it acts.
+- Small forms without client validation may use an Action with `useActionState`.
 
 ## Bans
 
-- Manually managing native `form` submit events.
-- Using `watch()` at the root level.
-- Synchronizing form state with `useEffect`.
-- Defining schemas inside component files.
-- Managing form inputs with `useState`.
-
-## Mandatory Patterns
-
-### 1. Server Action Error Handling
-ALWAYS handle Server Action validation errors by mapping them to the form using `setError`.
-
-<example>
-const onSubmit = async (data: FormValues) => {
-  const { error } = await submitAction(data);
-  if (error) {
-    form.setError("root", { message: error });
-  }
-};
-</example>
-
-## Correct Implementation
+- Inputs managed with `useState`.
+- Syncing form state with `useEffect`.
+- Handling the native `submit` event instead of using `handleSubmit`.
 
 <example>
 ```tsx
-const form = useForm<z.infer<typeof Schema>>({
-  resolver: zodResolver(Schema),
-  defaultValues: { email: "" }
-});
-const email = useWatch({ control: form.control, name: "email" });
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import { createProject } from "@/features/projects/api";
+import { projectSchema } from "@/features/projects/schemas";
+import type { ProjectInput } from "@/features/projects/schemas";
+
+export function ProjectForm() {
+  const form = useForm<ProjectInput>({
+    resolver: zodResolver(projectSchema),
+    defaultValues: { name: "" },
+  });
+
+  const onSubmit = form.handleSubmit(async (values) => {
+    const result = await createProject(values);
+    if (result.error) form.setError("root", { message: result.error });
+  });
+
+  return (
+    <form onSubmit={onSubmit}>
+      <label htmlFor="project-name">Name</label>
+      <input id="project-name" {...form.register("name")} />
+      <p role="alert">{form.formState.errors.name?.message}</p>
+      <button type="submit" disabled={form.formState.isSubmitting}>
+        Create
+      </button>
+    </form>
+  );
+}
 ```
 </example>
-
-## Incorrect Implementation
-
-<incorrect-example>
-```tsx
-const [email, setEmail] = useState("");
-const values = form.watch(); // Root watch
-```
-</incorrect-example>

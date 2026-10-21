@@ -1,48 +1,55 @@
 ---
-description: "USE WHEN: Designing React components, implementing hooks, and managing component lifecycles."
-globs: "src/components/**/*.{ts,tsx},src/hooks/**/*.{ts,tsx}"
+description: "USE WHEN: Writing React 19 components and hooks: state, effects, composition, React Compiler."
+globs: "src/**/*.tsx,src/hooks/**/*.ts,src/features/**/hooks/**/*.ts"
 alwaysApply: false
 ---
 
-# React Best Practices
+# React 19
 
-## Constraints
+## Rules
 
-- **SRP:** Keep components small (max 200 lines).
-- **Composition:** Use `children` or `slots` instead of prop drilling.
-- **Naming:** Use `PascalCase` for components, `useCamelCase` for hooks.
-- **Hooks:** Move business logic to custom hooks.
-- **State:** Lift state to the nearest common ancestor.
-- **Updates:** Use `setState(prev => ...)` for state updates.
-- **Effects:** Use `useEffect` as a last resort. Prefer event handlers or `useMemo`.
-- **Keys:** Use stable IDs for lists (index is forbidden).
+- One component per file, under about 200 lines.
+- Compose with `children` and slots instead of drilling props past two levels.
+- Derive values during render. Never mirror props or other state into state.
+- Business logic goes into hooks; components render.
+- List keys are stable ids, never the index.
+- `useEffect` only syncs with external systems (subscriptions, DOM APIs). Handle user actions in event handlers.
+- Use updater functions when the next state depends on the previous one.
+<!-- nextjs:start -->
+- React Compiler is enabled: no hand-written `useMemo`, `useCallback` or `memo`.
+<!-- nextjs:end -->
+<!-- tanstack:start -->
+- `useMemo`, `useCallback` and `memo` only for a measured problem or a required stable reference.
+<!-- tanstack:end -->
+
+## React 19 APIs
+
+- `ref` is a regular prop. Do not use `forwardRef` in new code.
+- `use()` reads a promise or context.
+- Actions: `useActionState`, `useFormStatus` and `useOptimistic` (TanStack Query mutations: see `server-state`).
 
 ## Bans
 
-- Prop drilling (>2 levels).
 - Class components.
-- Incomplete dependency arrays.
-- Syncing props to state (use Derived state).
-- Heavy computations during render.
-- Data fetching inside components (violation of API rules).
-
-## Correct Implementation
+- Fetching data with `useEffect` in a Client Component. Use query hooks or server loading (async Server Components may `await`).
+- Silencing `react-hooks/exhaustive-deps`.
 
 <example>
 ```tsx
-// Derived state instead of syncing props to state
-const Component = ({ items }) => {
-  const activeItems = items.filter(i => i.isActive); // Good
-  return <div>{activeItems.length}</div>;
-};
+import type { Task } from "@/features/tasks/types";
+
+type TaskListProps = { tasks: Task[]; showDone: boolean };
+
+export function TaskList({ tasks, showDone }: TaskListProps) {
+  const visible = showDone ? tasks : tasks.filter((task) => !task.done);
+
+  return (
+    <ul>
+      {visible.map((task) => (
+        <li key={task.id}>{task.title}</li>
+      ))}
+    </ul>
+  );
+}
 ```
 </example>
-
-## Incorrect Implementation
-
-<incorrect-example>
-```tsx
-useEffect(() => { fetchData(); }, []); // Fetching forbidden
-useEffect(() => { setVal(props.val); }, [props.val]); // Sync forbidden
-```
-</incorrect-example>

@@ -1,106 +1,65 @@
 ---
-description: TanStack Start Routing, Loaders, and Server Functions Standards
-globs: src/routes/**/*.{ts,tsx}
+description: "USE WHEN: Working on TanStack Start routes, loaders, server functions, middleware and head/SEO."
+globs: "src/routes/**/*.{ts,tsx},src/router.tsx,src/start.ts"
 alwaysApply: false
 ---
-# TanStack Start Constitution
 
-## Constraints
+# TanStack Start
 
-- **Route Definition:** Always use `createFileRoute`. Path MUST strictly match the file system location.
-- **Component Scope:** Keep route files thin. Only orchestrate routing and data. Move UI and business logic to `src/features`.
-- **Nested Layouts:** Use the `<Outlet />` component in parent routes to render child routes. If a route has children, the parent component MUST render `<Outlet />`.
-- **Data Loading:** Fetch all route-level data in `loader`. Consume via `Route.useLoaderData` or `useSuspenseQuery`.
-- **Guards:** Put auth, redirects, and preconditions in `beforeLoad`.
-- **Hydration:** Rely on loader prefetching for data hydration. Do not use Next.js-specific patterns like manual dehydration.
-- **Server Functions:** Wrap all backend-only logic in standalone `serverFn`. Functions MUST act as a bridge to the API layer; keep database orchestration and business logic inside src/features/api or helpers.
-- **Search Params:** Validate all search params with `validateSearch` using a Zod schema. Never trust raw search values.
+## Routes
+
+- `createFileRoute` with a path that matches the file. Never edit the generated `src/routeTree.gen.ts`.
+- Parent routes render `<Outlet />`.
+- Validate search params with `validateSearch` and a Zod schema.
+- Auth guards and redirects go in `beforeLoad`.
+- `pendingComponent`, `errorComponent` and `notFoundComponent` where a route can wait, fail or miss. Metadata in `head()`.
+- Navigate with typed `Link` and `useNavigate`, never string-built URLs.
+
+## Data
+
+- Load route data with `context.queryClient.ensureQueryData(options)` in `loader`, read it with `useSuspenseQuery(options)`. `@tanstack/react-router-ssr-query` handles hydration; no `HydrationBoundary`.
+
+## Server functions
+
+- `createServerFn` from `@tanstack/react-start`, exported from the feature's `api/` folder, never defined in components or routes.
+- Validate input with `.validator(zodSchema)`.
+- Check auth in `createMiddleware` or at the top of the handler. Return `{ data, error }`, never raw errors.
+- Secrets stay in server code; `VITE_` env vars are public.
 <!-- i18n:start -->
-- **i18n Implementation:** Use `paraglide-js` for translations. Follow the patterns defined in `i18n.mdc`.
+
+## i18n
+
+- Paraglide JS (`@inlang/paraglide-js`): locale routes under `src/routes/$lang`. See the `i18n` rule.
 <!-- i18n:end -->
-- **Error Handling:** Provide `errorComponent` for failure states. Handle expected errors in the loader.
-- **Loading UI:** Provide `pendingComponent` for async states when needed.
-- **Not Found:** Provide `notFoundComponent` for missing resources.
-- **Head/SEO:** Define metadata with the `head` property. Keep it deterministic and typed.
-- **Sync:** Ensure route paths are kept in sync via `tsr watch` command.
-- **Guard Security:** Enforce session and permission checks within `beforeLoad` or dedicated middleware before `serverFn` execution.
 
 ## Bans
 
-- **Client-Side Fetching:** Fetching data inside the component body via `useEffect` or `useQuery` (without loader prefetch) is FORBIDDEN.
-- **Inline serverFn:** Defining `serverFn` inside a component or route definition is FORBIDDEN. They MUST be exported as standalone constants.
-- **Next.js Conventions:** Using `"use server"` directives, `page.tsx` naming, or Next.js-specific hooks (`useRouter` from next/navigation) is STRICTLY FORBIDDEN.
-- **Untyped Routes:** Navigating via string paths without type-safety (using `Link` or `Maps` without the `to` property pointing to a valid route) is FORBIDDEN.
-- **Insecure Env Vars:** Forbidden to store secrets or private keys in environment variables with `VITE_` prefixes.
-
-## Mandatory Patterns
-
-### 1. Safe Return Pattern
-ServerFn MUST NOT throw raw errors. ALWAYS return a `{ data, error }` object.
+- Route data fetched in a component (`useEffect`, or `useQuery` without a loader prefetch).
+- Next.js APIs: `"use server"`, `next/*` imports, `page.tsx` files.
 
 <example>
-export const loginFn = createServerFn({ method: 'POST' })
-  .validator(z.object({ email: z.string().email() }))
-  .handler(async ({ data }) => {
-    try {
-      const result = await auth(data);
-      return { data: result, error: null };
-    } catch (e) {
-      return { data: null, error: "Login failed" };
-    }
-  });
-</example>
+```tsx
+// src/routes/users/$userId.tsx
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 
-## Correct Implementation
+import { UserProfile, userQueryOptions } from "@/features/users";
 
-<example>
-// src/routes/posts/$postId.tsx
-import { createFileRoute } from '@tanstack/react-router';
-import { PostFeature } from '@/features/posts';
-import { getPostById } from '@/features/posts/api';
-
-export const Route = createFileRoute('/posts/$postId')({
-  loader: ({ params }) => getPostById(params.postId),
-  component: PostPage,
+export const Route = createFileRoute("/users/$userId")({
+  loader: ({ context, params }) => context.queryClient.ensureQueryData(userQueryOptions(params.userId)),
+  component: UserPage,
 });
 
-function PostPage() {
-  const post = Route.useLoaderData();
-  return <PostFeature post={post} />;
+function UserPage() {
+  const { userId } = Route.useParams();
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId));
+  return <UserProfile user={user} />;
 }
+```
 </example>
 
-<example>
-// src/features/auth/api/auth-actions.ts (Standalone serverFn)
-import { createServerFn } from '@tanstack/start';
-import { z } from 'zod';
-
-export const loginFn = createServerFn({ method: 'POST' })
-  .validator(z.object({ email: z.string().email() }))
-  .handler(async ({ data }) => {
-    // Server-side logic here
-    return { success: true };
-  });
-</example>
-
-## Incorrect Implementation
-
 <incorrect-example>
-// BAN: Data fetching inside component without loader
-export const Route = createFileRoute('/dashboard')({
-  component: () => {
-    const { data } = useQuery({ queryKey: ['dash'], queryFn: fetchDash }); 
-    return <div>{data.name}</div>;
-  }
-});
-</incorrect-example>
-
-<incorrect-example>
-// BAN: Inline Next.js style server action
-export const Route = createFileRoute('/login')({
-  component: () => {
-    async function action() { "use server"; ... } 
-    return <form action={action}>...</form>;
-  }
-});
+```tsx
+const { data } = useQuery({ queryKey: ["dashboard"], queryFn: fetchDashboard }); // no loader prefetch
+```
 </incorrect-example>

@@ -1,64 +1,44 @@
 ---
-description: "USE WHEN: Applying core principles and enforcing global project constraints."
+description: "USE WHEN: Always. Working agreement, naming, exports and error handling for every task."
 alwaysApply: true
 ---
 
-# Core Constitution
+# Core
 
-## Constraints
+## Workflow
 
-- **INTENTIONAL_TODO Rule:** Usage is ONLY permitted for non-functional placeholders (e.g., temporary mock UI, future logging). 
-- **Business Integrity:** Forbidden to use `INTENTIONAL_TODO` for business logic, error handling, or API integrations.
-- **Pseudo-code:** Forbidden. Provide working TypeScript/React code.
-- **Reference:** Do not say "Usually done like this"; link to repo rules.
-- **Validation:** Do not deliver without passing `pnpm typecheck` and `pnpm lint`.
-- **Search First:** Analyze existing patterns before coding.
-- **Minimal Intervention:** Modify only necessary areas.
-- **Source of Truth:** Reference the codebase. Correct it if erroneous.
-- **Boy Scout:** Clean unused imports, `console.log`, and dead code.
-- **Naming Conventions (STRICT):**
-  - Folders & core files: `kebab-case` (e.g., `locale-switcher`, `query-client.ts`)
-  - Components: `PascalCase` (e.g., `UserList.tsx`)
-  - UI Elements: `kebab-case` (e.g., `button.tsx`)
-  - Hooks: `use-users.ts` (file), `useUsers` (function)
-  - Types/Interfaces: `PascalCase` without 'Type' suffix (e.g., `User`, `SiteConfig`)
-  - Suffixes: `*.data.ts`, `*.store.ts`, `*.types.ts`, `*.constants.ts` (base name in kebab-case).
-- **Imports & Aliases:** Use short aliases and barrel exports (`index.ts`). Prefer `@/ui`, `@/hooks`, `@/data`, `@/schemas`, `@/layout`. Avoid long paths like `@/components/ui`.
-- **Exports:** Group exports with `index.ts`.
-- **No Silent Failures:** Do not swallow errors. Manage `try/catch` blocks.
-- **Observability:** Log critical failures to an external service, not just `console.error`.
-- **Resilience:** Wrap feature modules in Error Boundaries to prevent full-page crashes.
-- **Secret Protection:** Do not log `.env` content.
-- **Dependency:** Obtain approval for new packages.
+- Read the files you will change and their neighbors first; follow their patterns.
+- Change only what the task needs. No drive-by refactors.
+- Ask before adding a dependency or changing a public API (exports, props, routes, schemas).
+- Deliver complete, working code. No pseudo-code, placeholders or `// ...existing code`.
+- When a path or API is unknown, say so instead of guessing.
+- Before you finish, run `{{VALIDATE_COMMAND}}` and `{{TEST_COMMAND}}` and fix what you broke.
 
-## Bans
+## Naming and exports
 
-- Comments (except JSDoc).
-- Placeholders/incomplete code.
-- `catch (e) {}` (Silent catch).
-- Logging secrets.
-- Out-of-scope refactoring.
-- `// ...existing code` (Provide full blocks).
-- Standard `TODO` or `FIXME` comments.
-- Using `INTENTIONAL_TODO` to skip core logic implementation.
-- Parent-relative imports (`../`, `../../`). Use path aliases only.
+- Files and folders: `kebab-case` (`query-client.ts`). Components: `PascalCase.tsx` (`UserList.tsx`). UI primitives: `button.tsx`. Hooks: `use-users.ts` exports `useUsers`.
+- Suffixes: `*.api.ts`, `*.queries.ts`, `*.schema.ts`, `*.store.ts`, `*.types.ts`, `*.constants.ts`, `*.test.ts(x)`.
+- Types: `User`, never `IUser`, `TUser` or `UserType`.
+- Named exports only; default exports only where a framework requires them. Each folder exposes its public API through `index.ts`.
 
-## Correct Implementation
+## Errors
+
+- Never swallow an error. A `catch` rethrows, returns a typed error, or reports it.
+- Report unexpected failures to the error tracker when the project has one.
+- Place Error Boundaries at route and feature boundaries, not around every component.
+- Never log secrets or `.env` values.
+
+## Comments and cleanup
+
+- Comment why, never what. JSDoc for exports whose behavior the signature does not show.
+- Remove unused imports, `console.log` calls and dead code in what you touched.
 
 <example>
-```js
+```ts
 try {
-  process(data);
+  await saveProfile(input);
 } catch (error) {
-  throw new ProcessingError({ cause: error });
+  throw new ProfileSaveError("Could not save the profile", { cause: error });
 }
 ```
 </example>
-
-## Incorrect Implementation
-
-<incorrect-example>
-```js
-try { process(data); } catch (e) {}
-```
-</incorrect-example>

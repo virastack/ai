@@ -14,7 +14,7 @@ import {
 import { readText, toAbsolute } from "../fs.js";
 import { manifestAgents, readManifest } from "../manifest.js";
 import { planLegacy } from "../migrate/index.js";
-import { renderAgentsBlock, renderRules } from "../render.js";
+import { renderAgentsBlock, renderRules, renderSkills } from "../render.js";
 
 /** Builds the CLAUDE.md operation and the `claudeImport` value to record. */
 async function planClaude(root, claudeSelected, previous) {
@@ -63,6 +63,7 @@ export async function init(root, options, { io, messages, version }) {
   const ops = [];
 
   const { files, rules } = await renderRules(ctx);
+  for (const [file, content] of await renderSkills(ctx)) files.set(file, content);
   for (const [file, content] of files) {
     ops.push(await planWrite(root, file, content, previous[file]));
   }

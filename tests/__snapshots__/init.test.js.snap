@@ -12,6 +12,7 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 
 - **Dev:** \`npm install && npm run dev\`
 - **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
 ## Operational Guardrails
@@ -29,24 +30,30 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 
 | Rule | Use when |
 | :--- | :------- |
-| \`core\` | Always. Applying core principles and enforcing global project constraints. |
-| \`architecture\` | Always. Deciding where code lives, creating folders, and respecting feature boundaries. |
-| \`react\` | Designing React components, implementing hooks, and managing component lifecycles. |
-| \`typescript\` | Defining TypeScript types, Zod schemas, and generic constraints for type safety. |
-| \`ui\` | Building UI components, structuring layouts, and applying styles using Tailwind CSS. |
-| \`forms\` | Constructing forms, validating inputs, and managing form state with Zod schemas. |
-| \`api\` | Defining HTTP requests, endpoints, and handling API responses. |
-| \`server-state\` | Managing server state, fetching data, and handling mutations with TanStack Query. |
-| \`client-state\` | Managing global client state with Zustand and handling client-side state logic. |
-| \`performance\` | Optimizing Core Web Vitals, managing assets, and ensuring high Lighthouse/A11y scores. |
-| \`testing\` | Writing unit, integration, or component tests. Mandatory for logic in features. |
-| \`nextjs\` | Next.js 16 App Router Standards & Constraints |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+
+## Skills
+
+\`virastack-create-feature\`, \`virastack-audit\` in \`.agents/skills/\` (and \`.claude/skills/\` for Claude Code).
 <!-- END:virastack-ai -->
 "
 `;
 
 exports[`init: file tree > nextjs with --agent claude > nextjs-claude-tree 1`] = `
 [
+  ".agents/skills/virastack-audit/SKILL.md",
+  ".agents/skills/virastack-create-feature/SKILL.md",
   ".claude/rules/virastack/api.md",
   ".claude/rules/virastack/architecture.md",
   ".claude/rules/virastack/client-state.md",
@@ -59,6 +66,8 @@ exports[`init: file tree > nextjs with --agent claude > nextjs-claude-tree 1`] =
   ".claude/rules/virastack/testing.md",
   ".claude/rules/virastack/typescript.md",
   ".claude/rules/virastack/ui.md",
+  ".claude/skills/virastack-audit/SKILL.md",
+  ".claude/skills/virastack-create-feature/SKILL.md",
   ".virastack/ai.json",
   "AGENTS.md",
   "CLAUDE.md",
@@ -78,6 +87,7 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 
 - **Dev:** \`npm install && npm run dev\`
 - **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
 ## Operational Guardrails
@@ -96,24 +106,30 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 
 | Rule | Use when |
 | :--- | :------- |
-| \`core\` | Always. Applying core principles and enforcing global project constraints. |
-| \`architecture\` | Always. Deciding where code lives, creating folders, and respecting feature boundaries. |
-| \`react\` | Designing React components, implementing hooks, and managing component lifecycles. |
-| \`typescript\` | Defining TypeScript types, Zod schemas, and generic constraints for type safety. |
-| \`ui\` | Building UI components, structuring layouts, and applying styles using Tailwind CSS. |
-| \`forms\` | Constructing forms, validating inputs, and managing form state with Zod schemas. |
-| \`api\` | Defining HTTP requests, endpoints, and handling API responses. |
-| \`server-state\` | Managing server state, fetching data, and handling mutations with TanStack Query. |
-| \`client-state\` | Managing global client state with Zustand and handling client-side state logic. |
-| \`performance\` | Optimizing Core Web Vitals, managing assets, and ensuring high Lighthouse/A11y scores. |
-| \`testing\` | Writing unit, integration, or component tests. Mandatory for logic in features. |
-| \`nextjs\` | Next.js 16 App Router Standards & Constraints |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+
+## Skills
+
+\`virastack-create-feature\`, \`virastack-audit\` in \`.agents/skills/\` (and \`.claude/skills/\` for Claude Code).
 <!-- END:virastack-ai -->
 "
 `;
 
 exports[`init: file tree > nextjs with --agent claude,cursor > nextjs-both-tree 1`] = `
 [
+  ".agents/skills/virastack-audit/SKILL.md",
+  ".agents/skills/virastack-create-feature/SKILL.md",
   ".claude/rules/virastack/api.md",
   ".claude/rules/virastack/architecture.md",
   ".claude/rules/virastack/client-state.md",
@@ -126,6 +142,8 @@ exports[`init: file tree > nextjs with --agent claude,cursor > nextjs-both-tree 
   ".claude/rules/virastack/testing.md",
   ".claude/rules/virastack/typescript.md",
   ".claude/rules/virastack/ui.md",
+  ".claude/skills/virastack-audit/SKILL.md",
+  ".claude/skills/virastack-create-feature/SKILL.md",
   ".cursor/rules/virastack/api.mdc",
   ".cursor/rules/virastack/architecture.mdc",
   ".cursor/rules/virastack/client-state.mdc",
@@ -157,6 +175,7 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 
 - **Dev:** \`npm install && npm run dev\`
 - **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
 ## Operational Guardrails
@@ -174,24 +193,30 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 
 | Rule | Use when |
 | :--- | :------- |
-| \`core\` | Always. Applying core principles and enforcing global project constraints. |
-| \`architecture\` | Always. Deciding where code lives, creating folders, and respecting feature boundaries. |
-| \`react\` | Designing React components, implementing hooks, and managing component lifecycles. |
-| \`typescript\` | Defining TypeScript types, Zod schemas, and generic constraints for type safety. |
-| \`ui\` | Building UI components, structuring layouts, and applying styles using Tailwind CSS. |
-| \`forms\` | Constructing forms, validating inputs, and managing form state with Zod schemas. |
-| \`api\` | Defining HTTP requests, endpoints, and handling API responses. |
-| \`server-state\` | Managing server state, fetching data, and handling mutations with TanStack Query. |
-| \`client-state\` | Managing global client state with Zustand and handling client-side state logic. |
-| \`performance\` | Optimizing Core Web Vitals, managing assets, and ensuring high Lighthouse/A11y scores. |
-| \`testing\` | Writing unit, integration, or component tests. Mandatory for logic in features. |
-| \`nextjs\` | Next.js 16 App Router Standards & Constraints |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+
+## Skills
+
+\`virastack-create-feature\`, \`virastack-audit\` in \`.agents/skills/\` (and \`.claude/skills/\` for Claude Code).
 <!-- END:virastack-ai -->
 "
 `;
 
 exports[`init: file tree > nextjs with --agent cursor > nextjs-cursor-tree 1`] = `
 [
+  ".agents/skills/virastack-audit/SKILL.md",
+  ".agents/skills/virastack-create-feature/SKILL.md",
   ".cursor/rules/virastack/api.mdc",
   ".cursor/rules/virastack/architecture.mdc",
   ".cursor/rules/virastack/client-state.mdc",
@@ -222,6 +247,7 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 
 - **Dev:** \`npm install && npm run dev\`
 - **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
 ## Operational Guardrails
@@ -238,18 +264,22 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 
 | Rule | Use when |
 | :--- | :------- |
-| \`core\` | Always. Applying core principles and enforcing global project constraints. |
-| \`architecture\` | Always. Deciding where code lives, creating folders, and respecting feature boundaries. |
-| \`react\` | Designing React components, implementing hooks, and managing component lifecycles. |
-| \`typescript\` | Defining TypeScript types, Zod schemas, and generic constraints for type safety. |
-| \`ui\` | Building UI components, structuring layouts, and applying styles using Tailwind CSS. |
-| \`forms\` | Constructing forms, validating inputs, and managing form state with Zod schemas. |
-| \`api\` | Defining HTTP requests, endpoints, and handling API responses. |
-| \`server-state\` | Managing server state, fetching data, and handling mutations with TanStack Query. |
-| \`client-state\` | Managing global client state with Zustand and handling client-side state logic. |
-| \`performance\` | Optimizing Core Web Vitals, managing assets, and ensuring high Lighthouse/A11y scores. |
-| \`testing\` | Writing unit, integration, or component tests. Mandatory for logic in features. |
-| \`nextjs\` | Next.js 16 App Router Standards & Constraints |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+
+## Skills
+
+\`virastack-create-feature\`, \`virastack-audit\` in \`.agents/skills/\` (and \`.claude/skills/\` for Claude Code).
 <!-- END:virastack-ai -->
 "
 `;
@@ -268,6 +298,8 @@ exports[`init: file tree > nextjs with --agent none > nextjs-none-tree 1`] = `
   ".agents/rules/virastack/testing.md",
   ".agents/rules/virastack/typescript.md",
   ".agents/rules/virastack/ui.md",
+  ".agents/skills/virastack-audit/SKILL.md",
+  ".agents/skills/virastack-create-feature/SKILL.md",
   ".virastack/ai.json",
   "AGENTS.md",
   "package.json",
@@ -286,6 +318,7 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 
 - **Dev:** \`npm install && npm run dev\`
 - **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
 ## Operational Guardrails
@@ -303,24 +336,30 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 
 | Rule | Use when |
 | :--- | :------- |
-| \`core\` | Always. Applying core principles and enforcing global project constraints. |
-| \`architecture\` | Always. Deciding where code lives, creating folders, and respecting feature boundaries. |
-| \`react\` | Designing React components, implementing hooks, and managing component lifecycles. |
-| \`typescript\` | Defining TypeScript types, Zod schemas, and generic constraints for type safety. |
-| \`ui\` | Building UI components, structuring layouts, and applying styles using Tailwind CSS. |
-| \`forms\` | Constructing forms, validating inputs, and managing form state with Zod schemas. |
-| \`api\` | Defining HTTP requests, endpoints, and handling API responses. |
-| \`server-state\` | Managing server state, fetching data, and handling mutations with TanStack Query. |
-| \`client-state\` | Managing global client state with Zustand and handling client-side state logic. |
-| \`performance\` | Optimizing Core Web Vitals, managing assets, and ensuring high Lighthouse/A11y scores. |
-| \`testing\` | Writing unit, integration, or component tests. Mandatory for logic in features. |
-| \`tanstack-start\` | TanStack Start Routing, Loaders, and Server Functions Standards |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+
+## Skills
+
+\`virastack-create-feature\`, \`virastack-audit\` in \`.agents/skills/\` (and \`.claude/skills/\` for Claude Code).
 <!-- END:virastack-ai -->
 "
 `;
 
 exports[`init: file tree > tanstack with --agent claude > tanstack-claude-tree 1`] = `
 [
+  ".agents/skills/virastack-audit/SKILL.md",
+  ".agents/skills/virastack-create-feature/SKILL.md",
   ".claude/rules/virastack/api.md",
   ".claude/rules/virastack/architecture.md",
   ".claude/rules/virastack/client-state.md",
@@ -333,6 +372,8 @@ exports[`init: file tree > tanstack with --agent claude > tanstack-claude-tree 1
   ".claude/rules/virastack/testing.md",
   ".claude/rules/virastack/typescript.md",
   ".claude/rules/virastack/ui.md",
+  ".claude/skills/virastack-audit/SKILL.md",
+  ".claude/skills/virastack-create-feature/SKILL.md",
   ".virastack/ai.json",
   "AGENTS.md",
   "CLAUDE.md",
@@ -352,6 +393,7 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 
 - **Dev:** \`npm install && npm run dev\`
 - **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
 ## Operational Guardrails
@@ -370,24 +412,30 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 
 | Rule | Use when |
 | :--- | :------- |
-| \`core\` | Always. Applying core principles and enforcing global project constraints. |
-| \`architecture\` | Always. Deciding where code lives, creating folders, and respecting feature boundaries. |
-| \`react\` | Designing React components, implementing hooks, and managing component lifecycles. |
-| \`typescript\` | Defining TypeScript types, Zod schemas, and generic constraints for type safety. |
-| \`ui\` | Building UI components, structuring layouts, and applying styles using Tailwind CSS. |
-| \`forms\` | Constructing forms, validating inputs, and managing form state with Zod schemas. |
-| \`api\` | Defining HTTP requests, endpoints, and handling API responses. |
-| \`server-state\` | Managing server state, fetching data, and handling mutations with TanStack Query. |
-| \`client-state\` | Managing global client state with Zustand and handling client-side state logic. |
-| \`performance\` | Optimizing Core Web Vitals, managing assets, and ensuring high Lighthouse/A11y scores. |
-| \`testing\` | Writing unit, integration, or component tests. Mandatory for logic in features. |
-| \`tanstack-start\` | TanStack Start Routing, Loaders, and Server Functions Standards |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+
+## Skills
+
+\`virastack-create-feature\`, \`virastack-audit\` in \`.agents/skills/\` (and \`.claude/skills/\` for Claude Code).
 <!-- END:virastack-ai -->
 "
 `;
 
 exports[`init: file tree > tanstack with --agent claude,cursor > tanstack-both-tree 1`] = `
 [
+  ".agents/skills/virastack-audit/SKILL.md",
+  ".agents/skills/virastack-create-feature/SKILL.md",
   ".claude/rules/virastack/api.md",
   ".claude/rules/virastack/architecture.md",
   ".claude/rules/virastack/client-state.md",
@@ -400,6 +448,8 @@ exports[`init: file tree > tanstack with --agent claude,cursor > tanstack-both-t
   ".claude/rules/virastack/testing.md",
   ".claude/rules/virastack/typescript.md",
   ".claude/rules/virastack/ui.md",
+  ".claude/skills/virastack-audit/SKILL.md",
+  ".claude/skills/virastack-create-feature/SKILL.md",
   ".cursor/rules/virastack/api.mdc",
   ".cursor/rules/virastack/architecture.mdc",
   ".cursor/rules/virastack/client-state.mdc",
@@ -431,6 +481,7 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 
 - **Dev:** \`npm install && npm run dev\`
 - **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
 ## Operational Guardrails
@@ -448,24 +499,30 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 
 | Rule | Use when |
 | :--- | :------- |
-| \`core\` | Always. Applying core principles and enforcing global project constraints. |
-| \`architecture\` | Always. Deciding where code lives, creating folders, and respecting feature boundaries. |
-| \`react\` | Designing React components, implementing hooks, and managing component lifecycles. |
-| \`typescript\` | Defining TypeScript types, Zod schemas, and generic constraints for type safety. |
-| \`ui\` | Building UI components, structuring layouts, and applying styles using Tailwind CSS. |
-| \`forms\` | Constructing forms, validating inputs, and managing form state with Zod schemas. |
-| \`api\` | Defining HTTP requests, endpoints, and handling API responses. |
-| \`server-state\` | Managing server state, fetching data, and handling mutations with TanStack Query. |
-| \`client-state\` | Managing global client state with Zustand and handling client-side state logic. |
-| \`performance\` | Optimizing Core Web Vitals, managing assets, and ensuring high Lighthouse/A11y scores. |
-| \`testing\` | Writing unit, integration, or component tests. Mandatory for logic in features. |
-| \`tanstack-start\` | TanStack Start Routing, Loaders, and Server Functions Standards |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+
+## Skills
+
+\`virastack-create-feature\`, \`virastack-audit\` in \`.agents/skills/\` (and \`.claude/skills/\` for Claude Code).
 <!-- END:virastack-ai -->
 "
 `;
 
 exports[`init: file tree > tanstack with --agent cursor > tanstack-cursor-tree 1`] = `
 [
+  ".agents/skills/virastack-audit/SKILL.md",
+  ".agents/skills/virastack-create-feature/SKILL.md",
   ".cursor/rules/virastack/api.mdc",
   ".cursor/rules/virastack/architecture.mdc",
   ".cursor/rules/virastack/client-state.mdc",
@@ -496,6 +553,7 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 
 - **Dev:** \`npm install && npm run dev\`
 - **Validation:** \`npm run lint && npm run typecheck\`
+- **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
 ## Operational Guardrails
@@ -512,18 +570,22 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 
 | Rule | Use when |
 | :--- | :------- |
-| \`core\` | Always. Applying core principles and enforcing global project constraints. |
-| \`architecture\` | Always. Deciding where code lives, creating folders, and respecting feature boundaries. |
-| \`react\` | Designing React components, implementing hooks, and managing component lifecycles. |
-| \`typescript\` | Defining TypeScript types, Zod schemas, and generic constraints for type safety. |
-| \`ui\` | Building UI components, structuring layouts, and applying styles using Tailwind CSS. |
-| \`forms\` | Constructing forms, validating inputs, and managing form state with Zod schemas. |
-| \`api\` | Defining HTTP requests, endpoints, and handling API responses. |
-| \`server-state\` | Managing server state, fetching data, and handling mutations with TanStack Query. |
-| \`client-state\` | Managing global client state with Zustand and handling client-side state logic. |
-| \`performance\` | Optimizing Core Web Vitals, managing assets, and ensuring high Lighthouse/A11y scores. |
-| \`testing\` | Writing unit, integration, or component tests. Mandatory for logic in features. |
-| \`tanstack-start\` | TanStack Start Routing, Loaders, and Server Functions Standards |
+| \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
+| \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
+| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
+| \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
+| \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
+| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+
+## Skills
+
+\`virastack-create-feature\`, \`virastack-audit\` in \`.agents/skills/\` (and \`.claude/skills/\` for Claude Code).
 <!-- END:virastack-ai -->
 "
 `;
@@ -542,6 +604,8 @@ exports[`init: file tree > tanstack with --agent none > tanstack-none-tree 1`] =
   ".agents/rules/virastack/testing.md",
   ".agents/rules/virastack/typescript.md",
   ".agents/rules/virastack/ui.md",
+  ".agents/skills/virastack-audit/SKILL.md",
+  ".agents/skills/virastack-create-feature/SKILL.md",
   ".virastack/ai.json",
   "AGENTS.md",
   "package.json",

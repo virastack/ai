@@ -1,45 +1,48 @@
 ---
-description: "USE WHEN: Managing global client state with Zustand and handling client-side state logic."
+description: "USE WHEN: Managing client state with Zustand 5 stores and URL state with nuqs."
 globs: "src/stores/**/*.ts,src/features/**/stores/**/*.ts"
 alwaysApply: false
 ---
 
-# State Management
+# Zustand and URL state
 
-## Constraints
+## Where state lives
 
-- **Library:** Use `Zustand` for client state.
-- **Scope:** Define Global state in `src/stores`, Feature state in `src/features/[feature]/stores`.
-- **Selectors:** Always consume state via selectors (`useStore(s => s.val)`).
-- **SSR:** Guarantee client-side rendering with `useHydrated`.
-- **Persistence:** Configure `onRehydrateStorage` when using `persist` middleware.
-- **Server State:** Use TanStack Query. Do not store server data in the global store.
-- **URL State (Pagination, Filters):** Always store shareable state (like pagination, filters, sorting) in the URL search parameters, NOT in the global store.
-  - **CRITICAL CHECK:** First, check `package.json`. If `nuqs` is installed, you MUST use `nuqs` (`useQueryState`, `useQueryStates`) for URL state management.
-  - If `nuqs` is NOT installed, use the framework's native URL search parameter hooks (e.g., `useSearchParams` in Next.js).
+- Server data: TanStack Query (`server-state`). Form input: React Hook Form (`forms`).
+- Filters, page, sort and tabs: URL search params with `nuqs` when installed, else the router's.
+- One component's UI state: `useState`. Client state shared across the app: Zustand.
+
+## Rules
+
+- Stores live in `src/stores/` or `features/<feature>/stores/` (`cart.store.ts` exports `useCartStore`).
+- Read through selectors (`useCartStore((state) => state.items)`); wrap object or array selectors in `useShallow`.
+- Actions live in the store and only update state. Side effects such as API calls live in hooks.
+- Never read `window` or `localStorage` while creating a store.
+- Pages render on the server: request or user data needs a per-request store (`createStore` in a context provider). Module-level `create()` is for client-only UI state.
+- `persist`: show persisted values only on the client, gated with `useIsClient()` (`usehooks-ts`) or `skipHydration: true` plus `persist.rehydrate()`.
 
 ## Bans
 
-- Passing store data via props.
-- Storing high-frequency state (e.g., inputs) in the store.
-- Executing side-effects (API calls) inside the store.
-- Accessing `window`/`localStorage` during initialization.
-- Returning the entire store without selectors.
-
-## Correct Implementation
+- Calling a store hook without a selector.
+- Keystroke-frequency values in a store.
+- Copies of server data in a store.
 
 <example>
 ```ts
-const user = useUserStore((s) => s.user);
-const isHydrated = useHydrated();
+import { create } from "zustand";
+
+import type { CartItem } from "@/features/cart/types";
+
+type CartState = {
+  items: CartItem[];
+  add: (item: CartItem) => void;
+  clear: () => void;
+};
+
+export const useCartStore = create<CartState>()((set) => ({
+  items: [],
+  add: (item) => set((state) => ({ items: [...state.items, item] })),
+  clear: () => set({ items: [] }),
+}));
 ```
 </example>
-
-## Incorrect Implementation
-
-<incorrect-example>
-```ts
-const { user } = useUserStore(); // Missing selector
-const store = create(() => ({ data: localStorage.getItem("x") })); // SSR Error
-```
-</incorrect-example>

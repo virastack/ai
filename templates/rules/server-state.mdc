@@ -1,99 +1,54 @@
 ---
-description: "USE WHEN: Managing server state, fetching data, and handling mutations with TanStack Query."
-globs: "src/features/**/api/*.{ts,tsx},src/features/**/hooks/*.{ts,tsx},src/providers/query-provider.tsx"
+description: "USE WHEN: Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation."
+globs: "src/features/**/api/**/*.ts,src/features/**/hooks/**/*.ts,src/hooks/**/*.ts,src/lib/query-client.ts,src/providers/**/*.{ts,tsx}"
 alwaysApply: false
 ---
 
 # TanStack Query
 
-## Constraints
+## Setup
 
-- **Structure:** Use Query Key Factory (`src/features/[feature]/api/query-keys.ts`).
-- **Hooks:** Create custom hooks for every query/mutation.
-- **Keys:** Use `as const`. Establish hierarchical structure (all -> lists -> details).
-- **Signal:** Pass `AbortSignal` to the API function.
-- **Invalidation:** Invalidate relevant keys in mutation `onSuccess`.
-- **Pagination:** Include `page` and filters in the query key.
+<!-- nextjs:start -->
+- `QueryProvider` (`src/providers/QueryProvider.tsx`) creates the browser `QueryClient` once.
+<!-- nextjs:end -->
+<!-- tanstack:start -->
+- The router context owns the `QueryClient` (`src/providers/root-provider.ts`, wired in `src/router.tsx`).
+<!-- tanstack:end -->
+- Defaults live in `makeQueryClient()` (`src/lib/query-client.ts`). Never create a module-level `QueryClient`.
 
-## Bans
+## Rules
 
-- `useQuery` inside components (Custom hooks are mandatory).
-- Manual string query keys.
-- Using API responses without validation.
-- Ignoring Loading/Error states.
-
-## Mandatory Patterns
-
-### 1. Query Options Factory (v5)
-NEVER use inline objects in `useQuery` or loaders. ALWAYS define queries externally using the `queryOptions` function.
-
-<example>
-import { queryOptions } from '@tanstack/react-query';
-
-export const userQueryOptions = (id: string) => queryOptions({
-  queryKey: userKeys.detail(id),
-  queryFn: ({ signal }) => fetchUser(id, signal)
-});
-
-// Inside Component or Loader
-const { data } = useQuery(userQueryOptions(id));
-</example>
-
-### 2. Optimistic Updates
-ALWAYS use the standard optimistic update pattern for mutations to ensure a snappy UI.
+- Key factory per feature in `api/query-keys.ts` (`all`, `lists()`, `list(filters)`, `details()`, `detail(id)`, `as const`). Page and filters belong in the key.
+- Define each query once with `queryOptions()` in `api/`; reuse it in hooks, prefetching, loaders and `setQueryData`.
+- Components call a thin hook from `hooks/` (`useUsers`), never `useQuery` directly.
+- Pass the query function's `signal` to the api function.
+- Mutation hooks invalidate the affected keys in `onSettled`.
+- Optimistic updates only when the UX needs them: render `mutation.variables` while pending; use `onMutate` with rollback only when several components must show the change.
+- Server data stays in the Query cache. Never copy it into a Zustand store.
 
 <example>
-export const useToggleTask = () => {
-  const queryClient = useQueryClient();
+```ts
+// features/users/api/user.queries.ts
+import { queryOptions } from "@tanstack/react-query";
 
-  return useMutation({
-    mutationFn: (taskId: string) => api.patch(`/tasks/${taskId}`),
-    onMutate: async (taskId) => {
-      await queryClient.cancelQueries({ queryKey: taskKeys.all });
-      const previousTasks = queryClient.getQueryData<Task[]>(taskKeys.all);
-      
-      queryClient.setQueryData<Task[]>(taskKeys.all, (old) => 
-        old?.map((t) => t.id === taskId ? { ...t, done: !t.done } : t)
-      );
-      
-      return { previousTasks };
-    },
-    onError: (err, taskId, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(taskKeys.all, context.previousTasks);
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: taskKeys.all });
-    }
+import { getUsers } from "@/features/users/api/get-users.api";
+import { userKeys } from "@/features/users/api/query-keys";
+
+export const usersQueryOptions = (page: number) =>
+  queryOptions({
+    queryKey: userKeys.list({ page }),
+    queryFn: ({ signal }) => getUsers(page, signal),
   });
-};
-</example>
-
-## Correct Implementation
-
-<example>
-// features/skills/api/query-keys.ts
-export const skillKeys = {
-  all: ['skills'] as const,
-  lists: () => [...skillKeys.all, 'list'] as const,
-  list: (filters: object) => [...skillKeys.lists(), { filters }] as const,
-  details: () => [...skillKeys.all, 'detail'] as const,
-  detail: (id: string) => [...skillKeys.details(), id] as const,
-};
-
-// features/skills/hooks/use-get-skills.ts
-export const useGetSkills = (filters: object) =>
-  useQuery({
-    queryKey: skillKeys.list(filters),
-    queryFn: ({ signal }) => getSkills(filters, signal),
-  });
-</example>
-
-## Incorrect Implementation
-
-<incorrect-example>
-```tsx
-useQuery({ queryKey: ["posts"], queryFn: () => api.get("/posts") });
 ```
-</incorrect-example>
+
+```ts
+// features/users/hooks/use-users.ts
+import { useQuery } from "@tanstack/react-query";
+
+import { usersQueryOptions } from "@/features/users/api";
+
+export function useUsers(page: number) {
+  return useQuery(usersQueryOptions(page));
+}
+```
+</example>

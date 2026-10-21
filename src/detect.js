@@ -14,10 +14,34 @@ const LOCKFILES = [
 ];
 
 const COMMANDS = {
-  pnpm: { dev: "pnpm install && pnpm dev", validate: "pnpm lint && pnpm typecheck", build: "pnpm build" },
-  npm: { dev: "npm install && npm run dev", validate: "npm run lint && npm run typecheck", build: "npm run build" },
-  yarn: { dev: "yarn install && yarn dev", validate: "yarn lint && yarn typecheck", build: "yarn build" },
-  bun: { dev: "bun install && bun run dev", validate: "bun run lint && bun run typecheck", build: "bun run build" },
+  pnpm: {
+    dev: "pnpm install && pnpm dev",
+    validate: "pnpm lint && pnpm typecheck",
+    test: "pnpm test",
+    build: "pnpm build",
+    exec: "pnpm dlx",
+  },
+  npm: {
+    dev: "npm install && npm run dev",
+    validate: "npm run lint && npm run typecheck",
+    test: "npm test",
+    build: "npm run build",
+    exec: "npx",
+  },
+  yarn: {
+    dev: "yarn install && yarn dev",
+    validate: "yarn lint && yarn typecheck",
+    test: "yarn test",
+    build: "yarn build",
+    exec: "yarn dlx",
+  },
+  bun: {
+    dev: "bun install && bun run dev",
+    validate: "bun run lint && bun run typecheck",
+    test: "bun run test",
+    build: "bun run build",
+    exec: "bunx",
+  },
 };
 
 export async function readPackageJson(dir) {
