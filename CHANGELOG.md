@@ -12,7 +12,7 @@
 - **`--agent claude,cursor|none`**, `remove`, `--dry-run`, `--yes` and `--framework`.
 - **Manifest** `.virastack/ai.json` with file hashes: re-running `init` updates untouched rules, asks before overwriting edited ones, and removes rules a new version drops.
 - **Automatic v1 migration:** unedited v1 files are removed, edited ones are kept and listed.
-- **Skills:** `virastack-create-feature` and `virastack-audit` in `.agents/skills/` (and `.claude/skills/` for Claude Code).
+- **Skills:** `virastack-create-feature` in `.agents/skills/` (and `.claude/skills/` for Claude Code).
 - **Package manager aware:** commands in the rules use the detected package manager.
 - **Conditional content:** the `i18n` rule installs only with `next-intl` or Paraglide; framework-specific lines appear only for the detected framework.
 

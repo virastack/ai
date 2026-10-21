@@ -64,7 +64,7 @@ npx @virastack/ai init
 | `CLAUDE.md` | `--agent claude` | Gets an `@AGENTS.md` import line if missing |
 | `.cursor/rules/virastack/*.mdc` | `--agent cursor` | Cursor rules, loaded by file path |
 | `.agents/rules/virastack/*.md` | `--agent none` | Plain Markdown rules for any agent |
-| `.agents/skills/virastack-*/` | always | Skills: `virastack-create-feature`, `virastack-audit` |
+| `.agents/skills/virastack-*/` | always | Skills: `virastack-create-feature` |
 | `AGENTS.md` | always | Managed `virastack-ai` block: persona, commands, rule map |
 | `.virastack/ai.json` | always | Manifest of installed files. Commit it. |
 
@@ -98,9 +98,8 @@ Commands in the rules (`lint`, `typecheck`, `test`, `shadcn add`) use the packag
 | Skill | What it does |
 | :---- | :----------- |
 | `virastack-create-feature` | Scaffolds `src/features/<name>/` following the `architecture` rule, then runs lint, typecheck and tests. |
-| `virastack-audit` | Read-only audit against the rules (feature boundaries, `../` imports, `any`, default exports, HTTP in UI). Reports `file:line` findings. |
 
-In Claude Code, run them as `/virastack-create-feature` and `/virastack-audit`.
+In Claude Code, run it as `/virastack-create-feature`.
 
 ## Commands
 

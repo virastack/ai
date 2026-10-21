@@ -23,7 +23,7 @@ export const FRAMEWORK_NAMES = { nextjs: "Next.js 16", tanstack: "TanStack Start
 export const FRAMEWORK_RULES = { nextjs: "nextjs", tanstack: "tanstack-start" };
 
 /** Skills installed in every project, under `templates/skills/<name>/SKILL.md`. */
-export const SKILLS = ["virastack-create-feature", "virastack-audit"];
+export const SKILLS = ["virastack-create-feature"];
 
 export function selectRules(ctx) {
   return RULES.filter((rule) => !rule.when || rule.when(ctx));
