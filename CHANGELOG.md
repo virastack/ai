@@ -1,6 +1,6 @@
 # Changelog
 
-## [v2.0.0] - Unreleased
+## [v2.0.0-beta.1] - 2026-10-22
 
 ### Breaking
 - **New file layout:** Rules install to `.claude/rules/virastack/` (Claude Code) and `.cursor/rules/virastack/` (Cursor), or `.agents/rules/virastack/` with `--agent none`. v1's `.cursor/rules/*.mdc`, `docs/MEMORIES.md` and `docs/architecture-guide.md` are no longer written.
