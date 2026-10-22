@@ -119,7 +119,7 @@ Run `npx @virastack/ai@latest init` in the project. Rule files and `docs/` writt
 
 ## Ecosystem
 
-Part of the [ViraStack](https://virastack.com) ecosystem.
+Part of the [ViraStack](https://virastack.com) ecosystem: [Academy](https://virastack.com/academy) · [Start](https://virastack.com/start) · [Mask](https://virastack.com/mask) · [Password](https://virastack.com/password) · [Guide](https://virastack.com/guide)
 
 ## License
 
