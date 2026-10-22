@@ -8,7 +8,7 @@
   </picture>
 </a>
 
-*AI-native architecture kit for modern React — disciplined agent rules in one command.*
+*Agent rules for modern React in one command: Claude Code, Cursor and AGENTS.md*
 
 [![ViraStack AI](https://img.shields.io/badge/ViraStack-AI-%23d946ef)](https://virastack.com/ai)
 [![npm version](https://img.shields.io/npm/v/@virastack/ai)](https://www.npmjs.com/package/@virastack/ai)
@@ -22,7 +22,7 @@
 
 ### [See how it works →](https://virastack.com/ai/)
 
-## Why ViraStack AI?
+## Features
 
 - **Claude Code and Cursor, one command:** Writes the same rules in each tool's native format. Claude Code gets `.claude/rules`, Cursor gets `.cursor/rules`, every other agent reads `AGENTS.md`.
 - **Written for the 2026 stack:** Next.js 16, React 19.2, TanStack Start, TanStack Query 5, Zustand 5, Zod 4 and Tailwind CSS 4. About 30% shorter than v1, with every example following its own rules.
@@ -117,17 +117,10 @@ In CI or any non-interactive shell, changed files are skipped with a warning ins
 
 Run `npx @virastack/ai@latest init` in the project. Rule files and `docs/` written by v1.x are removed if you never edited them. Edited ones are kept and listed so you can delete them yourself.
 
-## Explore the ViraStack Ecosystem
+## Ecosystem
 
-Discover all ViraStack tools, libraries, and boilerplates at [**virastack.com**](https://virastack.com).
+Part of the [ViraStack](https://virastack.com) ecosystem.
 
 ## License
 
-Licensed under the [MIT License](https://github.com/virastack/ai/blob/main/LICENSE).
-
-## Maintainer
-
-A project by [**Ömer Gülçiçek**](https://omergulcicek.com)
-
-[![Follow Ömer Gülçiçek](https://img.shields.io/github/followers/omergulcicek?label=Follow&style=social)](https://github.com/omergulcicek)
-
+[MIT](LICENSE) © [Ömer Gülçiçek](https://omergulcicek.com)
