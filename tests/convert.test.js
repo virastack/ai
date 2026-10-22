@@ -51,7 +51,7 @@ describe("toMarkdownRule", () => {
 
   it("writes no frontmatter for alwaysApply rules", () => {
     const output = toMarkdownRule(always, ctx);
-    expect(output.startsWith("<!-- Managed by @virastack/ai v9.9.9.")).toBe(true);
+    expect(output.startsWith("<!-- Managed by @virastack/ai -->")).toBe(true);
     expect(output).not.toContain("---");
   });
 
@@ -64,7 +64,7 @@ describe("toCursorRule", () => {
   it("keeps the source frontmatter and adds the managed note after it", () => {
     const output = toCursorRule(scoped, ctx);
     expect(output.startsWith(scoped.split("# Title")[0])).toBe(true);
-    expect(output).toContain("---\n<!-- Managed by @virastack/ai v9.9.9.");
+    expect(output).toContain("---\n<!-- Managed by @virastack/ai -->");
   });
 });
 

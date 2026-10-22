@@ -1,5 +1,10 @@
 # Changelog
 
+## [v2.0.0-beta.2] - 2026-10-22
+
+### Changed
+- **Shorter managed note:** rule files now start with `<!-- Managed by @virastack/ai -->`. The note no longer carries the version, so updating the package does not rewrite every rule file.
+
 ## [v2.0.0-beta.1] - 2026-10-22
 
 ### Breaking

@@ -63,8 +63,8 @@ export function applyConditionals(text, { i18n, framework }) {
   return current;
 }
 
-export function managedNote(version) {
-  return `<!-- Managed by @virastack/ai v${version}. Do not edit; add your own rule file. -->`;
+export function managedNote() {
+  return "<!-- Managed by @virastack/ai -->";
 }
 
 /** Cursor output: the source `.mdc` as is, with the managed note after the frontmatter. */
@@ -73,7 +73,7 @@ export function toCursorRule(source, ctx) {
   const match = text.match(FRONTMATTER);
   const head = match ? match[0].replace(/\r?\n?$/, "\n") : "";
   const body = match ? text.slice(match[0].length) : text;
-  return `${head}${managedNote(ctx.version)}\n\n${body.replace(/^\s+/, "")}`;
+  return `${head}${managedNote()}\n\n${body.replace(/^\s+/, "")}`;
 }
 
 function insertDescription(body, description) {
@@ -95,5 +95,5 @@ export function toMarkdownRule(source, ctx) {
     ? `---\npaths:\n${globs.map((glob) => `  - ${JSON.stringify(glob)}`).join("\n")}\n---\n`
     : "";
   const content = insertDescription(body.replace(/^\s+/, ""), data.description);
-  return `${frontmatter}${managedNote(ctx.version)}\n\n${content}`;
+  return `${frontmatter}${managedNote()}\n\n${content}`;
 }
