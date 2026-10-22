@@ -1,11 +1,6 @@
 # Changelog
 
-## [v2.0.0-beta.2] - 2026-10-22
-
-### Changed
-- **Shorter managed note:** rule files now start with `<!-- Managed by @virastack/ai -->`. The note no longer carries the version, so updating the package does not rewrite every rule file.
-
-## [v2.0.0-beta.1] - 2026-10-22
+## [v2.0.0] - 2026-10-22
 
 ### Breaking
 - **New file layout:** Rules install to `.claude/rules/virastack/` (Claude Code) and `.cursor/rules/virastack/` (Cursor), or `.agents/rules/virastack/` with `--agent none`. v1's `.cursor/rules/*.mdc`, `docs/MEMORIES.md` and `docs/architecture-guide.md` are no longer written.
@@ -21,6 +16,7 @@
 - **Conditional content:** the `i18n` rule installs only with `next-intl` or Paraglide; framework-specific lines appear only for the detected framework.
 
 ### Changed
+- **Short managed note:** rule files start with `<!-- Managed by @virastack/ai -->`, without the version, so updating the package does not rewrite every rule file.
 - **All 14 rules rewritten** for Next.js 16, React 19.2, TanStack Start, TanStack Query 5, Zustand 5, Zod 4 and Tailwind CSS 4. Rule text is about 30% smaller than v1, with one example per rule that follows its own rules.
 - **Next.js 16:** async `params`, `proxy.ts`, `"use cache"` with `cacheComponents`, `preload` instead of `priority`, `ssr: false` only in Client Components.
 - **TanStack Start:** `@tanstack/react-start` imports, `ensureQueryData` + `useSuspenseQuery` with the SSR Query integration, no `tsr watch`.
