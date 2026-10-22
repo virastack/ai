@@ -1,6 +1,6 @@
 {
   "name": "@virastack/ai",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "Agent rules for modern React in one command: Claude Code, Cursor and AGENTS.md",
   "author": {
     "name": "Ömer Gülçiçek (ViraStack)",
