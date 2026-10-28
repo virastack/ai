@@ -140,6 +140,7 @@ describe("template text", () => {
 });
 
 describe("rule examples", () => {
+  /** @type {Array<[string, RegExp] | [string, RegExp, (rule: string) => boolean]>} */
   const CHECKS = [
     ["any", /(:\s*any\b|\bas any\b|<any>)/],
     ["raw <img>", /<img\b/],

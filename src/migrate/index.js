@@ -8,10 +8,19 @@ const HASHES_FILE = path.join(path.dirname(fileURLToPath(import.meta.url)), "v1-
 const NEXT_BLOCK = /<!-- BEGIN:nextjs-agent-rules -->[\s\S]*?<!-- END:nextjs-agent-rules -->(?:\r?\n)*/;
 const V1_AGENTS_MARKER = "core-principles.mdc";
 
+/**
+ * Hashes of every file v1.x shipped, so an untouched one can be recognised and removed.
+ * @typedef {{ versions: string[], files: Record<string, string[]>, agentsMd: string[], nextjsBlock: string[] }} V1Hashes
+ */
+
+/** @type {V1Hashes | null} */
 let cachedHashes = null;
 
+/** @returns {Promise<V1Hashes>} */
 export async function loadV1Hashes() {
-  cachedHashes ??= JSON.parse(await fs.readFile(HASHES_FILE, "utf8"));
+  if (cachedHashes) return cachedHashes;
+
+  cachedHashes = /** @type {V1Hashes} */ (JSON.parse(await fs.readFile(HASHES_FILE, "utf8")));
   return cachedHashes;
 }
 
@@ -35,6 +44,7 @@ export function agentsMdKey(text) {
  */
 export async function planLegacy(root, { claudeSelected }) {
   const v1 = await loadV1Hashes();
+  /** @type {{ deletes: string[], kept: string[], agentsMdBase?: string, claudeImport?: string, warnings: string[] }} */
   const result = { deletes: [], kept: [], agentsMdBase: undefined, claudeImport: undefined, warnings: [] };
 
   for (const [file, known] of Object.entries(v1.files)) {

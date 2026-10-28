@@ -92,8 +92,9 @@ describe("rule templates", () => {
     if (data.alwaysApply === true) {
       expect(frontmatter).toBeNull();
     } else {
-      expect(frontmatter[1]).toMatch(/^paths:\n( {2}- ".+"\n?)+$/);
-      for (const line of frontmatter[1].split("\n").slice(1)) {
+      const paths = frontmatter?.[1] ?? "";
+      expect(paths).toMatch(/^paths:\n( {2}- ".+"\n?)+$/);
+      for (const line of paths.split("\n").slice(1)) {
         expect(() => JSON.parse(line.slice(4))).not.toThrow();
       }
     }

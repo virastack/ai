@@ -51,6 +51,9 @@ export function splitGlobs(value) {
  * Keeps or drops `<!-- name:start -->` … `<!-- name:end -->` sections; the
  * markers never reach the user. `i18n` follows the detected library, `nextjs`
  * and `tanstack` follow the framework. Blocks may nest when their names differ.
+ *
+ * @param {string} text
+ * @param {{ i18n?: boolean, framework?: string }} options
  */
 export function applyConditionals(text, { i18n, framework }) {
   const enabled = { i18n: Boolean(i18n), nextjs: framework === "nextjs", tanstack: framework === "tanstack" };
