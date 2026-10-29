@@ -1,20 +1,16 @@
 <div align="center">
 
 <a href="https://github.com/virastack/ai" target="_blank" rel="noreferrer">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/virastack/ai/main/assets/logo-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/virastack/ai/main/assets/logo-light.png">
-    <img src="https://raw.githubusercontent.com/virastack/ai/main/assets/logo-light.png" alt="ViraStack AI" height="120" style="max-width: 100%;" />
-  </picture>
+  <img src="https://raw.githubusercontent.com/virastack/ai/main/assets/logo.png" alt="ViraStack AI" height="120" style="max-width: 100%;" />
 </a>
 
 *Agent rules for modern React in one command: Claude Code, Cursor and AGENTS.md*
 
 [![ViraStack AI](https://img.shields.io/badge/ViraStack-AI-%23e131fa)](https://virastack.com/ai)
-[![npm version](https://img.shields.io/npm/v/@virastack/ai?color=e131fa)](https://www.npmjs.com/package/@virastack/ai)
-[![npm downloads](https://img.shields.io/npm/dt/@virastack/ai?color=e131fa)](https://www.npmjs.com/package/@virastack/ai)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/virastack/ai/blob/main/LICENSE)
-[![@virastack](https://img.shields.io/badge/-%40virastack-black?logo=x&logoColor=white)](https://x.com/virastack)
+[![npm version](https://img.shields.io/npm/v/@virastack/ai)](https://www.npmjs.com/package/@virastack/ai)
+[![npm downloads](https://img.shields.io/npm/dt/@virastack/ai)](https://www.npmjs.com/package/@virastack/ai)
+[![License: MIT](https://img.shields.io/github/license/virastack/ai)](https://github.com/virastack/ai/blob/main/LICENSE)
+[![@virastack](https://img.shields.io/badge/-%40virastack-555?logo=x&logoColor=white)](https://x.com/virastack)
 
 </div>
 
