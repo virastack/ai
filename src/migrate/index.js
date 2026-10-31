@@ -34,10 +34,6 @@ export function splitNextBlock(text) {
   };
 }
 
-export function agentsMdKey(text) {
-  return hash(splitNextBlock(text).rest.trim());
-}
-
 /**
  * Finds files a v1.x install left behind. Unchanged ones are removed,
  * edited ones are kept and reported. Only runs before the first v2 install.

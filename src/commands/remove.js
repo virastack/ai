@@ -45,7 +45,9 @@ export async function remove(root, options, { io, messages, version }) {
   if (manifest) ops.push({ kind: "delete", path: MANIFEST_PATH, status: "delete" });
 
   if (!options.dryRun) await execute(root, ops);
-  report(ops, { io, messages, dryRun: options.dryRun });
-  if (!options.dryRun) io.log(messages.doneRemove);
+  const counts = report(ops, { io, messages, dryRun: options.dryRun });
+  if (manifest?.ignored.length) io.log(`\n${messages.manifestIgnored(manifest.ignored)}`);
+  if (manifest?.corrupt) io.log(`\n${messages.manifestCorrupt}`);
+  if (!options.dryRun) io.log(counts.skip ? messages.partialRemove(counts.skip) : messages.doneRemove);
   return 0;
 }

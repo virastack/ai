@@ -41,32 +41,45 @@ export async function planText(root, file, content) {
 export async function planDelete(root, file, previousHash) {
   const current = await readText(toAbsolute(root, file));
   if (current === null) return null;
-  if (!previousHash || hash(current) === previousHash) return { kind: "delete", path: file, status: "delete" };
+  if (!previousHash) return { kind: "delete", path: file, status: "conflict", reason: "reasonUnknown" };
+  if (hash(current) === previousHash) return { kind: "delete", path: file, status: "delete" };
   return { kind: "delete", path: file, status: "conflict", reason: "reasonModified", previousHash };
 }
 
 /**
  * Settles conflicts: `--force` takes them, an interactive terminal is asked
- * once with the full list, everything else (CI, `--yes`, `--dry-run`) skips.
+ * separately about overwriting and deleting, everything else (CI, `--yes`,
+ * `--dry-run`) skips. One answer never covers both, so a file is never deleted
+ * under a question about overwriting.
  */
 export async function resolveConflicts(ops, { force, yes, dryRun, io, messages }) {
   const conflicts = ops.filter((op) => op.status === "conflict");
   if (conflicts.length === 0) return;
 
-  let accept = force;
-  if (!accept && !yes && !dryRun && io.interactive) {
-    io.log(`\n${messages.conflictList}`);
-    for (const op of conflicts) io.log(`  ${op.path} (${messages[op.reason]})`);
-    const deleting = conflicts.every((op) => op.kind === "delete");
-    accept = await io.confirm(deleting ? messages.confirmDelete : messages.confirmOverwrite);
-  }
+  const ask = !force && !yes && !dryRun && io.interactive;
+  if (ask) io.log(`\n${messages.conflictList}`);
 
-  for (const op of conflicts) {
-    if (accept) {
-      op.status = op.kind === "delete" ? "delete" : "update";
-    } else {
-      op.status = "skip";
-      if (!io.interactive && !yes && !dryRun) op.reason = "reasonNoTty";
+  const groups = [
+    { kind: "write", question: messages.confirmOverwrite, accepted: "update" },
+    { kind: "delete", question: messages.confirmDelete, accepted: "delete" },
+  ];
+  for (const { kind, question, accepted } of groups) {
+    const group = conflicts.filter((op) => op.kind === kind);
+    if (group.length === 0) continue;
+
+    let accept = force;
+    if (ask) {
+      for (const op of group) io.log(`  ${op.path} (${messages[op.reason]})`);
+      accept = await io.confirm(question);
+    }
+
+    for (const op of group) {
+      if (accept) {
+        op.status = accepted;
+      } else {
+        op.status = "skip";
+        if (!io.interactive && !yes && !dryRun) op.reason = "reasonNoTty";
+      }
     }
   }
 }

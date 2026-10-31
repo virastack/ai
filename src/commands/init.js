@@ -1,6 +1,6 @@
 import { AGENTS } from "../args.js";
 import { ensureClaudeImport, removeClaudeImport, upsertBlock } from "../blocks.js";
-import { detectFramework, detectI18n, detectPackageManager, readPackageJson } from "../detect.js";
+import { detectFramework, detectI18n, detectPackageManager, detectVitest, readPackageJson } from "../detect.js";
 import {
   execute,
   manifestFiles,
@@ -11,13 +11,18 @@ import {
   report,
   resolveConflicts,
 } from "../engine.js";
-import { readText, toAbsolute } from "../fs.js";
+import { isSameFile, readText, toAbsolute } from "../fs.js";
 import { manifestAgents, readManifest } from "../manifest.js";
 import { planLegacy } from "../migrate/index.js";
 import { renderAgentsBlock, renderRules } from "../render.js";
 
 /** Builds the CLAUDE.md operation and the `claudeImport` value to record. */
 async function planClaude(root, claudeSelected, previous) {
+  // A CLAUDE.md linked to AGENTS.md already has the block; an import would point at itself.
+  if (await isSameFile(toAbsolute(root, "CLAUDE.md"), toAbsolute(root, "AGENTS.md"))) {
+    return { op: null, claudeImport: null };
+  }
+
   const current = await readText(toAbsolute(root, "CLAUDE.md"));
 
   if (claudeSelected) {
@@ -48,8 +53,8 @@ export async function init(root, options, { io, messages, version }) {
     framework,
     agents,
     i18n: detectI18n(pkg),
+    vitest: detectVitest(pkg),
     packageManager: await detectPackageManager(root, pkg),
-    version,
   };
 
   io.log(messages.title(version));
@@ -109,8 +114,12 @@ export async function init(root, options, { io, messages, version }) {
 
   const counts = report(ops, { io, messages, dryRun: options.dryRun });
   for (const warning of legacy?.warnings ?? []) io.log(`\n${messages[warning]}`);
+  if (manifest?.ignored.length) io.log(`\n${messages.manifestIgnored(manifest.ignored)}`);
+  if (manifest?.corrupt) io.log(`\n${messages.manifestCorrupt}`);
   if (!options.dryRun) {
-    io.log(counts.create || counts.update || counts.delete ? messages.doneInit : messages.noChanges);
+    const skipped = ops.filter((op) => op.status === "skip").length;
+    if (skipped) io.log(messages.partialInit(skipped));
+    else io.log(counts.create || counts.update || counts.delete ? messages.doneInit : messages.noChanges);
   }
   return 0;
 }

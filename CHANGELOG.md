@@ -1,5 +1,28 @@
 # Changelog
 
+## [v2.1.0] - Unreleased
+
+### Changed
+- **Rule sources are Markdown.** `templates/rules/*.md` holds `description` and a `paths` list; `init` writes Claude Code rules as they are and converts them to Cursor's format. Installed paths and rule names do not change.
+- **`AGENTS.md`:** The persona section and the guardrails are gone. It now holds commands, including install and single-file tests, precedence and the rule map. Planning and English-code lines moved to `core`.
+- **Barrel files:** The rules now ban them in application code and use one `@/*` alias. This reverses v2.0; existing barrels are not errors.
+- **Cursor output:** Scoped rules use comma separated `globs` with no brace patterns, and the description moves into the rule body, following Cursor's docs.
+- **Rule corrections, checked against current docs:** `satisfies`, `useShallow`, React Compiler, `font-display`, `startTransition`, Zod 4 APIs, TanStack Query's `query()` instead of the deprecated `ensureQueryData` and `prefetchQuery`, `error.tsx` and `retry()`, `updateTag`, Base UI `render` and data attributes, the `cn` package, localization.
+- **Rules now load where they apply:** Server Action files load `nextjs`, server function files load `tanstack-start`, routes load `i18n`. State and selector rules moved to `react`, so they reach components.
+- **Examples:** The `forms` example no longer breaks a Next.js build and shows server errors. The `api` example uses an absolute URL. The `nextjs` example works with Cache Components on and off.
+- **`messages/` moved to `src/messages/`** in the rules. New suffix: `*.action.ts`.
+
+### Fixed
+- **A committed manifest can no longer delete files outside the rule folders.** Entries outside them are ignored and reported; a bad hash is a conflict, not permission to delete.
+- **Unbalanced or repeated `AGENTS.md` markers stop the run** with the file untouched, instead of losing your text on the next `init`.
+- **Overwriting and deleting are asked separately**, so one answer never deletes a file under a question about overwriting.
+- **Symlinks stay symlinks.** A `CLAUDE.md` linked to `AGENTS.md` keeps its link and gets no self-import.
+- **Closing messages are accurate** when files were skipped, and an unreadable manifest now gives a warning.
+- **Detection:** `@tanstack/react-router` alone no longer counts as TanStack Start, Yarn 1 uses `npx` instead of `yarn dlx`, and the lockfile is found up to the repository root.
+
+### Removed
+- `skills-lock.json` and unused code.
+
 ## [v2.0.0] - 2026-10-22
 
 ### Breaking

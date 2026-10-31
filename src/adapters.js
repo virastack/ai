@@ -6,21 +6,18 @@ export const ADAPTERS = {
     label: "Claude Code",
     dir: ".claude/rules/virastack",
     extension: ".md",
-    autoLoads: true,
     render: toMarkdownRule,
   },
   cursor: {
     label: "Cursor",
     dir: ".cursor/rules/virastack",
     extension: ".mdc",
-    autoLoads: true,
     render: toCursorRule,
   },
   none: {
     label: "AGENTS.md",
     dir: ".agents/rules/virastack",
     extension: ".md",
-    autoLoads: false,
     render: toMarkdownRule,
   },
 };

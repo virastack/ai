@@ -1,3 +1,5 @@
+import { RunError } from "./errors.js";
+
 export const BLOCK_BEGIN = "<!-- BEGIN:virastack-ai -->";
 export const BLOCK_END = "<!-- END:virastack-ai -->";
 export const CLAUDE_IMPORT = "@AGENTS.md";
@@ -12,11 +14,15 @@ function withEol(text, eol) {
   return text.replace(/\r?\n/g, eol);
 }
 
+/** Anything other than no markers or exactly one ordered pair could cost user text, so it stops the run. */
 function findBlock(text) {
+  const begins = text.split(BLOCK_BEGIN).length - 1;
+  const ends = text.split(BLOCK_END).length - 1;
+  if (begins === 0 && ends === 0) return null;
+
   const start = text.indexOf(BLOCK_BEGIN);
-  if (start === -1) return null;
   const endMarker = text.indexOf(BLOCK_END, start);
-  if (endMarker === -1) return null;
+  if (begins !== 1 || ends !== 1 || endMarker === -1) throw new RunError("unbalancedMarkers");
   return { start, end: endMarker + BLOCK_END.length };
 }
 

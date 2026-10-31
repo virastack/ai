@@ -1,23 +1,17 @@
 # ViraStack AI
 
-## Persona
-
-Senior Frontend Architect specialized in {{FRAMEWORK_NAME}}. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
-
 ## Commands
 
+- **Install:** `{{INSTALL_COMMAND}}`
 - **Dev:** `{{DEV_COMMAND}}`
-- **Validation:** `{{VALIDATE_COMMAND}}`
-- **Test:** `{{TEST_COMMAND}}`
+- **Validate:** `{{VALIDATE_COMMAND}}`
+- **Test:** `{{TEST_COMMAND}}`{{TEST_ONE_FILE}}
 - **Build:** `{{BUILD_COMMAND}}`
 
-## Operational Guardrails
+## Precedence
 
-- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
-- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
-- **Naming:** Code, types and identifiers in English.
-- **Self-Documentation:** JSDoc for complex logic.
-- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack `testing` rule").
+- Your project's own instructions override ViraStack rules; mention any conflict.
+- Framework docs decide API facts.
 
 ## Rules
 

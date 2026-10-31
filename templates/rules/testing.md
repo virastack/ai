@@ -1,7 +1,11 @@
 ---
 description: "USE WHEN: Writing tests with Vitest, Testing Library and MSW."
-globs: "src/**/*.test.{ts,tsx},src/test/**/*.{ts,tsx},vitest.config.ts"
-alwaysApply: false
+paths:
+  - "src/**/*.test.ts"
+  - "src/**/*.test.tsx"
+  - "src/test/**/*.ts"
+  - "src/test/**/*.tsx"
+  - "vitest.config.ts"
 ---
 
 # Testing
@@ -9,7 +13,13 @@ alwaysApply: false
 ## Setup
 
 - Vitest + jsdom (`vitest.config.ts`, `src/test/setup.ts`). Run `{{TEST_COMMAND}}`.
-- `renderWithProviders` (`@/test/render`) adds the app providers. MSW server: `@/test/server`; unhandled requests fail.
+- `renderWithProviders` (`@/test/render`) adds `QueryClientProvider`.
+<!-- nextjs:start -->
+<!-- i18n:start -->
+- It also adds next-intl's provider.
+<!-- i18n:end -->
+<!-- nextjs:end -->
+- MSW server: `@/test/server`. Unhandled requests reject, but a test still passes if the app catches the error: add a handler for every request and assert the resulting UI. Never lower this setting.
 
 ## Rules
 
@@ -21,6 +31,9 @@ alwaysApply: false
 - Cover loading, empty, error and success for critical data flows.
 - Tests sit next to their code (`get-users.api.test.ts`). Snapshots only for small, stable data.
 - No browser E2E tools unless the project has them or you are asked.
+<!-- nextjs:start -->
+- Vitest does not support async Server Components: test their sync children and helpers instead.
+<!-- nextjs:end -->
 
 <example>
 ```tsx
@@ -29,7 +42,7 @@ import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { expect, it } from "vitest";
 
-import { LoginForm } from "@/features/auth";
+import { LoginForm } from "@/features/auth/components/LoginForm";
 import { renderWithProviders } from "@/test/render";
 import { server } from "@/test/server";
 
