@@ -111,14 +111,6 @@ If Prettier formats the rule folders, ViraStack AI reads them as edited and stop
 
 In CI or any non-interactive shell, changed files are skipped with a warning instead of a question.
 
-## Upgrading to v2.1
-
-Run `npx @virastack/ai@latest init` in the project. The rules no longer use barrel files and now use one `@/*` alias; existing `index.ts` files and aliases are not errors, and nothing asks you to refactor them. New code follows the new rules.
-
-## Upgrading from v1
-
-Run `npx @virastack/ai@latest init` in the project. Rule files and `docs/` written by v1.x are removed if you never edited them. Edited ones are kept and listed so you can delete them yourself.
-
 ## Ecosystem
 
 Part of the [ViraStack](https://virastack.com) ecosystem: [Academy](https://github.com/virastack/academy) · [Start](https://github.com/virastack/start) · [Mask](https://github.com/virastack/form/tree/main/packages/mask) · [Password](https://github.com/virastack/form/tree/main/packages/password) · [Address](https://github.com/virastack/form/tree/main/packages/address) · [Guide](https://github.com/virastack/guide)
