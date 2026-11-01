@@ -26,7 +26,7 @@ Check unfamiliar APIs in `node_modules/next/dist/docs/`.
 - Prefetch TanStack Query on the server and hand off with `HydrationBoundary`; clients read it with the feature's query hook. Patterns, including Cache Components: `node_modules/next/dist/docs/01-app/02-guides/client-side-data-fetching/tanstack-query.md`.
 - `"use cache"` (`cacheLife`, `cacheTag`) only with `cacheComponents: true` in `next.config.ts`. Cached scopes cannot read `cookies()`, `headers()` or `searchParams`: read them outside and pass the value in.
 - After a write: `updateTag(tag)` inside a Server Action for read-your-writes; `revalidateTag(tag, "max")` for stale-while-revalidate.
-- Pass only serializable, non-sensitive data to Client Components. Import `server-only` in server-only modules.
+- Pass only serializable, non-sensitive data to Client Components. Import `server-only` in server-only modules (Next.js resolves it, so no install is needed).
 
 ## Server Actions
 

@@ -23,7 +23,7 @@ paths:
 
 - Server data: TanStack Query (`server-state`). Form input: React Hook Form (`forms`).
 <!-- nextjs:start -->
-- Filters, page, sort and tabs: URL search params with `nuqs`.
+- Filters, page, sort and tabs: URL search params with `nuqs`. Parsers live in the feature's `schemas/`, shared by the server loader and the client hook.
 <!-- nextjs:end -->
 <!-- tanstack:start -->
 - Filters, page, sort and tabs: URL search params with `validateSearch`, `Route.useSearch()` and `navigate({ search })`.
