@@ -27,7 +27,7 @@ paths:
 - Define each query once with `queryOptions()` in `api/`; reuse it in hooks, prefetching, loaders and `setQueryData`.
 - Components call a thin hook from `hooks/` (`useUsers`), never `useQuery` or `useSuspenseQuery` directly.
 <!-- tanstack:start -->
-- Route data loaded in a `loader`: the hook wraps `useSuspenseQuery`. Use `useQuery` only for data the first render does not need.
+- Route data loaded in a `loader`: the hook wraps `useSuspenseQuery`. Use `useQuery` only for data the first render does not need, or when the page keeps old data on screen while new data loads.
 <!-- tanstack:end -->
 - Pass the query function's `signal` to the api function.
 - Mutation hooks invalidate the affected keys in `onSettled`.

@@ -26,7 +26,7 @@ paths:
 - Filters, page, sort and tabs: URL search params with `nuqs`. Parsers live in the feature's `schemas/`, shared by the server loader and the client hook.
 <!-- nextjs:end -->
 <!-- tanstack:start -->
-- Filters, page, sort and tabs: URL search params with `validateSearch`, `Route.useSearch()` and `navigate({ search })`.
+- Filters, page, sort and tabs: URL search params with `validateSearch`, `getRouteApi("/path").useSearch()` (features cannot import routes) and `navigate({ search })`.
 <!-- tanstack:end -->
 - One component's UI state: `useState`. Client state shared across the app: Zustand (`client-state`).
 - Zustand: read one value per selector, never call a store hook without one. A selector that builds a new object or array needs `useShallow` from `zustand/react/shallow`; without it React throws.

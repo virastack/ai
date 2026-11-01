@@ -27,6 +27,9 @@ paths:
 - Prioritize feature logic (helpers, api, hooks, stores) and critical flows. Skip trivial markup.
 - Query by role and label (`getByRole`, `findByRole`, `getByLabelText`). Use `getByTestId` only as a last resort.
 - Interact through `userEvent.setup()` and wait for async UI with `findBy*`.
+<!-- tanstack:start -->
+- A component using router hooks renders inside a real router with `createMemoryHistory`.
+<!-- tanstack:end -->
 - Mock HTTP with MSW handlers (`server.use(...)`) per test. Do not mock `fetch` or the api module.
 - Cover loading, empty, error and success for critical data flows.
 - Tests sit next to their code (`get-users.api.test.ts`). Snapshots only for small, stable data.
