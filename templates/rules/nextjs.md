@@ -17,7 +17,7 @@ Check unfamiliar APIs in `node_modules/next/dist/docs/`.
 - `src/app` files are Server Components by default; `error.tsx` and `global-error.tsx` must be Client Components. `"use client"` only on leaf components that need state, effects, events or browser APIs, never on `page.tsx` or `layout.tsx`.
 - `params`, `searchParams`, `cookies()` and `headers()` are async: `const { id } = await params`. Type pages with the generated `PageProps<"/route">`.
 - With `cacheComponents` (on in new `create-next-app` projects), read `params`, `searchParams`, `cookies()` and `headers()` under `<Suspense>`; otherwise the build fails.
-- Stream with `loading.tsx` and `<Suspense>`; add `error.tsx` and `not-found.tsx` where a segment can fail or miss. In `error.tsx`, use `retry()` rather than `reset()`.
+- Stream with `loading.tsx` and `<Suspense>` (above a catch-all route, `loading.tsx` turns 404s into 200s); add `error.tsx` and `not-found.tsx` where a segment can fail or miss. In `error.tsx`, use `retry()` rather than `reset()`.
 - Metadata via `metadata` or `generateMetadata`, never manual `<head>` tags.
 - `next/dynamic` with `{ ssr: false }` works only inside Client Components.
 

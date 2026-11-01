@@ -37,7 +37,7 @@ paths:
 
 ## i18n
 
-- Paraglide JS (`@inlang/paraglide-js`): locale routes under `src/routes/$lang`, so paths start with `/$lang`. See the `i18n` rule.
+- Paraglide JS (`@inlang/paraglide-js`): locale routes under the optional param `src/routes/{-$lang}`, so the default locale has no prefix; `/en` answers with a 301 to `/`. See the `i18n` rule.
 <!-- i18n:end -->
 
 ## Bans
