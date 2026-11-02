@@ -41,7 +41,7 @@ src/
 - A feature creates only the subfolders it needs.
 - Features never import each other: share through the shared folders or compose at the route level.
 - Imports flow one way: shared folders, then features, then routes. Shared folders never import features or routes.
-- Route files only load data, set metadata and render a feature component.
+- Route files only load data, set metadata and render feature components.
 - `constants/`: static lists and config objects.
 - `helpers/`: pure functions without package imports; anything importing a package goes to `lib/`.
 - `lib/`: configured library instances (`api.ts`, `query-client.ts`, `utils.ts`).
