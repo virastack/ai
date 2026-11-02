@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { parseCliArgs, UsageError } from "./args.js";
 import { init } from "./commands/init.js";
 import { remove } from "./commands/remove.js";
+import { RunError } from "./errors.js";
 import { createMessages, isYes } from "./i18n.js";
 
 const PACKAGE_JSON = path.join(path.dirname(path.dirname(fileURLToPath(import.meta.url))), "package.json");
@@ -58,7 +59,8 @@ export async function run(argv, { cwd = process.cwd(), io = terminalIo() } = {})
   try {
     return await command(cwd, options, { io, messages, version });
   } catch (err) {
-    io.error(`${messages.failed} ${err.message}`);
+    const detail = err instanceof RunError ? messages.errors[err.key](...err.params) : err.message;
+    io.error(`${messages.failed} ${detail}`);
     return 1;
   }
 }

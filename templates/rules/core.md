@@ -1,6 +1,5 @@
 ---
 description: "USE WHEN: Always. Working agreement, naming, exports and error handling for every task."
-alwaysApply: true
 ---
 
 # Core
@@ -9,22 +8,22 @@ alwaysApply: true
 
 - Read the files you will change and their neighbors first; follow their patterns.
 - Change only what the task needs. No drive-by refactors.
-- Ask before adding a dependency or changing a public API (exports, props, routes, schemas).
-- Deliver complete, working code. No pseudo-code, placeholders or `// ...existing code`.
-- When a path or API is unknown, say so instead of guessing.
+- Ask before adding a dependency, changing a public API (exports, props, routes, schemas), or changing boundaries, routing or rendering, state or infrastructure.
+- Check that a package exists on npm before proposing it; a name from memory counts as unverified.
+- If a path or API is unknown, look it up in the repo and installed docs; if it is still unknown, say so.
 - Before you finish, run `{{VALIDATE_COMMAND}}` and `{{TEST_COMMAND}}` and fix what you broke.
 
 ## Naming and exports
 
+- Code, types and identifiers are in English.
 - Files and folders: `kebab-case` (`query-client.ts`). Components: `PascalCase.tsx` (`UserList.tsx`). UI primitives: `button.tsx`. Hooks: `use-users.ts` exports `useUsers`.
-- Suffixes: `*.api.ts`, `*.queries.ts`, `*.schema.ts`, `*.store.ts`, `*.types.ts`, `*.constants.ts`, `*.test.ts(x)`.
+- Suffixes: `*.api.ts`, `*.action.ts`, `*.queries.ts`, `*.schema.ts`, `*.store.ts`, `*.types.ts`, `*.constants.ts`, `*.test.ts(x)`.
 - Types: `User`, never `IUser`, `TUser` or `UserType`.
-- Named exports only; default exports only where a framework requires them. Each folder exposes its public API through `index.ts`.
+- Named exports only; default exports only where a framework requires them. No barrel files in application code: import from the defining file.
 
 ## Errors
 
-- Never swallow an error. A `catch` rethrows, returns a typed error, or reports it.
-- Report unexpected failures to the error tracker when the project has one.
+- Never swallow an error. A `catch` rethrows with `{ cause: error }`, returns a typed error, or reports it.
 - Place Error Boundaries at route and feature boundaries, not around every component.
 - Never log secrets or `.env` values.
 

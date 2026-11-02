@@ -4,24 +4,18 @@ exports[`init: file tree > nextjs with --agent claude > nextjs-claude-agents 1`]
 "<!-- BEGIN:virastack-ai -->
 # ViraStack AI
 
-## Persona
-
-Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
-
 ## Commands
 
-- **Dev:** \`npm install && npm run dev\`
-- **Validation:** \`npm run lint && npm run typecheck\`
+- **Install:** \`npm install\`
+- **Dev:** \`npm run dev\`
+- **Validate:** \`npm run lint && npm run typecheck\`
 - **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
-## Operational Guardrails
+## Precedence
 
-- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
-- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
-- **Naming:** Code, types and identifiers in English.
-- **Self-Documentation:** JSDoc for complex logic.
-- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+- Your project's own instructions override ViraStack rules; mention any conflict.
+- Framework docs decide API facts.
 
 ## Rules
 
@@ -32,16 +26,16 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 | :--- | :------- |
 | \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
 | \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
-| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
 | \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
-| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+| \`ui\` | Building UI with shadcn/ui and Tailwind CSS 4: components, styling, states, accessibility. |
 | \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
 | \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
 | \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
-| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
-| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`client-state\` | Writing Zustand 5 stores: placement, actions, server rendering and persist. |
 | \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
-| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
 <!-- END:virastack-ai -->
 "
 `;
@@ -71,24 +65,18 @@ exports[`init: file tree > nextjs with --agent claude,cursor > nextjs-both-agent
 "<!-- BEGIN:virastack-ai -->
 # ViraStack AI
 
-## Persona
-
-Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
-
 ## Commands
 
-- **Dev:** \`npm install && npm run dev\`
-- **Validation:** \`npm run lint && npm run typecheck\`
+- **Install:** \`npm install\`
+- **Dev:** \`npm run dev\`
+- **Validate:** \`npm run lint && npm run typecheck\`
 - **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
-## Operational Guardrails
+## Precedence
 
-- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
-- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
-- **Naming:** Code, types and identifiers in English.
-- **Self-Documentation:** JSDoc for complex logic.
-- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+- Your project's own instructions override ViraStack rules; mention any conflict.
+- Framework docs decide API facts.
 
 ## Rules
 
@@ -100,16 +88,16 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 | :--- | :------- |
 | \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
 | \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
-| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
 | \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
-| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+| \`ui\` | Building UI with shadcn/ui and Tailwind CSS 4: components, styling, states, accessibility. |
 | \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
 | \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
 | \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
-| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
-| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`client-state\` | Writing Zustand 5 stores: placement, actions, server rendering and persist. |
 | \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
-| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
 <!-- END:virastack-ai -->
 "
 `;
@@ -151,24 +139,18 @@ exports[`init: file tree > nextjs with --agent cursor > nextjs-cursor-agents 1`]
 "<!-- BEGIN:virastack-ai -->
 # ViraStack AI
 
-## Persona
-
-Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
-
 ## Commands
 
-- **Dev:** \`npm install && npm run dev\`
-- **Validation:** \`npm run lint && npm run typecheck\`
+- **Install:** \`npm install\`
+- **Dev:** \`npm run dev\`
+- **Validate:** \`npm run lint && npm run typecheck\`
 - **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
-## Operational Guardrails
+## Precedence
 
-- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
-- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
-- **Naming:** Code, types and identifiers in English.
-- **Self-Documentation:** JSDoc for complex logic.
-- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+- Your project's own instructions override ViraStack rules; mention any conflict.
+- Framework docs decide API facts.
 
 ## Rules
 
@@ -179,16 +161,16 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 | :--- | :------- |
 | \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
 | \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
-| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
 | \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
-| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+| \`ui\` | Building UI with shadcn/ui and Tailwind CSS 4: components, styling, states, accessibility. |
 | \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
 | \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
 | \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
-| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
-| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`client-state\` | Writing Zustand 5 stores: placement, actions, server rendering and persist. |
 | \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
-| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
 <!-- END:virastack-ai -->
 "
 `;
@@ -217,24 +199,18 @@ exports[`init: file tree > nextjs with --agent none > nextjs-none-agents 1`] = `
 "<!-- BEGIN:virastack-ai -->
 # ViraStack AI
 
-## Persona
-
-Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
-
 ## Commands
 
-- **Dev:** \`npm install && npm run dev\`
-- **Validation:** \`npm run lint && npm run typecheck\`
+- **Install:** \`npm install\`
+- **Dev:** \`npm run dev\`
+- **Validate:** \`npm run lint && npm run typecheck\`
 - **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
-## Operational Guardrails
+## Precedence
 
-- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
-- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
-- **Naming:** Code, types and identifiers in English.
-- **Self-Documentation:** JSDoc for complex logic.
-- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+- Your project's own instructions override ViraStack rules; mention any conflict.
+- Framework docs decide API facts.
 
 ## Rules
 
@@ -244,16 +220,16 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 | :--- | :------- |
 | \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
 | \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
-| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
 | \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
-| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+| \`ui\` | Building UI with shadcn/ui and Tailwind CSS 4: components, styling, states, accessibility. |
 | \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
 | \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
 | \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
-| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
-| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`client-state\` | Writing Zustand 5 stores: placement, actions, server rendering and persist. |
 | \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
-| \`nextjs\` | Working on Next.js 16 App Router routes, layouts, Server Components, Server Actions, caching and proxy.ts. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
 <!-- END:virastack-ai -->
 "
 `;
@@ -282,24 +258,18 @@ exports[`init: file tree > tanstack with --agent claude > tanstack-claude-agents
 "<!-- BEGIN:virastack-ai -->
 # ViraStack AI
 
-## Persona
-
-Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
-
 ## Commands
 
-- **Dev:** \`npm install && npm run dev\`
-- **Validation:** \`npm run lint && npm run typecheck\`
+- **Install:** \`npm install\`
+- **Dev:** \`npm run dev\`
+- **Validate:** \`npm run lint && npm run typecheck\`
 - **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
-## Operational Guardrails
+## Precedence
 
-- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
-- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
-- **Naming:** Code, types and identifiers in English.
-- **Self-Documentation:** JSDoc for complex logic.
-- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+- Your project's own instructions override ViraStack rules; mention any conflict.
+- Framework docs decide API facts.
 
 ## Rules
 
@@ -310,16 +280,16 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 | :--- | :------- |
 | \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
 | \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
-| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
 | \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
-| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+| \`ui\` | Building UI with shadcn/ui and Tailwind CSS 4: components, styling, states, accessibility. |
 | \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
 | \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
 | \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
-| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
-| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`client-state\` | Writing Zustand 5 stores: placement, actions, server rendering and persist. |
 | \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
-| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
 <!-- END:virastack-ai -->
 "
 `;
@@ -349,24 +319,18 @@ exports[`init: file tree > tanstack with --agent claude,cursor > tanstack-both-a
 "<!-- BEGIN:virastack-ai -->
 # ViraStack AI
 
-## Persona
-
-Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
-
 ## Commands
 
-- **Dev:** \`npm install && npm run dev\`
-- **Validation:** \`npm run lint && npm run typecheck\`
+- **Install:** \`npm install\`
+- **Dev:** \`npm run dev\`
+- **Validate:** \`npm run lint && npm run typecheck\`
 - **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
-## Operational Guardrails
+## Precedence
 
-- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
-- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
-- **Naming:** Code, types and identifiers in English.
-- **Self-Documentation:** JSDoc for complex logic.
-- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+- Your project's own instructions override ViraStack rules; mention any conflict.
+- Framework docs decide API facts.
 
 ## Rules
 
@@ -378,16 +342,16 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 | :--- | :------- |
 | \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
 | \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
-| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
 | \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
-| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+| \`ui\` | Building UI with shadcn/ui and Tailwind CSS 4: components, styling, states, accessibility. |
 | \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
 | \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
 | \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
-| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
-| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`client-state\` | Writing Zustand 5 stores: placement, actions, server rendering and persist. |
 | \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
-| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
 <!-- END:virastack-ai -->
 "
 `;
@@ -429,24 +393,18 @@ exports[`init: file tree > tanstack with --agent cursor > tanstack-cursor-agents
 "<!-- BEGIN:virastack-ai -->
 # ViraStack AI
 
-## Persona
-
-Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
-
 ## Commands
 
-- **Dev:** \`npm install && npm run dev\`
-- **Validation:** \`npm run lint && npm run typecheck\`
+- **Install:** \`npm install\`
+- **Dev:** \`npm run dev\`
+- **Validate:** \`npm run lint && npm run typecheck\`
 - **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
-## Operational Guardrails
+## Precedence
 
-- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
-- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
-- **Naming:** Code, types and identifiers in English.
-- **Self-Documentation:** JSDoc for complex logic.
-- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+- Your project's own instructions override ViraStack rules; mention any conflict.
+- Framework docs decide API facts.
 
 ## Rules
 
@@ -457,16 +415,16 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 | :--- | :------- |
 | \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
 | \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
-| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
 | \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
-| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+| \`ui\` | Building UI with shadcn/ui and Tailwind CSS 4: components, styling, states, accessibility. |
 | \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
 | \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
 | \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
-| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
-| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`client-state\` | Writing Zustand 5 stores: placement, actions, server rendering and persist. |
 | \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
-| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
 <!-- END:virastack-ai -->
 "
 `;
@@ -495,24 +453,18 @@ exports[`init: file tree > tanstack with --agent none > tanstack-none-agents 1`]
 "<!-- BEGIN:virastack-ai -->
 # ViraStack AI
 
-## Persona
-
-Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
-
 ## Commands
 
-- **Dev:** \`npm install && npm run dev\`
-- **Validation:** \`npm run lint && npm run typecheck\`
+- **Install:** \`npm install\`
+- **Dev:** \`npm run dev\`
+- **Validate:** \`npm run lint && npm run typecheck\`
 - **Test:** \`npm test\`
 - **Build:** \`npm run build\`
 
-## Operational Guardrails
+## Precedence
 
-- **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
-- **Context Integrity:** No hallucinations for unknown paths; ask or state UNKNOWN.
-- **Naming:** Code, types and identifiers in English.
-- **Self-Documentation:** JSDoc for complex logic.
-- **Deviation:** Follow every ViraStack rule. A project instruction may override a rule only by naming it (e.g. "ignore the ViraStack \`testing\` rule").
+- Your project's own instructions override ViraStack rules; mention any conflict.
+- Framework docs decide API facts.
 
 ## Rules
 
@@ -522,16 +474,16 @@ Senior Frontend Architect specialized in TanStack Start. Decisions: SOLID, SRP, 
 | :--- | :------- |
 | \`core\` | Always. Working agreement, naming, exports and error handling for every task. |
 | \`architecture\` | Always. Where code lives in src/, feature boundaries and import rules. |
-| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
 | \`typescript\` | Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference. |
-| \`ui\` | Building UI with shadcn/ui (Base UI or Radix) and Tailwind CSS 4: components, styling, states, accessibility. |
+| \`react\` | Writing React 19 components and hooks: state, effects, composition, React Compiler. |
+| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+| \`ui\` | Building UI with shadcn/ui and Tailwind CSS 4: components, styling, states, accessibility. |
 | \`forms\` | Building forms with React Hook Form and Zod: schemas, defaults, submission, server errors. |
 | \`api\` | Writing HTTP calls with the native fetch wrapper in src/lib/api.ts: endpoints, Zod parsing, ApiError. |
 | \`server-state\` | Fetching and caching server data with TanStack Query 5: queryOptions, hooks, mutations, invalidation. |
-| \`client-state\` | Managing client state with Zustand 5 stores and URL state with nuqs. |
-| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
+| \`client-state\` | Writing Zustand 5 stores: placement, actions, server rendering and persist. |
 | \`testing\` | Writing tests with Vitest, Testing Library and MSW. |
-| \`tanstack-start\` | Working on TanStack Start routes, loaders, server functions, middleware and head/SEO. |
+| \`performance\` | Improving Core Web Vitals (LCP, INP, CLS): images, fonts, scripts, bundle size. |
 <!-- END:virastack-ai -->
 "
 `;

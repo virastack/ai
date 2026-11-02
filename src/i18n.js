@@ -24,7 +24,6 @@ Options:
     updated: "updated",
     removed: "removed",
     skipped: "skipped",
-    unchanged: "unchanged",
     kept: "kept",
     reasonModified: "you changed this file",
     reasonUnknown: "file exists and is not managed by ViraStack AI",
@@ -42,7 +41,17 @@ Options:
     noChanges: "Already up to date.",
     unknownFramework: "Could not detect the framework. Use --framework nextjs or --framework tanstack.",
     failed: "ViraStack AI failed:",
+    manifestIgnored: (files) => `Ignored manifest entries outside the rule folders: ${files.join(", ")}`,
+    manifestCorrupt:
+      ".virastack/ai.json could not be read, so installed files cannot be recognized. They are treated as yours and kept.",
+    partialInit: (count) =>
+      `${count} file(s) you changed were kept and may be out of date. Use --force to replace them.`,
+    partialRemove: (count) =>
+      `ViraStack AI was removed, except ${count} file(s) you changed. Use --force to delete them.`,
     errors: {
+      unbalancedMarkers: () =>
+        "AGENTS.md has unbalanced or repeated ViraStack AI markers. Fix them by hand; nothing was changed.",
+      outsideProject: (file) => `Refusing a path outside the project: ${file}. Nothing was changed.`,
       badOption: (message) => message,
       missingCommand: () => "Missing command.",
       unknownCommand: (command) => `Unknown command: ${command}`,
@@ -77,7 +86,6 @@ Seçenekler:
     updated: "güncellendi",
     removed: "silindi",
     skipped: "atlandı",
-    unchanged: "aynı",
     kept: "korundu",
     reasonModified: "bu dosyayı değiştirmişsin",
     reasonUnknown: "dosya var ve ViraStack AI'a ait değil",
@@ -95,7 +103,17 @@ Seçenekler:
     noChanges: "Zaten güncel.",
     unknownFramework: "Framework tespit edilemedi. --framework nextjs veya --framework tanstack kullan.",
     failed: "ViraStack AI başarısız oldu:",
+    manifestIgnored: (files) => `Manifest'te kural klasörleri dışındaki kayıtlar yok sayıldı: ${files.join(", ")}`,
+    manifestCorrupt:
+      ".virastack/ai.json okunamadı, bu yüzden kurulu dosyalar tanınamıyor. Senin dosyaların sayılıp korundu.",
+    partialInit: (count) =>
+      `Değiştirdiğin ${count} dosya korundu, güncel olmayabilir. Değiştirmek için --force kullan.`,
+    partialRemove: (count) =>
+      `ViraStack AI kaldırıldı, değiştirdiğin ${count} dosya hariç. Silmek için --force kullan.`,
     errors: {
+      unbalancedMarkers: () =>
+        "AGENTS.md içindeki ViraStack AI işaretleri dengesiz veya tekrarlı. Elle düzelt; hiçbir şey değişmedi.",
+      outsideProject: (file) => `Proje dışındaki yol reddedildi: ${file}. Hiçbir şey değişmedi.`,
       badOption: (message) => message,
       missingCommand: () => "Komut eksik.",
       unknownCommand: (command) => `Bilinmeyen komut: ${command}`,

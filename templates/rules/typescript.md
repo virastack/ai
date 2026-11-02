@@ -1,7 +1,8 @@
 ---
 description: "USE WHEN: Writing TypeScript types and Zod 4 schemas: strict mode, unions, inference."
-globs: "src/**/*.{ts,tsx}"
-alwaysApply: false
+paths:
+  - "src/**/*.ts"
+  - "src/**/*.tsx"
 ---
 
 # TypeScript and Zod
@@ -10,20 +11,18 @@ alwaysApply: false
 
 - `strict` and `noUncheckedIndexedAccess` are on: handle `undefined` from index access, do not assert it away.
 - Zod first for outside data (API, forms, search params, env): write the schema, derive the type with `z.infer`.
-- Zod 4 APIs: `z.email()`, `z.url()`, `z.uuid()`, `z.iso.datetime()` instead of `z.string().email()` and similar. Custom messages are a string or `{ error }`.
-- `type` for shapes and unions. `interface` only for declaration merging, such as module augmentation.
-- `satisfies` checks a value against a type without widening it.
+- Zod 4 APIs: `z.email()`, `z.url()`, `z.uuid()`, `z.iso.datetime()` instead of `z.string().email()` and similar; `z.strictObject()` and `z.looseObject()` instead of `.strict()` and `.passthrough()`; `z.flattenError()` or `z.treeifyError()` instead of `.flatten()`. Custom messages are a string or `{ error }`.
+- `type` by default (team convention). `interface` for declaration merging or for composing object types with `extends`.
+- `satisfies` checks a value against a type without changing its inferred type. Add `as const` to keep literals.
 - Model variants as discriminated unions.
 - `as const` objects or `z.enum` instead of `enum`.
-- Branded types are recommended for ids that are easy to mix up (`UserId`, `OrderId`).
+- Derive variants from schemas with `.pick()`, `.omit()` and `.extend()`, not nested utility types.
 
 ## Bans
 
 - `any`. Use `unknown` and narrow it.
 - `as` casts outside tests and low-level wrappers in `src/lib/`. Parse with Zod instead. `as const` is fine.
 - Non-null assertions (`!`).
-- `@ts-ignore`. Use `@ts-expect-error` with a reason when it is unavoidable.
-- More than two nested utility types. Derive from schemas with `.pick()`, `.omit()` and `.extend()`.
 
 <example>
 ```ts
@@ -38,11 +37,12 @@ export const userSchema = z.object({
 export type User = z.infer<typeof userSchema>;
 
 export type SaveState =
-  | { status: "idle" }
-  | { status: "saved"; savedAt: Date }
-  | { status: "failed"; reason: string };
+  { status: "idle" } | { status: "saved"; savedAt: Date } | { status: "failed"; reason: string };
 
-export const roleLabels = { admin: "Admin", member: "Member" } satisfies Record<User["role"], string>;
+export const roleLabels = {
+  admin: "Admin",
+  member: "Member",
+} as const satisfies Record<User["role"], string>;
 ```
 </example>
 
@@ -51,6 +51,7 @@ export const roleLabels = { admin: "Admin", member: "Member" } satisfies Record<
 interface IUser {
   id: any;
 }
+const schema = z.object({ email: z.string().email() });
 const user = data as IUser;
 ```
 </incorrect-example>

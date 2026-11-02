@@ -21,8 +21,8 @@
 ## Features
 
 - **Claude Code and Cursor, one command:** Writes the same rules in each tool's native format. Claude Code gets `.claude/rules`, Cursor gets `.cursor/rules`, every other agent reads `AGENTS.md`.
-- **Written for the 2026 stack:** Next.js 16, React 19.2, TanStack Start, TanStack Query 5, Zustand 5, Zod 4 and Tailwind CSS 4. About 30% shorter than v1, with every example following its own rules.
-- **Never overwrites your files:** Rules live in their own `virastack/` folders. `AGENTS.md` and `CLAUDE.md` only get a small managed block or import line; everything else in them stays byte for byte.
+- **Written for the 2026 stack:** Next.js 16, React 19, TanStack Start, TanStack Query 5, Zustand 5, Zod 4 and Tailwind CSS 4. API rules are checked against each library's current docs, and every example is built in fresh projects.
+- **Never overwrites your files:** Rules live in their own `virastack/` folders. `AGENTS.md` and `CLAUDE.md` only get a small managed block or import line; everything else in them stays byte for byte. Unbalanced markers stop the run and leave the file untouched.
 - **Smart Framework Isolation:** Detects Next.js or TanStack Start from `package.json` and installs only that framework's rules. The `i18n` rule is installed only when `next-intl` or Paraglide is in the project.
 - **Safe updates:** `.virastack/ai.json` records what was installed. Re-running `init` updates untouched rules, asks before touching rules you changed, and cleans up rules a new version no longer ships.
 
@@ -59,7 +59,7 @@ npx @virastack/ai init
 | `CLAUDE.md` | `--agent claude` | Gets an `@AGENTS.md` import line if missing |
 | `.cursor/rules/virastack/*.mdc` | `--agent cursor` | Cursor rules, loaded by file path |
 | `.agents/rules/virastack/*.md` | `--agent none` | Plain Markdown rules for any agent |
-| `AGENTS.md` | always | Managed `virastack-ai` block: persona, commands, rule map |
+| `AGENTS.md` | always | Managed `virastack-ai` block: commands, precedence, rule map |
 | `.virastack/ai.json` | always | Manifest of installed files. Commit it. |
 
 Without `--agent`, both Claude Code and Cursor are installed. The choice is saved in `.virastack/ai.json` and reused on the next `init`.
@@ -72,20 +72,22 @@ Two rules are always loaded. The others load when the agent works on matching fi
 | :--- | :--------- |
 | `core` | Always: workflow, naming, exports, errors |
 | `architecture` | Always: folder tree, feature boundaries, imports |
-| `react` | `src/**/*.tsx`, hooks |
 | `typescript` | `src/**/*.{ts,tsx}` |
-| `ui` | `src/components/**`, feature components |
+| `react` | `src/**/*.tsx`, hooks |
+| `nextjs` | `src/app/**`, `src/proxy.ts`, `next.config.ts`, feature `actions/` (Next.js only) |
+| `tanstack-start` | `src/routes/**`, `src/router.tsx`, `src/start.ts`, feature `api/` (TanStack Start only) |
+| `ui` | `src/components/**`, feature components, `src/styles/` |
 | `forms` | `*Form*.tsx`, `schemas/` |
 | `api` | `src/lib/api.ts`, feature `api/` |
 | `server-state` | feature `api/` and `hooks/`, `src/providers/`, `src/lib/query-client.ts` |
 | `client-state` | `stores/` |
-| `i18n` | `messages/`, `src/i18n/`, components (only with `next-intl` or Paraglide) |
-| `performance` | routes and components |
+| `i18n` | `src/messages/`, `src/i18n/`, routes, components (only with `next-intl` or Paraglide) |
 | `testing` | `*.test.{ts,tsx}`, `src/test/` |
-| `nextjs` | `src/app/**`, `src/proxy.ts`, `next.config.ts` (Next.js only) |
-| `tanstack-start` | `src/routes/**`, `src/router.tsx`, `src/start.ts` (TanStack Start only) |
+| `performance` | routes and components |
 
-Commands in the rules (`lint`, `typecheck`, `test`, `shadcn add`) use the package manager detected from your lockfile.
+Commands in the rules (`lint`, `typecheck`, `test`, `shadcn add`) use the package manager detected from your lockfile. The rules assume your project has `lint`, `typecheck` and `test` scripts.
+
+If Prettier formats the rule folders, ViraStack AI reads them as edited and stops updating them. Add `.claude/rules/virastack/` and `.cursor/rules/virastack/` to `.prettierignore`.
 
 ## Commands
 
@@ -108,10 +110,6 @@ Commands in the rules (`lint`, `typecheck`, `test`, `shadcn add`) use the packag
 | `--version`, `-v` | Show the version. |
 
 In CI or any non-interactive shell, changed files are skipped with a warning instead of a question.
-
-## Upgrading from v1
-
-Run `npx @virastack/ai@latest init` in the project. Rule files and `docs/` written by v1.x are removed if you never edited them. Edited ones are kept and listed so you can delete them yourself.
 
 ## Ecosystem
 

@@ -2,9 +2,9 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { adaptersFor } from "./adapters.js";
-import { parseMdc } from "./convert.js";
+import { parseFrontmatter } from "./convert.js";
 import { packageManagerCommands } from "./detect.js";
-import { FRAMEWORK_NAMES, FRAMEWORK_RULES, selectRules } from "./rules.js";
+import { selectRules } from "./rules.js";
 
 const TEMPLATES = path.join(path.dirname(path.dirname(fileURLToPath(import.meta.url))), "templates");
 
@@ -16,11 +16,11 @@ async function readTemplate(relative) {
 function templateValues(ctx) {
   const commands = packageManagerCommands(ctx.packageManager);
   return {
-    FRAMEWORK_NAME: FRAMEWORK_NAMES[ctx.framework],
-    FRAMEWORK_RULE: FRAMEWORK_RULES[ctx.framework],
+    INSTALL_COMMAND: commands.install,
     DEV_COMMAND: commands.dev,
     VALIDATE_COMMAND: commands.validate,
     TEST_COMMAND: commands.test,
+    TEST_ONE_FILE: ctx.vitest ? `\n- **Test one file:** \`${commands.testFile} <path>\`` : "",
     BUILD_COMMAND: commands.build,
     EXEC_COMMAND: commands.exec,
   };
@@ -38,9 +38,9 @@ export async function renderRules(ctx) {
   const values = templateValues(ctx);
   const rules = [];
   for (const rule of selectRules(ctx)) {
-    const source = fill(await readTemplate(`rules/${rule.name}.mdc`), values);
-    const { data } = parseMdc(source);
-    rules.push({ name: rule.name, source, description: data.description ?? "", always: data.alwaysApply === true });
+    const source = fill(await readTemplate(`rules/${rule.name}.md`), values);
+    const { data } = parseFrontmatter(source);
+    rules.push({ name: rule.name, source, description: data.description ?? "", always: !data.paths?.length });
   }
 
   const files = new Map();

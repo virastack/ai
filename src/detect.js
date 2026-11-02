@@ -3,7 +3,7 @@ import { FRAMEWORKS } from "./args.js";
 import { exists, readText } from "./fs.js";
 
 const I18N_PACKAGES = ["next-intl", "@inlang/paraglide-js"];
-const TANSTACK_PACKAGES = ["@tanstack/react-start", "@tanstack/start", "@tanstack/react-router"];
+const TANSTACK_PACKAGES = ["@tanstack/react-start", "@tanstack/start"];
 
 const LOCKFILES = [
   ["pnpm-lock.yaml", "pnpm"],
@@ -13,30 +13,50 @@ const LOCKFILES = [
   ["package-lock.json", "npm"],
 ];
 
+const YARN_CLASSIC_LOCK = "# yarn lockfile v1";
+
 const COMMANDS = {
   pnpm: {
-    dev: "pnpm install && pnpm dev",
+    install: "pnpm install",
+    dev: "pnpm dev",
+    testFile: "pnpm vitest run",
     validate: "pnpm lint && pnpm typecheck",
     test: "pnpm test",
     build: "pnpm build",
     exec: "pnpm dlx",
   },
   npm: {
-    dev: "npm install && npm run dev",
+    install: "npm install",
+    dev: "npm run dev",
+    testFile: "npx vitest run",
     validate: "npm run lint && npm run typecheck",
     test: "npm test",
     build: "npm run build",
     exec: "npx",
   },
   yarn: {
-    dev: "yarn install && yarn dev",
+    install: "yarn install",
+    dev: "yarn dev",
+    testFile: "yarn vitest run",
     validate: "yarn lint && yarn typecheck",
     test: "yarn test",
     build: "yarn build",
     exec: "yarn dlx",
   },
+  // Yarn 1 has no `dlx`.
+  "yarn-classic": {
+    install: "yarn install",
+    dev: "yarn dev",
+    testFile: "yarn vitest run",
+    validate: "yarn lint && yarn typecheck",
+    test: "yarn test",
+    build: "yarn build",
+    exec: "npx",
+  },
   bun: {
-    dev: "bun install && bun run dev",
+    install: "bun install",
+    dev: "bun run dev",
+    testFile: "bunx vitest run",
     validate: "bun run lint && bun run typecheck",
     test: "bun run test",
     build: "bun run build",
@@ -68,17 +88,41 @@ export function detectFramework(pkg) {
   return null;
 }
 
+export function detectVitest(pkg) {
+  return Boolean(dependencies(pkg).vitest);
+}
+
 export function detectI18n(pkg) {
   const deps = dependencies(pkg);
   return I18N_PACKAGES.some((name) => deps[name]);
 }
 
+/** `dir`, then its parents up to the repository root. Outside a repository, only `dir`. */
+async function lockfileFolders(dir) {
+  const start = path.resolve(dir);
+  const folders = [];
+  let current = start;
+  while (true) {
+    folders.push(current);
+    if (await exists(path.join(current, ".git"))) return folders;
+    const parent = path.dirname(current);
+    if (parent === current) return [start];
+    current = parent;
+  }
+}
+
 export async function detectPackageManager(dir, pkg) {
-  const declared = typeof pkg?.packageManager === "string" ? pkg.packageManager.split("@")[0] : null;
+  const [declared, declaredVersion] = typeof pkg?.packageManager === "string" ? pkg.packageManager.split("@") : [];
+  if (declared === "yarn" && declaredVersion?.startsWith("1.")) return "yarn-classic";
   if (declared && COMMANDS[declared]) return declared;
 
-  for (const [file, manager] of LOCKFILES) {
-    if (await exists(path.join(dir, file))) return manager;
+  for (const folder of await lockfileFolders(dir)) {
+    for (const [file, manager] of LOCKFILES) {
+      const lockfile = path.join(folder, file);
+      if (!(await exists(lockfile))) continue;
+      if (manager === "yarn" && (await readText(lockfile))?.includes(YARN_CLASSIC_LOCK)) return "yarn-classic";
+      return manager;
+    }
   }
   return "npm";
 }

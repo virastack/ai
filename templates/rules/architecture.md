@@ -1,30 +1,14 @@
 ---
 description: "USE WHEN: Always. Where code lives in src/, feature boundaries and import rules."
-alwaysApply: true
 ---
 
 # Architecture
-
-## Stack
-
-| Layer | Library | Rule |
-| :-- | :-- | :-- |
-| Framework | {{FRAMEWORK_NAME}} | `{{FRAMEWORK_RULE}}` |
-| Server state | TanStack Query 5 | `server-state` |
-| Client state | Zustand 5 | `client-state` |
-| Validation | Zod 4 | `typescript` |
-| UI | shadcn/ui (Base UI) + Tailwind CSS 4 | `ui` |
-| HTTP | Native `fetch` wrapper in `src/lib/api.ts` | `api` |
-| Tests | Vitest, Testing Library, MSW | `testing` |
 
 ## Folder tree
 
 Create folders only from this tree.
 
 ```text
-<!-- i18n:start -->
-messages/                # one JSON file per locale
-<!-- i18n:end -->
 src/
 <!-- nextjs:start -->
 ├── app/                 # routes only
@@ -33,13 +17,19 @@ src/
 ├── routes/              # routes only
 <!-- tanstack:end -->
 ├── features/<feature>/  # api, components, constants, helpers, hooks, icons,
-│                        # schemas, stores, types + index.ts (public API)
+│                        # schemas, stores, types
+<!-- nextjs:start -->
+│                        # actions (Server Actions)
+<!-- nextjs:end -->
 ├── components/          # layout, shared, ui
 <!-- nextjs:start -->
 <!-- i18n:start -->
 ├── i18n/
 <!-- i18n:end -->
 <!-- nextjs:end -->
+<!-- i18n:start -->
+├── messages/            # one JSON file per locale
+<!-- i18n:end -->
 ├── assets/  config/  constants/  helpers/  hooks/  lib/
 ├── providers/  schemas/  stores/  styles/  test/  types/
 └── env.ts
@@ -48,9 +38,10 @@ src/
 ## Placement
 
 - Code starts in `features/<feature>/` and moves to the shared `src/` folders when a second feature needs it.
+- A feature creates only the subfolders it needs.
 - Features never import each other: share through the shared folders or compose at the route level.
-- Outside code imports a feature only through its `index.ts`.
-- Route files only load data, set metadata and render a feature component.
+- Imports flow one way: shared folders, then features, then routes. Shared folders never import features or routes.
+- Route files only load data, set metadata and render feature components.
 - `constants/`: static lists and config objects.
 - `helpers/`: pure functions without package imports; anything importing a package goes to `lib/`.
 - `lib/`: configured library instances (`api.ts`, `query-client.ts`, `utils.ts`).
@@ -59,5 +50,5 @@ src/
 
 ## Imports
 
-- Use the `tsconfig.json` path aliases (`@/...`); do not invent new ones.
+- Use the `@/*` path alias; do not add others.
 - Parent-relative imports (`../`) are banned; same-folder `./` is fine.

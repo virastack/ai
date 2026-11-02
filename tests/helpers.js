@@ -25,7 +25,12 @@ export async function cleanup(dir) {
   await fs.rm(dir, { recursive: true, force: true });
 }
 
-/** Runs the CLI in-process with a fake terminal. `answer` is the reply to any question. */
+/**
+ * Runs the CLI in-process with a fake terminal. `answer` is the reply, or a function of the question.
+ * @param {string} dir
+ * @param {string[]} args
+ * @param {{ interactive?: boolean, answer?: boolean | ((question: string) => boolean) }} [terminal]
+ */
 export async function cli(dir, args, { interactive = false, answer = false } = {}) {
   const out = [];
   const err = [];
@@ -36,7 +41,7 @@ export async function cli(dir, args, { interactive = false, answer = false } = {
     error: (message) => err.push(message),
     confirm: async (question) => {
       questions.push(question);
-      return answer;
+      return typeof answer === "function" ? answer(question) : answer;
     },
   };
   const code = await run(args, { cwd: dir, io });

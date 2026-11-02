@@ -2,7 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { applyConditionals, parseMdc, splitGlobs, toCursorRule, toMarkdownRule } from "../src/convert.js";
+import { applyConditionals, parseFrontmatter, toCursorRule, toMarkdownRule } from "../src/convert.js";
 import { RULES } from "../src/rules.js";
 
 const RULES_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), "../templates/rules");
@@ -10,8 +10,9 @@ const ctx = { version: "9.9.9", i18n: true };
 
 const scoped = `---
 description: "USE WHEN: Testing."
-globs: "src/**/*.{ts,tsx},src/hooks/**/*.{ts,tsx}"
-alwaysApply: false
+paths:
+  - "src/**/*.ts"
+  - "src/hooks/**/*.tsx"
 ---
 # Title
 
@@ -20,31 +21,29 @@ Body
 
 const always = `---
 description: "USE WHEN: Always."
-alwaysApply: true
 ---
 # Core
 
 Body
 `;
 
-describe("splitGlobs", () => {
-  it("splits on top-level commas only", () => {
-    expect(splitGlobs("src/**/*.{ts,tsx},src/hooks/**/*.{ts,tsx}")).toEqual([
-      "src/**/*.{ts,tsx}",
-      "src/hooks/**/*.{ts,tsx}",
-    ]);
+describe("parseFrontmatter", () => {
+  it("reads scalars and the paths list", () => {
+    expect(parseFrontmatter(scoped).data).toEqual({
+      description: "USE WHEN: Testing.",
+      paths: ["src/**/*.ts", "src/hooks/**/*.tsx"],
+    });
   });
 
-  it("handles a single glob and empty values", () => {
-    expect(splitGlobs("src/app/**/{page,layout}.tsx")).toEqual(["src/app/**/{page,layout}.tsx"]);
-    expect(splitGlobs(undefined)).toEqual([]);
+  it("reports no paths for an always-loaded rule", () => {
+    expect(parseFrontmatter(always).data.paths).toBeUndefined();
   });
 });
 
 describe("toMarkdownRule", () => {
   it("writes a quoted YAML paths list for scoped rules", () => {
     const output = toMarkdownRule(scoped, ctx);
-    expect(output.startsWith('---\npaths:\n  - "src/**/*.{ts,tsx}"\n  - "src/hooks/**/*.{ts,tsx}"\n---\n')).toBe(true);
+    expect(output.startsWith('---\npaths:\n  - "src/**/*.ts"\n  - "src/hooks/**/*.tsx"\n---\n')).toBe(true);
     expect(output).not.toContain("globs:");
     expect(output).not.toContain("alwaysApply");
   });
@@ -61,10 +60,20 @@ describe("toMarkdownRule", () => {
 });
 
 describe("toCursorRule", () => {
-  it("keeps the source frontmatter and adds the managed note after it", () => {
+  it("attaches a scoped rule by comma separated globs, as Cursor documents", () => {
     const output = toCursorRule(scoped, ctx);
-    expect(output.startsWith(scoped.split("# Title")[0])).toBe(true);
-    expect(output).toContain("---\n<!-- Managed by @virastack/ai -->");
+    expect(output.startsWith("---\nglobs: src/**/*.ts,src/hooks/**/*.tsx\nalwaysApply: false\n---\n")).toBe(true);
+    expect(output).not.toContain("description:");
+    expect(output).not.toContain("paths:");
+  });
+
+  it("marks an always-loaded rule with alwaysApply only", () => {
+    expect(toCursorRule(always, ctx).startsWith("---\nalwaysApply: true\n---\n")).toBe(true);
+  });
+
+  it("keeps the same content as the Markdown rule", () => {
+    const content = (text) => text.replace(/^---[\s\S]*?---\n/, "");
+    expect(content(toCursorRule(scoped, ctx))).toBe(content(toMarkdownRule(scoped, ctx)));
   });
 });
 
@@ -82,14 +91,13 @@ describe("applyConditionals", () => {
 
 describe("rule templates", () => {
   it.each(RULES.map((rule) => rule.name))("%s has valid frontmatter and paths", async (name) => {
-    const source = await fs.readFile(path.join(RULES_DIR, `${name}.mdc`), "utf8");
-    const { data } = parseMdc(source);
+    const source = await fs.readFile(path.join(RULES_DIR, `${name}.md`), "utf8");
+    const { data } = parseFrontmatter(source);
     expect(data.description).toBeTruthy();
-    expect(data.alwaysApply === true || splitGlobs(data.globs).length > 0).toBe(true);
 
     const markdown = toMarkdownRule(source, ctx);
     const frontmatter = markdown.match(/^---\n([\s\S]*?)\n---\n/);
-    if (data.alwaysApply === true) {
+    if (!data.paths?.length) {
       expect(frontmatter).toBeNull();
     } else {
       const paths = frontmatter?.[1] ?? "";
@@ -102,7 +110,7 @@ describe("rule templates", () => {
 
   it("balances every i18n marker", async () => {
     for (const rule of RULES) {
-      const source = await fs.readFile(path.join(RULES_DIR, `${rule.name}.mdc`), "utf8");
+      const source = await fs.readFile(path.join(RULES_DIR, `${rule.name}.md`), "utf8");
       const starts = source.match(/<!-- i18n:start -->/g)?.length ?? 0;
       const ends = source.match(/<!-- i18n:end -->/g)?.length ?? 0;
       expect(starts, rule.name).toBe(ends);
