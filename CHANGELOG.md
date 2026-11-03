@@ -1,6 +1,6 @@
 # Changelog
 
-## [v2.1.0] - Unreleased
+## [v2.1.0] - 2026-11-03
 
 ### Changed
 - **Rule sources are Markdown.** `templates/rules/*.md` holds `description` and a `paths` list; `init` writes Claude Code rules as they are and converts them to Cursor's format. Installed paths and rule names do not change.
