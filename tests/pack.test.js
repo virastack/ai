@@ -24,7 +24,9 @@ describe("npm package", () => {
   }, 60000);
 
   it("ships only the allowed files", () => {
-    const [result] = JSON.parse(execSync("npm pack --dry-run --json --ignore-scripts", { cwd: root, encoding: "utf8" }));
+    // npm 11 prints an array, npm 12 an object keyed by package name.
+    const output = JSON.parse(execSync("npm pack --dry-run --json --ignore-scripts", { cwd: root, encoding: "utf8" }));
+    const [result] = Array.isArray(output) ? output : Object.values(output);
     const files = result.files.map((file) => file.path.split(path.sep).join("/"));
     expect(files.filter((file) => !ALLOWED.test(file))).toEqual([]);
     expect(files).toContain("bin/virastack-ai.js");
