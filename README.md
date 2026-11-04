@@ -87,7 +87,16 @@ Two rules are always loaded. The others load when the agent works on matching fi
 
 Commands in the rules (`lint`, `typecheck`, `test`, `shadcn add`) use the package manager detected from your lockfile. The rules assume your project has `lint`, `typecheck` and `test` scripts.
 
-If Prettier formats the rule folders, ViraStack AI reads them as edited and stops updating them. Add `.claude/rules/virastack/` and `.cursor/rules/virastack/` to `.prettierignore`.
+If Prettier formats the files ViraStack AI writes, it reads the rules as edited and stops updating them, and every `init` rewrites `AGENTS.md` again. Add these to `.prettierignore`:
+
+```text
+.claude/rules/virastack/
+.cursor/rules/virastack/
+.agents/rules/virastack/
+.virastack/
+AGENTS.md
+CLAUDE.md
+```
 
 ## Commands
 
