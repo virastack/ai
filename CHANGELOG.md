@@ -1,6 +1,6 @@
 # Changelog
 
-## [v2.1.1] - Unreleased
+## [v2.1.1] - 2026-11-04
 
 ### Changed
 - **`react` (TanStack Start):** A reusable module that does not know its route reads search params with `useSearch({ strict: false })`, parses them with its Zod schema and navigates with `to: "."`. Features with a known route keep `getRouteApi("/path").useSearch()`. ViraStack Start modules install at a path you choose, so they cannot name their route.
