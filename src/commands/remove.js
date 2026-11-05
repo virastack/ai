@@ -2,8 +2,9 @@ import { hasBlock, removeBlock, removeClaudeImport } from "../blocks.js";
 import { execute, planDelete, planText, report, resolveConflicts } from "../engine.js";
 import { readText, toAbsolute } from "../fs.js";
 import { MANIFEST_PATH, readManifest } from "../manifest.js";
+import { formatTitle, plain } from "../ui.js";
 
-export async function remove(root, options, { io, messages, version }) {
+export async function remove(root, options, { io, messages, version, colors = plain }) {
   const manifest = await readManifest(root);
   const agentsMd = await readText(toAbsolute(root, "AGENTS.md"));
 
@@ -12,7 +13,7 @@ export async function remove(root, options, { io, messages, version }) {
     return 0;
   }
 
-  io.log(messages.title(version));
+  io.log(formatTitle(colors, version));
   io.log("");
 
   const ops = [];

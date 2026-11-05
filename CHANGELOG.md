@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.2.0] - 2026-11-05
+
+### Added
+- **The title is a ViraStack badge.** `init` and `remove` start with "ViraStack AI" on the accent color ViraStack Start uses, and the version dimmed next to it.
+- **Colored `--help`:** headings bold, commands and flags in the accent color. The text and its layout stay the same.
+- **Short, marked errors:** an error starts with a red `✖`; a long message keeps its first line and at most its last 8 lines, dimmed.
+- **Colors follow the terminal:** they show only in an interactive terminal. `NO_COLOR` turns them off, `FORCE_COLOR` turns them on (`0` or `false` turns them off). Pipes, CI logs and ViraStack Start's run get plain text. Still no runtime dependencies.
+
 ## [v2.1.1] - 2026-11-04
 
 ### Changed

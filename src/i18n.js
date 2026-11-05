@@ -15,7 +15,6 @@ Options:
   --tr                Turkish output
   -h, --help          Show this help
   -v, --version       Show the version`,
-    title: (version) => `ViraStack AI v${version}`,
     context: (fw, agents, i18n, pm) =>
       `Framework: ${fw} · Agents: ${agents} · i18n: ${i18n ? "yes" : "no"} · Package manager: ${pm}`,
     none: "none (AGENTS.md)",
@@ -77,7 +76,6 @@ Seçenekler:
   --tr                Türkçe çıktı
   -h, --help          Bu yardımı gösterir
   -v, --version       Sürümü gösterir`,
-    title: (version) => `ViraStack AI v${version}`,
     context: (fw, agents, i18n, pm) =>
       `Framework: ${fw} · Araçlar: ${agents} · i18n: ${i18n ? "var" : "yok"} · Paket yöneticisi: ${pm}`,
     none: "yok (AGENTS.md)",

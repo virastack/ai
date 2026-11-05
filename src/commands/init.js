@@ -15,6 +15,7 @@ import { isSameFile, readText, toAbsolute } from "../fs.js";
 import { manifestAgents, readManifest } from "../manifest.js";
 import { planLegacy } from "../migrate/index.js";
 import { renderAgentsBlock, renderRules } from "../render.js";
+import { formatError, formatTitle, plain } from "../ui.js";
 
 /** Builds the CLAUDE.md operation and the `claudeImport` value to record. */
 async function planClaude(root, claudeSelected, previous) {
@@ -38,13 +39,13 @@ async function planClaude(root, claudeSelected, previous) {
   return { op: null, claudeImport: null };
 }
 
-export async function init(root, options, { io, messages, version }) {
+export async function init(root, options, { io, messages, version, colors = plain, errorColors = plain }) {
   const manifest = await readManifest(root);
   const pkg = await readPackageJson(root);
 
   const framework = options.framework ?? detectFramework(pkg) ?? manifest?.framework ?? null;
   if (!framework) {
-    io.error(messages.unknownFramework);
+    io.error(formatError(errorColors, messages.unknownFramework));
     return 1;
   }
 
@@ -57,7 +58,7 @@ export async function init(root, options, { io, messages, version }) {
     packageManager: await detectPackageManager(root, pkg),
   };
 
-  io.log(messages.title(version));
+  io.log(formatTitle(colors, version));
   io.log(
     messages.context(framework, agents.length ? agents.join(", ") : messages.none, ctx.i18n, ctx.packageManager),
   );

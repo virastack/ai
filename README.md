@@ -118,7 +118,7 @@ CLAUDE.md
 | `--help`, `-h` | Show help. |
 | `--version`, `-v` | Show the version. |
 
-In CI or any non-interactive shell, changed files are skipped with a warning instead of a question.
+In CI or any non-interactive shell, changed files are skipped with a warning instead of a question. Colors show only in an interactive terminal; set `NO_COLOR=1` for plain text.
 
 ## Ecosystem
 
