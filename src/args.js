@@ -56,7 +56,7 @@ export function parseCliArgs(argv) {
       },
     });
   } catch (err) {
-    throw new UsageError("badOption", err.message);
+    throw new UsageError("badOption", err instanceof Error ? err.message : String(err));
   }
 
   const { values, positionals } = parsed;

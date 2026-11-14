@@ -21,7 +21,8 @@ export async function readText(file) {
   try {
     return await fs.readFile(file, "utf8");
   } catch (err) {
-    if (err.code === "ENOENT" || err.code === "EISDIR") return null;
+    const { code } = /** @type {NodeJS.ErrnoException} */ (err);
+    if (code === "ENOENT" || code === "EISDIR") return null;
     throw err;
   }
 }
@@ -31,7 +32,7 @@ async function realPath(file) {
   try {
     return await fs.realpath(file);
   } catch (err) {
-    if (err.code === "ENOENT") return null;
+    if (/** @type {NodeJS.ErrnoException} */ (err).code === "ENOENT") return null;
     throw err;
   }
 }

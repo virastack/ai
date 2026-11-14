@@ -80,7 +80,7 @@ export async function run(argv, { cwd = process.cwd(), io = terminalIo() } = {})
     const context = { io, messages, version, colors, errorColors };
     return await command(cwd, options, context);
   } catch (err) {
-    const detail = err instanceof RunError ? messages.errors[err.key](...err.params) : err.message;
+    const detail = err instanceof RunError ? messages.errors[err.key](...err.params) : err instanceof Error ? err.message : String(err);
     io.error(formatError(errorColors, `${messages.failed} ${detail}`));
     return 1;
   }
