@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [v2.2.1] - 2026-11-14
 
 ### Changed
 - **`tanstack-start`:** Route options follow the order TanStack Router infers types in: `params` and `validateSearch`, `loaderDeps`, `context`, `beforeLoad`, `loader`, then `head`. A `head` above `loader` loses the `loaderData` type. `@tanstack/eslint-plugin-router` enforces it.
