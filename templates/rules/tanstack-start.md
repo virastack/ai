@@ -15,6 +15,7 @@ paths:
 - `createFileRoute` with a path that matches the file. Never edit the generated `src/routeTree.gen.ts`.
 - Parent routes render `<Outlet />`.
 - Validate search params with `validateSearch` and a Zod schema. Route data that depends on them goes through `loaderDeps`. Use `.default().catch()` so `Link` needs no `search` and a bad URL falls back; `stripSearchParams` keeps defaults out of the URL. The router parses `?q=123` as a number, so a text param accepts numbers too.
+- Write route options in the order TanStack Router infers types: `params` and `validateSearch`, `loaderDeps`, `context`, `beforeLoad`, `loader`, then `head` and the other lifecycle options. A `head` above `loader` loses the `loaderData` type. `@tanstack/eslint-plugin-router` enforces this order and fixes it with `--fix`.
 - `beforeLoad` handles auth redirects for page UX only. It does not protect data: enforce auth in every server function and server route that reads or writes private data.
 - `pendingComponent`, `errorComponent` and `notFoundComponent` where a route can wait, fail or miss. Metadata in `head()`.
 - Navigate with typed `Link` and `useNavigate`, never string-built URLs.
