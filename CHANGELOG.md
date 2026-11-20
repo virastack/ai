@@ -1,5 +1,10 @@
 # Changelog
 
+## [v2.2.2] - 2026-11-20
+
+### Changed
+- **README**: the hero logo is the new ViraStack lockup, in a light and a dark version. No code changes.
+
 ## [v2.2.1] - 2026-11-14
 
 ### Changed
